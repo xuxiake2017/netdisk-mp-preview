@@ -1,0 +1,72 @@
+<wxs src="../../common/wxs/file.wxs" module="tools"></wxs>
+<view class="{{ show ? 'noscroll' : 'scroll' }}">
+  <van-tabs active="{{ active }}" bind:change="onChange">
+    <van-tab wx:for="{{ tabs }}" title="{{ item.label }}" wx:key="value" name="{{ item.value }}">
+      <view class="home-container" wx:if="{{ active === 1 }}">
+        <!-- 文件搜索条 -->
+        <view class="home__search-bar">
+          <view class="home__search-bar-input-wrap">
+            <text class="iconfont icon-search"></text>
+            <input placeholder="搜索网盘文件" placeholder-style="font-weight: 600; font-size: 30rpx; color: #c2c2c2;" />
+          </view>
+          <text class="iconfont icon-descending"></text>
+        </view>
+        <!-- 文件列表 -->
+        <view class="home_file-list-wrap">
+          <view class="home_file-list">
+            <van-cell custom-class="home_file-item" wx:for="{{ fileList }}" wx:key="id" wx:for-item="file" data-file="{{ file }}" bind:click="onFileClick">
+              <view slot="title" class="home_file-item-content">
+                <view class="home_file-item-content-img-wrap">
+                  <text class="home_file-item-content-img icon-svg {{ tools.fileIcoFilter(file.fileType) }}"></text>
+                </view>
+                <view class="home_file-item-content-main">
+                  <view class="home_file-item-content-name van-ellipsis">{{ file.fileName }}</view>
+                  <text class="home_file-item-content-time">{{ tools.formatDate(file.updateTime) }}</text>
+                </view>
+                <view class="home_file-item-content-opt" catch:tap="fileOptHandler">
+                  <text class="iconfont icon-ellipsis"></text>
+                </view>
+              </view>
+            </van-cell>
+          </view>
+        </view>
+        <!-- 文件列表加载 -->
+        <view class="home_file-list-loading">
+          <van-loading wx:if="{{ loading }}" size="45rpx" vertical>加载中...</van-loading>
+        </view>
+        <!-- 文件操作弹窗 -->
+        <van-popup
+          show="{{ show }}"
+          round
+          position="bottom"
+          bind:close="onPopupClose"
+        >
+          <view class="home_opt-popup">
+            <view class="home_opt-popup-title">
+              <view class="home_opt-popup-title-file-icon">
+                <text class="icon-svg icon-file_dir"></text>
+              </view>
+              <view class="home_opt-popup-title-file-name">
+                文件
+              </view>
+            </view>
+            <view class="home_opt-popup-content">
+              <van-cell custom-class="home_opt-popup-opt-item-wrap" wx:for="{{ fileOptions }}" wx:key="icon" wx:for-item="fileOption">
+                <view slot="title" class="home_opt-popup-opt-item">
+                  <view class="home_opt-popup-opt-item-icon">
+                    <text class="iconfont {{ fileOption.icon }}"></text>
+                  </view>
+                  <view class="home_opt-popup-opt-item-title">
+                    <text>{{ fileOption.name }}</text>
+                  </view>
+                </view>
+              </van-cell>
+            </view>
+          </view>
+        </van-popup>
+      </view>
+      <view wx:if="{{ active === 2 }}">2</view>
+      <view wx:if="{{ active === 3 }}">3</view>
+    </van-tab>
+  </van-tabs>
+</view>

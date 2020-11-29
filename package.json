@@ -1,0 +1,22 @@
+{
+  "name": "netdisk-mp-preview",
+  "version": "1.0.0",
+  "description": "netdisk power by weixin miniprogram",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuxiake2017/netdisk-mp-preview.git"
+  },
+  "author": "xuxiake",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xuxiake2017/netdisk-mp-preview/issues"
+  },
+  "homepage": "https://github.com/xuxiake2017/netdisk-mp-preview#readme",
+  "dependencies": {
+    "@vant/weapp": "^1.6.1"
+  }
+}
