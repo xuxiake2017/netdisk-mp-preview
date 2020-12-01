@@ -1,8 +1,20 @@
 <wxs src="../../common/wxs/file.wxs" module="tools"></wxs>
-<view class="{{ show ? 'noscroll' : 'scroll' }}">
-  <van-tabs active="{{ active }}" bind:change="onChange">
-    <van-tab wx:for="{{ tabs }}" title="{{ item.label }}" wx:key="value" name="{{ item.value }}">
-      <view class="home-container" wx:if="{{ active === 1 }}">
+<view style="height: {{ windowHeight }}px;">
+  <view class="u-flex home__tabs">
+    <view
+      wx:for="{{ tabs }}"
+      wx:key="value"
+      class="u-flex-1 home__tab-item {{ item.value === active ? 'home__tab-item-selected' : '' }}"
+      style="width: {{ 100 / tabs.length }}%;"
+      bind:tap="onTabClick"
+      data-tab="{{ item }}"
+    >
+      {{ item.label }}
+    </view>
+  </view>
+  <view class="home-container-wrap" wx:if="{{ active === 1 }}">
+    <scroll-view scroll-y="{{ true }}" style="height: 100%;" bindscrolltolower="onReachBottom">
+      <view class="home-container">
         <!-- 文件搜索条 -->
         <view class="home__search-bar">
           <view class="home__search-bar-input-wrap">
@@ -20,7 +32,7 @@
                   <text class="home_file-item-content-img icon-svg {{ tools.fileIcoFilter(file.fileType) }}"></text>
                 </view>
                 <view class="home_file-item-content-main">
-                  <view class="home_file-item-content-name van-ellipsis">{{ file.fileName }}</view>
+                  <text class="home_file-item-content-name van-ellipsis">{{ file.fileName }}</text>
                   <text class="home_file-item-content-time">{{ tools.formatDate(file.updateTime) }}</text>
                 </view>
                 <view class="home_file-item-content-opt" catch:tap="fileOptHandler">
@@ -40,6 +52,7 @@
           round
           position="bottom"
           bind:close="onPopupClose"
+          catch:touchmove="onTouchmove"
         >
           <view class="home_opt-popup">
             <view class="home_opt-popup-title">
@@ -62,11 +75,16 @@
                 </view>
               </van-cell>
             </view>
+            <view class="home_opt-popup-cancel-wrap" bind:tap="onPopupClose">
+              <view>
+                取消
+              </view>
+            </view>
           </view>
         </van-popup>
       </view>
-      <view wx:if="{{ active === 2 }}">2</view>
-      <view wx:if="{{ active === 3 }}">3</view>
-    </van-tab>
-  </van-tabs>
+    </scroll-view>
+  </view>
+  <view wx:if="{{ active === 2 }}"></view>
+  <view wx:if="{{ active === 3 }}"></view>
 </view>
