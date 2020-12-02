@@ -1,66 +1,61 @@
-// pages/fileList/fileList.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    // 状态栏高度（px）
+    statusBarHeight: 0,
+    navBarHeight: 0,
+    menuButtonHeight: 0,
+    menuButtonWidth: 0,
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getSystemInfo().then(({ info, rect }) => {
+      console.log(info)
+      console.log(rect)
+      const {
+        statusBarHeight
+      } = info
+      let {
+        top,
+        height,
+        width
+      } = rect
+      top += 2
+      const navBarHeight = (top - statusBarHeight) * 2 + height
+      this.setData({
+        statusBarHeight,
+        navBarHeight,
+        menuButtonHeight: height,
+        menuButtonWidth: width,
+      })
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  getSystemInfo() {
+    return new Promise((resolve, reject) => {
+      const rect = wx.getMenuButtonBoundingClientRect()
+      wx.getSystemInfo({
+        success: info => {
+          resolve({
+            info, rect
+          })
+        }
+      })
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  goBack() {
+    wx.navigateBack()
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  goHome() {
+    // wx.redirectTo({
+    //   url: '/pages/home/home'
+    // })
+    wx.reLaunch({
+      url: '/pages/home/home'
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

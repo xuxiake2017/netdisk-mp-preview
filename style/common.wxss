@@ -64,3 +64,34 @@
 .u-flex-1 {
   flex: 1;
 }
+
+.u-p-20 {
+	padding: 20rpx;
+}
+.u-p-l-20 {
+	padding-left: 20rpx;
+}
+.u-p-r-20 {
+	padding-right: 20rpx;
+}
+.u-p-t-20 {
+	padding-top: 20rpx;
+}
+.u-p-b-20 {
+	padding-bottom: 20rpx;
+}
+.u-p-30 {
+	padding: 30rpx;
+}
+.u-p-l-30 {
+	padding-left: 30rpx;
+}
+.u-p-r-30 {
+	padding-right: 30rpx;
+}
+.u-p-t-30 {
+	padding-top: 30rpx;
+}
+.u-p-b-30 {
+	padding-bottom: 30rpx;
+}

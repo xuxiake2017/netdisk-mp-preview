@@ -183,6 +183,7 @@ Page({
     this.getFileList()
     wx.getSystemInfo({
       success: info => {
+        console.log(info)
         const {
           windowHeight,
           windowWidth,
