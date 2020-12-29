@@ -1,0 +1,21 @@
+.tabs-wrap {
+  height: 90rpx;
+  background: #FFF;
+  color: #666;
+  position: relative;
+}
+.tabs__line {
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  background: #ee0a24;
+  transition: all ease .2s;
+}
+.tab-item {
+  height: 100%;
+  line-height:  90rpx;
+  text-align: center;
+  position: relative;
+  font-weight: 600;
+  color: #333;
+}

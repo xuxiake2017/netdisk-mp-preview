@@ -1,0 +1,20 @@
+<wxs src="../../common/wxs/file.wxs" module="tools"></wxs>
+<!-- 文件列表 -->
+<view class="file-list-wrap">
+  <view class="file-list">
+    <van-cell custom-class="file-item" wx:for="{{ fileList }}" wx:key="id" wx:for-item="file" data-file="{{ file }}" bind:click="onFileClick">
+      <view slot="title" class="file-item-content">
+        <view class="file-item-content-img-wrap">
+          <text class="file-item-content-img icon-svg {{ tools.fileIcoFilter(file.fileType) }}"></text>
+        </view>
+        <view class="file-item-content-main">
+          <text class="file-item-content-name van-ellipsis">{{ file.fileName }}</text>
+          <text class="file-item-content-time">{{ tools.formatDate(file.updateTime) }}</text>
+        </view>
+        <view class="file-item-content-opt" catch:tap="fileOptHandler">
+          <text class="iconfont icon-ellipsis"></text>
+        </view>
+      </view>
+    </van-cell>
+  </view>
+</view>

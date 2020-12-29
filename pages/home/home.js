@@ -30,7 +30,7 @@ Page({
     pagination: {
       total: 0,
       pageNum: 1,
-      pageSize: 20
+      pageSize: 10
     },
     // 查询过滤条件
     filters: {
@@ -127,7 +127,7 @@ Page({
   },
   // 文件点击事件处理
   onFileClick(event) {
-    const file = event.currentTarget.dataset.file
+    const file = event.detail.file
     console.log(file)
     const {
       id,
@@ -159,22 +159,22 @@ Page({
         break
     }
   },
-  // 获取节点信息
-  $uGetRect(selector, all) {
-    return new Promise(resolve => {
-      wx.createSelectorQuery().
-      in(this)[all ? 'selectAll' : 'select'](selector)
-        .boundingClientRect(rect => {
-          if (all && Array.isArray(rect) && rect.length) {
-            resolve(rect)
-          }
-          if (!all && rect) {
-            resolve(rect)
-          }
-        })
-        .exec()
-    })
-  },
+  // // 获取节点信息
+  // $uGetRect(selector, all) {
+  //   return new Promise(resolve => {
+  //     wx.createSelectorQuery().
+  //     in(this)[all ? 'selectAll' : 'select'](selector)
+  //       .boundingClientRect(rect => {
+  //         if (all && Array.isArray(rect) && rect.length) {
+  //           resolve(rect)
+  //         }
+  //         if (!all && rect) {
+  //           resolve(rect)
+  //         }
+  //       })
+  //       .exec()
+  //   })
+  // },
 
   /**
    * 生命周期函数--监听页面加载
@@ -212,7 +212,7 @@ Page({
     this.getFileList()
   },
   onTabClick(e) {
-    const tab = e.currentTarget.dataset.tab
+    const tab = e.detail.tab
     this.setData({
       active: tab.value
     })

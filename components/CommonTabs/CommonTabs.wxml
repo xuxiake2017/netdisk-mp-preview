@@ -1,0 +1,13 @@
+<view class="u-flex tabs-wrap">
+  <view
+    wx:for="{{ tabs }}"
+    wx:key="value"
+    class="u-flex-1 u-font-lg tab-item {{ item.value === active ? 'tab-item--selected' : '' }}"
+    style="width: {{ 100 / tabs.length }}%;"
+    bind:tap="onTabClick"
+    data-tab="{{ item }}"
+  >
+    {{ item.label }}
+  </view>
+  <view class="tabs__line" style="{{ lineStyle }}"></view>
+</view>

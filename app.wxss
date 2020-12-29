@@ -1,20 +1,22 @@
 /**app.wxss**/
 @import 'miniprogram_npm/@vant/weapp/common/index.wxss';
 @import 'style/iconfont.wxss';
+@import 'style/style.wxss';
 @import 'style/common.wxss';
 page {
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica,
     Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei',
     sans-serif;
 }
-.container {
+.full-w {
+  width: 100%;
+}
+.full-h {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
-  box-sizing: border-box;
+}
+.full-w-h {
+  width: 100%;
+  height: 100%;
 }
 view {
   box-sizing: border-box;

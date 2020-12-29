@@ -2,7 +2,9 @@
   "usingComponents": {
     "van-cell": "@vant/weapp/cell/index",
     "van-popup": "@vant/weapp/popup/index",
-    "van-loading": "@vant/weapp/loading/index"
+    "van-loading": "@vant/weapp/loading/index",
+    "file-list": "/components/FileList/FileList",
+    "common-tabs": "/components/CommonTabs/CommonTabs"
   },
   "navigationBarTitleText": "首页"
 }
