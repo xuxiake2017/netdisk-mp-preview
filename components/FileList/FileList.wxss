@@ -37,7 +37,7 @@
   height: 100%;
 }
 .file-item-content-name {
-  font-size: 36rpx;
+  font-size: 30rpx;
   line-height: 45rpx;
   font-weight: 600;
 }

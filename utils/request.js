@@ -1,8 +1,11 @@
-const { BASE_API } = require('../conf/index')
+const {
+  BASE_API,
+  token
+} = require('../conf/index')
 const requestParams = {
   header: {
     'content-type': 'application/x-www-form-urlencoded',
-    'X-Token': '98ae938c-1050-4e2f-a7e0-cb03010f98d4'
+    'X-Token': token
   },
   timeout: 60000,
   dataType: 'json'

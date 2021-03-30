@@ -8,10 +8,13 @@
           <text class="file-item-content-img icon-svg {{ tools.fileIcoFilter(file.fileType) }}"></text>
         </view>
         <view class="file-item-content-main">
-          <text class="file-item-content-name van-ellipsis">{{ file.fileName }}</text>
-          <text class="file-item-content-time">{{ tools.formatDate(file.updateTime) }}</text>
+          <view class="file-item-content-name van-ellipsis">{{ file.fileName }}</view>
+          <view class="file-item-content-time">
+            {{ tools.formatDate(file.updateTime) }}
+            <text wx:if="{{ FILE_TYPE.FILE_TYPE_OF_DIR !== file.fileType }}" class="u-p-l-10">{{ tools.formatFileSize(file.fileSize) }}</text>
+          </view>
         </view>
-        <view class="file-item-content-opt" catch:tap="fileOptHandler">
+        <view class="file-item-content-opt" data-file="{{ file }}" catch:tap="fileOptHandler">
           <text class="iconfont icon-ellipsis"></text>
         </view>
       </view>

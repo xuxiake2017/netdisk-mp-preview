@@ -39,29 +39,13 @@ Page({
     },
     // 是否展示文件操作弹窗
     show: false,
-    // 文件操作选项
-    fileOptions: [
-      {
-        name: '分享',
-        icon: 'icon-share'
-      },
-      {
-        name: '复制',
-        icon: 'icon-copy'
-      },
-      {
-        name: '重命名',
-        icon: 'icon-rename'
-      },
-      {
-        name: '删除',
-        icon: 'icon-delete'
-      },
-    ],
     // 加载中
     loading: false,
     // 加载结束
-    finished: false
+    finished: false,
+    optFile: {
+      fileName: ''
+    }
   },
   // tab切换
   onChange(event) {
@@ -74,9 +58,11 @@ Page({
     });
   },
   // 对文件进行操作
-  fileOptHandler() {
+  fileOptHandler(event) {
+    const optFile = event.detail.file
     this.setData({
-      show: true
+      show: true,
+      optFile
     })
   },
   // 文件操作对话框关闭
@@ -122,13 +108,16 @@ Page({
         })
       }).catch(res => {
         console.error(res)
+        this.setData({
+          loading: false,
+          finished: true
+        })
       })
     }, 500)
   },
   // 文件点击事件处理
   onFileClick(event) {
     const file = event.detail.file
-    console.log(file)
     const {
       id,
       fileType,
@@ -137,17 +126,8 @@ Page({
     switch(fileType) {
       case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_DIR:  // 文件夹
         wx.navigateTo({
-          url: '/pages/fileList/fileList'
+          url: `/pages/fileList/fileList?fileId=${id}`
         })
-        // this.setData({
-        //   'filters.parentId': id,
-        //   'pagination.pageNum': 1,
-        //   fileList: []
-        // })
-        // wx.setNavigationBarTitle({
-        //   title: fileName
-        // })
-        // this.getFileList()
         break
       case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_PIC: // 图片
         console.log('pic')
@@ -159,22 +139,6 @@ Page({
         break
     }
   },
-  // // 获取节点信息
-  // $uGetRect(selector, all) {
-  //   return new Promise(resolve => {
-  //     wx.createSelectorQuery().
-  //     in(this)[all ? 'selectAll' : 'select'](selector)
-  //       .boundingClientRect(rect => {
-  //         if (all && Array.isArray(rect) && rect.length) {
-  //           resolve(rect)
-  //         }
-  //         if (!all && rect) {
-  //           resolve(rect)
-  //         }
-  //       })
-  //       .exec()
-  //   })
-  // },
 
   /**
    * 生命周期函数--监听页面加载
@@ -216,5 +180,9 @@ Page({
     this.setData({
       active: tab.value
     })
+  },
+  onOptClick (e) {
+    const opt = e.detail.opt
+    console.log('onOptClick', opt)
   }
 })

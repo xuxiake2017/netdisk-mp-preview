@@ -1,0 +1,44 @@
+<view
+  class="custom-header-wrap"
+  style="height: {{ statusBarHeight + navBarHeight }}px;"
+>
+  <view
+    class="custom-header"
+    style="height: {{ statusBarHeight + navBarHeight }}px;"
+  >
+    <!-- 占据状态栏的高度 -->
+    <view class="custom-header__status-bar" style="height: {{ statusBarHeight }}px;"></view>
+    <view
+      style="height: {{ navBarHeight }}px; line-height: {{ navBarHeight }}px;"
+      class="u-flex u-p-l-30 u-p-r-30"
+    >
+      <view class="u-flex-1">
+        <block wx:if="{{ $slots.left }}">
+          <slot name="left">
+          </slot>
+        </block>
+        <block wx:else>
+          <view
+              style="height: {{ menuButtonHeight }}px; width: {{ menuButtonWidth }}px; border-radius: {{ menuButtonHeight / 2 }}px;"
+              class="u-flex u-p-l-20 u-p-r-20 custom-header__opt-button"
+            >
+              <text class="iconfont icon-arrow-left u-flex-1" bind:tap="goBack"></text>
+              <text class="custom-header__opt-button-interval u-flex-1">|</text>
+              <text class="iconfont icon-home-fill u-flex-1" bind:tap="goHome"></text>
+            </view>
+        </block>
+      </view>
+      <view class="u-flex-1 u-text-center custom-header__title">
+        <block wx:if="{{ $slots.title }}">
+          <slot name="title">
+          </slot>
+        </block>
+        <block wx:else>
+          {{ title }}
+        </block>
+      </view>
+      <view class="u-flex-1 full-h">
+      </view>
+    </view>
+  </view>
+</view>

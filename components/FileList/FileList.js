@@ -1,4 +1,5 @@
 // components/FileList.js
+import { FILE_TYPE } from '../../utils/fileUtils'
 Component({
   /**
    * 组件的属性列表
@@ -17,7 +18,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    FILE_TYPE,
   },
 
   /**
@@ -28,6 +29,9 @@ Component({
       const file = event.currentTarget.dataset.file
       this.triggerEvent('file-click', { file })
     },
-    fileOptHandler() {},
+    fileOptHandler(event) {
+      const file = event.currentTarget.dataset.file
+      this.triggerEvent('file-opt', { file })
+    },
   }
 })

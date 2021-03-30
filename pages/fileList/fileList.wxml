@@ -1,20 +1,12 @@
-<div
-  class="custom-header"
-  style="height: {{ statusBarHeight + navBarHeight }}px;"
->
-  <!-- 占据状态栏的高度 -->
-  <view class="custom-header__status-bar" style="height: {{ statusBarHeight }}px;"></view>
-  <view
-    style="height: {{ navBarHeight }}px; line-height: {{ navBarHeight }}px;"
-    class="u-flex u-p-l-30 u-p-r-30"
-  >
-    <view
-      style="height: {{ menuButtonHeight }}px; width: {{ menuButtonWidth }}px; border-radius: {{ menuButtonHeight / 2 }}px;"
-      class="u-flex u-p-l-20 u-p-r-20 custom-header__opt-button"
-    >
-      <text class="iconfont icon-arrow-left u-flex-1" bind:tap="goBack"></text>
-      <text class="custom-header__opt-button-interval u-flex-1">|</text>
-      <text class="iconfont icon-home-fill u-flex-1" bind:tap="goHome"></text>
+<div>
+  <custom-nav title="{{ pathname }}"></custom-nav>
+  <view class="u-p-30">
+    <!-- 文件列表 -->
+    <file-list file-list="{{ fileList }}" bind:file-click="onFileClick" bind:file-opt="fileOptHandler"></file-list>
+    <!-- 文件列表加载 -->
+    <view wx:if="{{ loading }}" class="u-text-center u-p-t-20 u-p-b-20">
+      <van-loading size="45rpx" vertical>加载中...</van-loading>
     </view>
+    <load-finished wx:if="{{ finished }}"></load-finished>
   </view>
 </div>

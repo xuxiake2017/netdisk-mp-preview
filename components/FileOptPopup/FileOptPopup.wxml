@@ -1,0 +1,38 @@
+<wxs src="../../common/wxs/file.wxs" module="tools"></wxs>
+<!-- 文件操作弹窗 -->
+<van-popup
+  show="{{ show }}"
+  round
+  position="bottom"
+  bind:close="onPopupClose"
+  catch:touchmove
+>
+  <view class="home_opt-popup">
+    <view class="home_opt-popup-title">
+      <view class="home_opt-popup-title-file-icon">
+        <!-- <text class="icon-svg icon-file_dir"></text> -->
+        <text class="icon-svg {{ tools.fileIcoFilter(file.fileType) }}"></text>
+      </view>
+      <view class="home_opt-popup-title-file-name">
+        {{ file.fileName }}
+      </view>
+    </view>
+    <view class="home_opt-popup-content">
+      <van-cell custom-class="home_opt-popup-opt-item-wrap" wx:for="{{ fileOptions }}" wx:key="icon" wx:for-item="fileOption" data-opt="{{ fileOption }}" bind:tap="onOptClick">
+        <view slot="title" class="home_opt-popup-opt-item">
+          <view class="home_opt-popup-opt-item-icon">
+            <text class="iconfont {{ fileOption.icon }}"></text>
+          </view>
+          <view class="home_opt-popup-opt-item-title">
+            <text>{{ fileOption.name }}</text>
+          </view>
+        </view>
+      </van-cell>
+    </view>
+    <view class="home_opt-popup-cancel-wrap" bind:tap="onPopupClose">
+      <view>
+        取消
+      </view>
+    </view>
+  </view>
+</van-popup>

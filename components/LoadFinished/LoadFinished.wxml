@@ -1,0 +1,4 @@
+
+<view class="u-font-sm u-text-center u-p-t-30 u-p-b-30 load-finished">
+  {{ note }}
+</view>

@@ -1,61 +1,74 @@
+import { GetFileList } from '../../api/file'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    // 状态栏高度（px）
-    statusBarHeight: 0,
-    navBarHeight: 0,
-    menuButtonHeight: 0,
-    menuButtonWidth: 0,
+    parentId: null,
+    // 文件列表
+    fileList: [],
+    // 分页参数
+    pagination: {
+      total: 0,
+      pageNum: 1,
+      pageSize: 10
+    },
+    // 加载中
+    loading: false,
+    // 加载结束
+    finished: false,
+    pathname: ''
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    this.getSystemInfo().then(({ info, rect }) => {
-      console.log(info)
-      console.log(rect)
-      const {
-        statusBarHeight
-      } = info
-      let {
-        top,
-        height,
-        width
-      } = rect
-      top += 2
-      const navBarHeight = (top - statusBarHeight) * 2 + height
-      this.setData({
-        statusBarHeight,
-        navBarHeight,
-        menuButtonHeight: height,
-        menuButtonWidth: width,
-      })
-    })
-  },
-  getSystemInfo() {
-    return new Promise((resolve, reject) => {
-      const rect = wx.getMenuButtonBoundingClientRect()
-      wx.getSystemInfo({
-        success: info => {
-          resolve({
-            info, rect
-          })
-        }
-      })
-    })
+  onLoad: function ({ fileId }) {
+    this.parentId = fileId
+    this.getFileList()
   },
   goBack() {
     wx.navigateBack()
   },
-  goHome() {
-    // wx.redirectTo({
-    //   url: '/pages/home/home'
-    // })
-    wx.reLaunch({
-      url: '/pages/home/home'
+  // 获取文件列表
+  getFileList() {
+    this.setData({
+      loading: true
     })
+    const params = {
+      ...this.data.pagination,
+      parentId: this.parentId
+    }
+    setTimeout(() => {
+      GetFileList(params).then(res => {
+        this.setData({
+          loading: false
+        })
+        const data = res.data
+        const {
+          list,
+          pageNum,
+          pageSize,
+          total
+        } = data.pageInfo
+        let finished = false
+        // 判断是否结束加载
+        if(pageNum * pageSize >= total) {
+          finished = true
+        }
+        this.setData({
+          fileList: [ ...this.data.fileList, ...list ],
+          pagination: {
+            pageNum,
+            pageSize,
+            total
+          },
+          finished,
+          pathname: data.pathname
+        })
+      }).catch(res => {
+        console.error(res)
+      })
+    }, 500)
   },
 })

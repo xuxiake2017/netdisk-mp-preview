@@ -14,50 +14,21 @@
           <text class="iconfont icon-descending"></text>
         </view>
         <!-- 文件列表 -->
-        <file-list file-list="{{ fileList }}" bind:file-click="onFileClick"></file-list>
+        <file-list file-list="{{ fileList }}" bind:file-click="onFileClick" bind:file-opt="fileOptHandler"></file-list>
         <!-- 文件列表加载 -->
-        <view class="home_file-list-loading">
-          <van-loading wx:if="{{ loading }}" size="45rpx" vertical>加载中...</van-loading>
+        <view wx:if="{{ loading }}" class="home_file-list-loading">
+          <van-loading size="45rpx" vertical>加载中...</van-loading>
         </view>
-        <!-- 文件操作弹窗 -->
-        <van-popup
-          show="{{ show }}"
-          round
-          position="bottom"
-          bind:close="onPopupClose"
-          catch:touchmove="onTouchmove"
-        >
-          <view class="home_opt-popup">
-            <view class="home_opt-popup-title">
-              <view class="home_opt-popup-title-file-icon">
-                <text class="icon-svg icon-file_dir"></text>
-              </view>
-              <view class="home_opt-popup-title-file-name">
-                文件
-              </view>
-            </view>
-            <view class="home_opt-popup-content">
-              <van-cell custom-class="home_opt-popup-opt-item-wrap" wx:for="{{ fileOptions }}" wx:key="icon" wx:for-item="fileOption">
-                <view slot="title" class="home_opt-popup-opt-item">
-                  <view class="home_opt-popup-opt-item-icon">
-                    <text class="iconfont {{ fileOption.icon }}"></text>
-                  </view>
-                  <view class="home_opt-popup-opt-item-title">
-                    <text>{{ fileOption.name }}</text>
-                  </view>
-                </view>
-              </van-cell>
-            </view>
-            <view class="home_opt-popup-cancel-wrap" bind:tap="onPopupClose">
-              <view>
-                取消
-              </view>
-            </view>
-          </view>
-        </van-popup>
+        <load-finished wx:if="{{ finished }}"></load-finished>
       </view>
     </scroll-view>
   </view>
   <view wx:if="{{ active === 2 }}"></view>
   <view wx:if="{{ active === 3 }}"></view>
+  <file-opt-popup
+    show="{{ show }}"
+    file="{{ optFile }}"
+    bind:popup-close="onPopupClose"
+    bind:opt-click="onOptClick"
+  ></file-opt-popup>
 </view>

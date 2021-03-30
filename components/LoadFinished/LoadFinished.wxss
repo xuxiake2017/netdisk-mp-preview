@@ -1,0 +1,3 @@
+.load-finished {
+  color: var(--u-tips-color);
+}

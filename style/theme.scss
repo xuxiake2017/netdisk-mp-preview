@@ -36,3 +36,12 @@ $u-type-info-light: #f4f4f5;
 
 $u-form-item-height: 70rpx;
 $u-form-item-border-color: #dcdfe6;
+
+Page {
+  --u-main-color: #{$u-main-color};
+  --u-content-color: #{$u-content-color};
+  --u-tips-color: #{$u-tips-color};
+  --u-light-color: #{$u-light-color};
+  --u-border-color: #{$u-border-color};
+  --u-bg-color: #{$u-bg-color};
+}

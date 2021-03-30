@@ -4,7 +4,9 @@
     "van-popup": "@vant/weapp/popup/index",
     "van-loading": "@vant/weapp/loading/index",
     "file-list": "/components/FileList/FileList",
-    "common-tabs": "/components/CommonTabs/CommonTabs"
+    "common-tabs": "/components/CommonTabs/CommonTabs",
+    "file-opt-popup": "/components/FileOptPopup/FileOptPopup",
+    "load-finished": "/components/LoadFinished/LoadFinished"
   },
   "navigationBarTitleText": "首页"
 }

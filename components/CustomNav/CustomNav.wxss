@@ -1,0 +1,23 @@
+.custom-header-wrap {
+  width: 100%;
+}
+.custom-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.custom-header__opt-button {
+  border: 1px #dcdcdc solid;
+  /* border: 1px #FF0000 solid; */
+}
+.custom-header__opt-button .iconfont {
+  color: #000000;
+  text-align: center;
+  font-weight: 600;
+}
+.custom-header__opt-button-interval {
+  color: #dcdcdc;
+  /* color: #FF0000; */
+  text-align: center;
+}
