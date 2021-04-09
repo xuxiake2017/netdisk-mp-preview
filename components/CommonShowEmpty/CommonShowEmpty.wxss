@@ -1,0 +1,13 @@
+.common-show-empty {
+  text-align: center;
+  padding: 100rpx 0 0 0;
+}
+.common-show-empty .icon-empty {
+  width: 250rpx;
+  height: 250rpx;
+}
+.common-show-empty__note {
+  padding: 10rpx 0;
+  text-align: center;
+  color: var(--u-tips-color);
+}

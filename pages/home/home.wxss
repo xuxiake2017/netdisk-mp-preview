@@ -1,16 +1,13 @@
 .home-container-wrap {
-  height: calc(100% - 90rpx);
   padding-left: 30rpx;
   padding-right: 30rpx;
   padding-top: 40rpx;
 }
 .home-container {
   width: 100%;
-  /* background: #fafafa; */
 }
 .home__search-bar {
   background: #FFFFFF;
-  /* padding: 20rpx; */
   display: flex;
   align-items: center;
   justify-content: center;

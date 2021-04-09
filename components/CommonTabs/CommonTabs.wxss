@@ -4,10 +4,20 @@
   color: #666;
   position: relative;
 }
+.tabs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 90rpx;
+  width: 100%;
+  background: #FFF;
+  color: #666;
+  z-index: 9;
+}
 .tabs__line {
   height: 2px;
   position: absolute;
-  bottom: 0;
+  bottom: 5px;
   background: #ee0a24;
   transition: all ease .2s;
 }

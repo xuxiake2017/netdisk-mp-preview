@@ -1,74 +1,50 @@
-import { GetFileList } from '../../api/file'
+// 小程序官方的计算属性插件
+import computedBehavior from 'miniprogram-computed';
+import fileListBehaviors from '../../common/behaviors/fileListBehaviors';
 Page({
 
+  // 混入（相当于vue的mixins）
+  behaviors: [
+    fileListBehaviors,
+    computedBehavior,
+  ],
   /**
    * 页面的初始数据
    */
   data: {
     parentId: null,
-    // 文件列表
-    fileList: [],
-    // 分页参数
-    pagination: {
-      total: 0,
-      pageNum: 1,
-      pageSize: 10
-    },
-    // 加载中
-    loading: false,
-    // 加载结束
-    finished: false,
     pathname: ''
+  },
+  // 计算属性
+  computed: {
+    // 注意： computed 函数中不能访问 this ，只有 data 对象可供访问
+    showEmpty: data => {
+      if (!data.loading || data.fileList) {
+        return false
+      }
+      return !data.loading && data.fileList.length === 0
+    },
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function ({ fileId }) {
-    this.parentId = fileId
+    this.setData({
+      'filters.parentId': fileId
+    })
+    this.getFileList()
+  },
+  // 触底
+  onReachBottom() {
+    if(this.data.finished) {
+      return
+    }
+    this.setData({
+      'pagination.pageNum': this.data.pagination.pageNum + 1
+    })
     this.getFileList()
   },
   goBack() {
     wx.navigateBack()
-  },
-  // 获取文件列表
-  getFileList() {
-    this.setData({
-      loading: true
-    })
-    const params = {
-      ...this.data.pagination,
-      parentId: this.parentId
-    }
-    setTimeout(() => {
-      GetFileList(params).then(res => {
-        this.setData({
-          loading: false
-        })
-        const data = res.data
-        const {
-          list,
-          pageNum,
-          pageSize,
-          total
-        } = data.pageInfo
-        let finished = false
-        // 判断是否结束加载
-        if(pageNum * pageSize >= total) {
-          finished = true
-        }
-        this.setData({
-          fileList: [ ...this.data.fileList, ...list ],
-          pagination: {
-            pageNum,
-            pageSize,
-            total
-          },
-          finished,
-          pathname: data.pathname
-        })
-      }).catch(res => {
-        console.error(res)
-      })
-    }, 500)
   },
 })

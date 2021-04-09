@@ -1,0 +1,3 @@
+.upload-btn {
+  width: 200rpx;
+}

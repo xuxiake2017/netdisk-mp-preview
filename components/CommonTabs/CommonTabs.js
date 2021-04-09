@@ -1,6 +1,7 @@
 // 小程序官方的计算属性插件
 import computedBehavior  from 'miniprogram-computed';
 import commonBehaviors  from '../../common/behaviors/commonBehaviors';
+import { styleObj2StyleStr } from '../../utils/util';
 Component({
   // 混入（相当于vue的mixins）
   behaviors: [computedBehavior, commonBehaviors],
@@ -52,20 +53,19 @@ Component({
       return index_
     },
     lineStyle: data => {
-      let styleObject = ''
+      const styleObject = {}
       if (typeof data.lineWidth === 'number') {
-        styleObject += `width: ${data.lineWidth}rpx;`
+        styleObject.width = `${data.lineWidth}rpx`
       } else {
-        styleObject += `width: ${data.lineWidth};`
+        styleObject.width = data.lineWidth
       }
       if (typeof data.lineHeight === 'number') {
-        styleObject += `height: ${data.lineHeight}rpx;`
+        styleObject.height = `${data.lineHeight}rpx`
       } else {
-        styleObject += `height: ${data.lineHeight};`
+        styleObject.height = data.lineHeight
       }
-      styleObject += `transform: translateX(${data.tabWidth * data.tabIndex + data.tabWidth / 2}px) translateX(-50%);`
-      return styleObject
-      // return ''
+      styleObject.transform = `translateX(${data.tabWidth * data.tabIndex + data.tabWidth / 2}px) translateX(-50%)`
+      return styleObj2StyleStr(styleObject)
     }
   },
   /**

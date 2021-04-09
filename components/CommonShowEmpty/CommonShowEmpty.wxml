@@ -1,0 +1,6 @@
+<view class="common-show-empty">
+  <text class="icon-svg icon-empty"></text>
+  <view class="common-show-empty__note">
+    {{ note }}
+  </view>
+</view>

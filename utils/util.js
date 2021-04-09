@@ -14,6 +14,27 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+/**
+ * 将style的obj形式转换为字符
+ * @param {*} obj 
+ * @returns 
+ */
+const styleObj2StyleStr = obj =>  {
+  let styleStr = ''
+  if (Object.keys(obj).length === 0) {
+    return styleStr
+  }
+  const reg = /[A-Z]/g
+  Object.entries(obj).forEach(item => {
+    const res = item[0].replace(reg, match => {
+      return `_${String.prototype.toLocaleLowerCase.call(match)}`
+    })
+    styleStr += `${res}: ${item[1]};`
+  })
+  return styleStr
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  styleObj2StyleStr: styleObj2StyleStr,
 }

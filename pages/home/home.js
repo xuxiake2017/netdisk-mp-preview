@@ -1,12 +1,14 @@
-import { GetFileList } from '../../api/file'
+import fileListBehaviors from '../../common/behaviors/fileListBehaviors';
 Page({
 
+  // 混入（相当于vue的mixins）
+  behaviors: [
+    fileListBehaviors,
+  ],
   /**
    * 页面的初始数据
    */
   data: {
-    windowHeight: 0,
-    windowWidth: 0,
     // 当前tab
     active: 1,
     // tabs
@@ -24,28 +26,6 @@ Page({
         value: 3
       }
     ],
-    // 文件列表
-    fileList: [],
-    // 分页参数
-    pagination: {
-      total: 0,
-      pageNum: 1,
-      pageSize: 10
-    },
-    // 查询过滤条件
-    filters: {
-      parentId: -1,
-      fileRealName: ''
-    },
-    // 是否展示文件操作弹窗
-    show: false,
-    // 加载中
-    loading: false,
-    // 加载结束
-    finished: false,
-    optFile: {
-      fileName: ''
-    }
   },
   // tab切换
   onChange(event) {
@@ -57,107 +37,12 @@ Page({
       icon: 'none',
     });
   },
-  // 对文件进行操作
-  fileOptHandler(event) {
-    const optFile = event.detail.file
-    this.setData({
-      show: true,
-      optFile
-    })
-  },
-  // 文件操作对话框关闭
-  onPopupClose() {
-    this.setData({
-      show: false
-    })
-  },
-  // 获取文件列表
-  getFileList() {
-    this.setData({
-      loading: true
-    })
-    const params = {
-      ...this.data.pagination,
-      ...this.data.filters
-    }
-    setTimeout(() => {
-      GetFileList(params).then(res => {
-        this.setData({
-          loading: false
-        })
-        const data = res.data
-        const {
-          list,
-          pageNum,
-          pageSize,
-          total
-        } = data.pageInfo
-        let finished = false
-        // 判断是否结束加载
-        if(pageNum * pageSize >= total) {
-          finished = true
-        }
-        this.setData({
-          fileList: [ ...this.data.fileList, ...list ],
-          pagination: {
-            pageNum,
-            pageSize,
-            total
-          },
-          finished
-        })
-      }).catch(res => {
-        console.error(res)
-        this.setData({
-          loading: false,
-          finished: true
-        })
-      })
-    }, 500)
-  },
-  // 文件点击事件处理
-  onFileClick(event) {
-    const file = event.detail.file
-    const {
-      id,
-      fileType,
-      fileName
-    } = file
-    switch(fileType) {
-      case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_DIR:  // 文件夹
-        wx.navigateTo({
-          url: `/pages/fileList/fileList?fileId=${id}`
-        })
-        break
-      case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_PIC: // 图片
-        console.log('pic')
-        wx.previewImage({
-          urls: [
-            file.thumbnailUrl
-          ]
-        })
-        break
-    }
-  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.getFileList()
-    wx.getSystemInfo({
-      success: info => {
-        console.log(info)
-        const {
-          windowHeight,
-          windowWidth,
-        } = info
-        this.setData({
-          windowHeight,
-          windowWidth
-        })
-      }
-    })
   },
 
   /**
@@ -181,8 +66,4 @@ Page({
       active: tab.value
     })
   },
-  onOptClick (e) {
-    const opt = e.detail.opt
-    console.log('onOptClick', opt)
-  }
 })

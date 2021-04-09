@@ -21,3 +21,6 @@
   /* color: #FF0000; */
   text-align: center;
 }
+.custom-header__title {
+  font-weight: 600;
+}
