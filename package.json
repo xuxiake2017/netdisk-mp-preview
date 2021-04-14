@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/xuxiake2017/netdisk-mp-preview#readme",
   "dependencies": {
-    "@vant/weapp": "^1.6.1",
-    "miniprogram-computed": "^2.2.0"
+    "@vant/weapp": "^1.6.8",
+    "eventemitter2": "^6.4.4",
+    "miniprogram-computed": "^4.0.3"
   }
 }

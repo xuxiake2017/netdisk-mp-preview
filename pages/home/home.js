@@ -1,4 +1,5 @@
 import fileListBehaviors from '../../common/behaviors/fileListBehaviors';
+
 Page({
 
   // 混入（相当于vue的mixins）
@@ -66,4 +67,10 @@ Page({
       active: tab.value
     })
   },
+
+  clearInput () {
+    this.setData({
+      fileName: ''
+    })
+  }
 })

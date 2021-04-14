@@ -35,3 +35,7 @@
 .home_file-list-wrap {
   height: 100%;
 }
+
+.van-dialog__content {
+  padding: 20rpx 30rpx;
+}

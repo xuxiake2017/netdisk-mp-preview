@@ -1,0 +1,40 @@
+<van-popup
+  show="{{ show }}"
+  position="center"
+  custom-style="{{ popupStyle }}"
+  round
+  bind:close="onClose"
+>
+  <view class="custom-model">
+    <view class="custom-model__header">
+      {{ title }}
+    </view>
+    <view class="custom-model__content">
+      <slot>
+      </slot>
+    </view>
+    <view class="van-hairline--top u-flex custom-model__footer">
+      <van-button
+        wx:if="{{ showCancelButton }}"
+        plain
+        size="large"
+        custom-class="custom-model__cancel"
+        class="u-flex-1 van-hairline--right"
+        bind:tap="onCancel"
+      >
+        {{ cancelButtonText }}
+      </van-button>
+      <van-button
+        wx:if="{{ showConfirmButton }}"
+        type="danger"
+        plain
+        size="large"
+        custom-class="custom-model__confirm"
+        class="u-flex-1"
+        bind:tap="onConfirm"
+      >
+        {{ confirmButtonText }}
+      </van-button>
+    </view>
+  </view>
+</van-popup>

@@ -1,5 +1,5 @@
 // 小程序官方的计算属性插件
-import computedBehavior  from 'miniprogram-computed';
+import { behavior as computedBehavior } from 'miniprogram-computed';
 import commonBehaviors  from '../../common/behaviors/commonBehaviors';
 import { styleObj2StyleStr } from '../../utils/util';
 Component({
@@ -75,15 +75,12 @@ Component({
     ready: function() {
       // 在组件在视图层布局完成后执行
       this.$uGetRect('.tabs-wrap').then(res => {
-        console.log(res)
         const containerWidth = res.width
         const tabWidth = containerWidth / this.data.tabsLength
         this.setData({
           containerWidth,
           tabWidth,
         })
-      }).catch(err => {
-        console.log(err)
       })
     },
   },

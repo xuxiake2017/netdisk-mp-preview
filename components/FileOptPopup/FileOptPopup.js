@@ -18,19 +18,23 @@ Component({
       value: [
         {
           name: '分享',
-          icon: 'icon-share'
+          icon: 'icon-share',
+          value: 'share'
         },
         {
           name: '复制',
-          icon: 'icon-copy'
+          icon: 'icon-copy',
+          value: 'copy'
         },
         {
           name: '重命名',
-          icon: 'icon-rename'
+          icon: 'icon-rename',
+          value: 'rename'
         },
         {
           name: '删除',
-          icon: 'icon-delete'
+          icon: 'icon-delete',
+          value: 'delete'
         },
       ],
     },

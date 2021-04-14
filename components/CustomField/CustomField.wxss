@@ -1,0 +1,17 @@
+.custom-field {
+  padding: 10rpx 20rpx;
+  background: #f6f7f9;
+  line-height: 48rpx;
+  height: 68rpx;
+}
+.custom-field__control {
+  width: calc(100% - 50rpx);
+  display: inline-block;
+  line-height: 48rpx;
+  height: 48rpx;
+}
+.custom-field__right-icon {
+  line-height: 48rpx;
+  height: 48rpx;
+  width: 50rpx;
+}

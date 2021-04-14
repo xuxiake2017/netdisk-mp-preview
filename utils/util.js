@@ -27,7 +27,7 @@ const styleObj2StyleStr = obj =>  {
   const reg = /[A-Z]/g
   Object.entries(obj).forEach(item => {
     const res = item[0].replace(reg, match => {
-      return `_${String.prototype.toLocaleLowerCase.call(match)}`
+      return `-${String.prototype.toLocaleLowerCase.call(match)}`
     })
     styleStr += `${res}: ${item[1]};`
   })

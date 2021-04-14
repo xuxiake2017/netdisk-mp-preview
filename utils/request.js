@@ -20,10 +20,16 @@ export const post = (url, data = {}, options = {}) => {
       ...options,
       method: 'post',
       success: (res) => {
-        resolve(res.data)
+        if (res.data) {
+          if (res.data.code === 20000) {
+            resolve(res.data)
+          } else {
+            reject(res.data)
+          }
+        }
       },
       fail: (res) => {
-        reject(res.data)
+        reject(res)
       },
     })
     wx.request(requestParams_)

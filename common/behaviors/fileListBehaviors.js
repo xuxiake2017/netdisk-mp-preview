@@ -1,5 +1,16 @@
-import { GetFileList } from '../../api/file'
+import {
+  GetFileList,
+  ReName
+} from '../../api/file'
+import { behavior as computedBehavior } from 'miniprogram-computed';
+import commonBehaviors from './commonBehaviors';
+import { verifyFileName } from '../../utils/validate';
+
 export default Behavior({
+  behaviors: [
+    computedBehavior,
+    commonBehaviors,
+  ],
   data: {
     // 文件列表
     fileList: [],
@@ -22,6 +33,21 @@ export default Behavior({
     finished: false,
     optFile: {
       fileName: ''
+    },
+    optDialogShow: false,
+    // dialog行为（重命名reName；新建文件夹makeDir）
+    dialogAction: 'reName',
+    fileName: '',
+  },
+  computed: {
+    // 对话框标题
+    optDialogTitle: data => {
+      switch (data.dialogAction) {
+        case 'reName':
+          return '重命名'
+        case 'makeDir':
+          return '新建文件夹'
+      }
     }
   },
   methods: {
@@ -60,6 +86,11 @@ export default Behavior({
             },
             finished
           })
+          if (this.data.hasOwnProperty('pathname')) {
+            this.setData({
+              pathname: data.pathname
+            })
+          }
         }).catch(res => {
           console.error(res)
           this.setData({
@@ -83,12 +114,24 @@ export default Behavior({
         show: false
       })
     },
+    // 文件操作项点击
     onOptClick (e) {
+      this.setData({
+        show: false,
+      })
       const opt = e.detail.opt
-      console.log('onOptClick', opt)
+      switch (opt.value) {
+        case 'rename':
+          this.setData({
+            dialogAction: 'reName',
+            optDialogShow: true,
+            fileName: this.data.optFile.fileName
+          })
+          break
+      }
     },
     // 文件点击事件处理
-    onFileClick(event) {
+    onFileClick (event) {
       const file = event.detail.file
       const {
         id,
@@ -109,6 +152,53 @@ export default Behavior({
             ]
           })
           break
+      }
+    },
+    // 对话框点击确认
+    onDialogConfirm () {
+      switch (this.data.dialogAction) {
+        case 'reName':
+          this.reNameHandler()
+          break
+        case 'makeDir':
+          break
+      }
+    },
+    // 对话框点击取消
+    onDialogCancel () {
+      this.setData({
+        optDialogShow: false
+      })
+    },
+    // 对话框关闭（点击遮罩层触发）
+    onDialogClose () {
+    },
+    // 重命名操作
+    reNameHandler () {
+      try {
+        verifyFileName(this.data.fileName)
+        const params = {
+          parentId: this.data.filters.parentId,
+          key: this.data.optFile.key,
+          fileName: this.data.fileName,
+          isDir: this.data.optFile.isDir
+        }
+        ReName(params).then(res => {
+          this.$toast.success('重命名成功！')
+          this.setData({
+            'pagination.pageNum': 1,
+            fileList: [],
+          })
+          this.setData({
+            optDialogShow: false
+          })
+          this.getFileList()
+        }).catch(res => {
+          this.$toast(res.msg || '重命名失败！')
+        })
+      } catch (error) {
+        console.log(error.message);
+        this.$toast(error.message)
       }
     },
   }

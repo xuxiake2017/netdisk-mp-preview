@@ -29,4 +29,18 @@
     bind:popup-close="onPopupClose"
     bind:opt-click="onOptClick"
   ></file-opt-popup>
+  <custom-model
+    title="{{ optDialogTitle }}"
+    show="{{ optDialogShow }}"
+    bind:confirm="onDialogConfirm"
+    bind:cancel="onDialogCancel"
+    bind:close="onDialogClose"
+  >
+    <block wx:if="{{ dialogAction === 'reName' }}">
+      <view class="van-dialog__content">
+        <custom-field model:value="{{ fileName }}" bind:rightClick="clearInput"></custom-field>
+      </view>
+    </block>
+    <block wx:elif="{{ dialogAction === 'makeDir' }}"></block>
+  </custom-model>
 </view>

@@ -1,0 +1,6 @@
+<view class="u-flex custom-field">
+  <input model:value="{{ value }}" class="custom-field__control" />
+  <view class="custom-field__right-icon u-flex u-row-center" bind:tap="onRightClick">
+    <van-icon name="clear" color="#d8dcdf" />
+  </view>
+</view>

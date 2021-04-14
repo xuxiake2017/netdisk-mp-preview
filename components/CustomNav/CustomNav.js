@@ -40,10 +40,7 @@ Component({
    */
    lifetimes: {
     ready: function() {
-      console.log(this.$slots)
       this.getSystemInfo().then(({ info, rect }) => {
-        console.log(info)
-        console.log(rect)
         const {
           statusBarHeight
         } = info
