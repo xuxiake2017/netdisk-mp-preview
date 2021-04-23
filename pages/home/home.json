@@ -9,7 +9,9 @@
     "load-finished": "/components/LoadFinished/LoadFinished",
     "van-dialog": "@vant/weapp/dialog/index",
     "custom-field": "/components/CustomField/CustomField",
-    "custom-model": "/components/CustomModel/CustomModel"
+    "custom-model": "/components/CustomModel/CustomModel",
+    "footer-bar": "/components/FooterBar/FooterBar",
+    "file-upload-popup": "/components/FileUploadPopup/FileUploadPopup"
   },
   "navigationBarTitleText": "首页"
 }

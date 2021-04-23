@@ -19,6 +19,9 @@
         <van-loading size="45rpx" vertical>加载中...</van-loading>
       </view>
       <load-finished wx:if="{{ finished }}"></load-finished>
+      <footer-bar
+        bind:uploadFile="onUploadFile"
+      ></footer-bar>
     </view>
   </view>
   <view wx:if="{{ active === 2 }}"></view>
@@ -36,11 +39,16 @@
     bind:cancel="onDialogCancel"
     bind:close="onDialogClose"
   >
-    <block wx:if="{{ dialogAction === 'reName' }}">
+    <block wx:if="{{ dialogAction === 'reName' || dialogAction === 'makeDir' }}">
       <view class="van-dialog__content">
         <custom-field model:value="{{ fileName }}" bind:rightClick="clearInput"></custom-field>
       </view>
     </block>
-    <block wx:elif="{{ dialogAction === 'makeDir' }}"></block>
+    <!-- <block wx:elif="{{ dialogAction === 'makeDir' }}"></block> -->
   </custom-model>
+  <file-upload-popup
+    show="{{ uploadPopupShow }}"
+    bind:popupClose="onUploadPopupClose"
+    bind:uploadItemClick="onUploadItemClick"
+  ></file-upload-popup>
 </view>

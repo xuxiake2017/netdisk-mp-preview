@@ -56,9 +56,9 @@
   align-items: center;
 }
 .home_opt-popup-cancel-wrap {
-  height: 130rpx;
+  height: 100rpx;
   color: #212121;
-  line-height: 130rpx;
+  line-height: 100rpx;
   text-align: center;
   background: #f9f9f9;
   font-weight: 600;

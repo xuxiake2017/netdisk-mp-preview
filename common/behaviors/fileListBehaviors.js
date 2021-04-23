@@ -1,6 +1,8 @@
 import {
   GetFileList,
-  ReName
+  ReName,
+  GetFileMediaInfo,
+  MkDir,
 } from '../../api/file'
 import { behavior as computedBehavior } from 'miniprogram-computed';
 import commonBehaviors from './commonBehaviors';
@@ -38,6 +40,7 @@ export default Behavior({
     // dialog行为（重命名reName；新建文件夹makeDir）
     dialogAction: 'reName',
     fileName: '',
+    uploadPopupShow: false
   },
   computed: {
     // 对话框标题
@@ -136,7 +139,8 @@ export default Behavior({
       const {
         id,
         fileType,
-        fileName
+        fileName,
+        key: fileKey,
       } = file
       switch(fileType) {
         case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_DIR:  // 文件夹
@@ -152,6 +156,22 @@ export default Behavior({
             ]
           })
           break
+        case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_VIDEO: // 视频
+          console.log('video')
+          GetFileMediaInfo({ fileKey }).then(res => {
+            const previewUrl =  res.data.fileOrigin.previewUrl
+            const poster =  res.data.fileMedia.thumbnailUrl
+            wx.previewMedia({
+              sources: [
+                {
+                  url: previewUrl,
+                  type: 'video',
+                  poster: poster
+                }
+              ]
+            })
+          })
+          break
       }
     },
     // 对话框点击确认
@@ -161,13 +181,15 @@ export default Behavior({
           this.reNameHandler()
           break
         case 'makeDir':
+          this.makeDirHandler()
           break
       }
     },
     // 对话框点击取消
     onDialogCancel () {
       this.setData({
-        optDialogShow: false
+        optDialogShow: false,
+        fileName: ''
       })
     },
     // 对话框关闭（点击遮罩层触发）
@@ -201,5 +223,87 @@ export default Behavior({
         this.$toast(error.message)
       }
     },
+    // 新建文件夹操作
+    makeDirHandler () {
+      try {
+        verifyFileName(this.data.fileName)
+        const params = {
+          parentId: this.data.filters.parentId,
+          fileName: this.data.fileName,
+        }
+        MkDir(params).then(res => {
+          this.$toast.success('新建文件夹成功！')
+          this.setData({
+            'pagination.pageNum': 1,
+            fileList: [],
+          })
+          this.setData({
+            optDialogShow: false
+          })
+          this.getFileList()
+        }).catch(res => {
+          this.$toast(res.msg || '新建文件夹失败！')
+        })
+      } catch (error) {
+        console.log(error.message);
+        this.$toast(error.message)
+      }
+    },
+    onUploadFile () {
+      this.setData({
+        uploadPopupShow: true
+      })
+      // wx.chooseImage({
+      //   success (res) {
+      //     const tempFilePaths = res.tempFilePaths
+      //     console.log(tempFilePaths);
+
+      //     wx.getFileInfo({
+      //       filePath: tempFilePaths[0],
+      //       success (res) {
+      //         console.log(res.size)
+      //         console.log(res.digest)
+      //       }
+      //     })
+      //     // wx.uploadFile({
+      //     //   url: 'https://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
+      //     //   filePath: tempFilePaths[0],
+      //     //   name: 'file',
+      //     //   formData: {
+      //     //     'user': 'test'
+      //     //   },
+      //     //   success (res){
+      //     //     const data = res.data
+      //     //     //do something
+      //     //   }
+      //     // })
+      //   }
+      // })
+    },
+    onUploadPopupClose () {
+      this.setData({
+        uploadPopupShow: false
+      })
+    },
+    onUploadItemClick (e) {
+      this.setData({
+        uploadPopupShow: false
+      })
+      const type = e.detail.type
+      switch (type) {
+        case 'pic':
+          break
+        case 'video':
+          break
+        case 'dir':
+          this.setData({
+            dialogAction: 'makeDir',
+            optDialogShow: true,
+          })
+          break
+        case 'wechat':
+          break
+      }
+    }
   }
 })

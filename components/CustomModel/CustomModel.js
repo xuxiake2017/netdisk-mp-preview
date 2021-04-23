@@ -16,7 +16,7 @@ Component({
     },
     width: {
       type: String,
-      value: '250px'
+      value: '300px'
     },
     title: {
       type: String,

@@ -1,0 +1,35 @@
+.popup-title {
+  height: 40rpx;
+}
+.popup-footer {
+  height: 100rpx;
+  color: #212121;
+  line-height: 100rpx;
+  text-align: center;
+  background: #f9f9f9;
+  font-weight: 600;
+}
+
+
+.upload-item-wrap {
+  /* height: 100rpx; */
+  /* background: linear-gradient(to right, #4bb0ff, #6149f6); */
+}
+.upload-item__icon-wrap {
+  width: 100rpx;
+  height: 100rpx;
+  text-align: center;
+  padding: 20rpx;
+  border-radius: 50%;
+  background: #f6f6f6;
+}
+.upload-item__icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin: auto 0;
+  vertical-align: middle;
+}
+.upload-item__label {
+  font-size: 24rpx;
+  color: #333;
+}

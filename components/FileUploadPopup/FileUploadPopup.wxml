@@ -1,0 +1,64 @@
+<wxs src="../../common/wxs/file.wxs" module="tools"></wxs>
+<!-- 文件上传弹窗 -->
+<van-popup
+  show="{{ show }}"
+  round
+  position="bottom"
+  bind:close="onPopupClose"
+  catch:touchmove
+>
+  <view class="popup-title"></view>
+  <view class="u-p-30 popup-content">
+    <view class="u-flex">
+      <view class="u-flex-1 u-row-center upload-item-wrap" data-type="pic" bind:tap="onUploadItemClick">
+        <view class="u-flex-col u-col-center full-w-h upload-item">
+          <view class="upload-item__icon-wrap">
+            <text class="icon-svg upload-item__icon {{ tools.fileIcoFilter(FILE_TYPE.FILE_TYPE_OF_PIC) }}"></text>
+          </view>
+          <view class="u-p-t-10 u-p-b-10 upload-item__label">
+            本地照片
+          </view>
+        </view>
+      </view>
+      <view class="u-flex-1 u-row-center upload-item-wrap" data-type="video" bind:tap="onUploadItemClick">
+        <view class="u-flex-col u-col-center full-w-h upload-item">
+          <view class="upload-item__icon-wrap">
+            <text class="icon-svg upload-item__icon {{ tools.fileIcoFilter(FILE_TYPE.FILE_TYPE_OF_VIDEO) }}"></text>
+          </view>
+          <view class="u-p-t-10 u-p-b-10 upload-item__label">
+            本地视频
+          </view>
+        </view>
+      </view>
+      <view class="u-flex-1 u-row-center upload-item-wrap" data-type="dir" bind:tap="onUploadItemClick">
+        <view class="u-flex-col u-col-center full-w-h upload-item">
+          <view class="upload-item__icon-wrap">
+            <text class="icon-svg upload-item__icon {{ tools.fileIcoFilter(FILE_TYPE.FILE_TYPE_OF_DIR) }}"></text>
+          </view>
+          <view class="u-p-t-10 u-p-b-10 upload-item__label">
+            新建文件夹
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="u-flex u-m-t-20">
+      <view class="u-flex-1 u-row-center upload-item-wrap" data-type="wechat" bind:tap="onUploadItemClick">
+        <view class="u-flex-col u-col-center full-w-h upload-item">
+          <view class="upload-item__icon-wrap">
+            <van-icon color="#1AAD19" size="60rpx" name="wechat" />
+          </view>
+          <view class="u-p-t-10 u-p-b-10 upload-item__label">
+            微信文件
+          </view>
+        </view>
+      </view>
+      <view class="u-flex-1 u-row-center upload-item-wrap">
+      </view>
+      <view class="u-flex-1 u-row-center upload-item-wrap">
+      </view>
+    </view>
+  </view>
+  <view class="popup-footer" bind:tap="onPopupClose">
+    取消
+  </view>
+</van-popup>

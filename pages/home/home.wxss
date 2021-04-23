@@ -37,5 +37,5 @@
 }
 
 .van-dialog__content {
-  padding: 20rpx 30rpx;
+  padding: 40rpx 40rpx;
 }

@@ -26,6 +26,6 @@
   line-height:  90rpx;
   text-align: center;
   position: relative;
-  font-weight: 600;
+  font-weight: 700;
   color: #333;
 }

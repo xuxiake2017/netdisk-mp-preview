@@ -1,0 +1,28 @@
+.footer-bar-wrap {
+  height: 100rpx;
+  width: 100%;
+  box-sizing: content-box;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.footer-bar {
+  height: 100rpx;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: constant(safe-area-inset-bottom);
+  bottom: env(safe-area-inset-bottom);
+  background: #fcfcfc;
+}
+.footer-bar-item {
+  text-align: center;
+  line-height: 1;
+  height: 100%;
+}
+.footer-bar-item__icon {
+  margin-bottom: 8rpx;
+}
+.footer-bar-item__text {
+  font-size: 24rpx;
+  color: var(--u-content-color);
+}

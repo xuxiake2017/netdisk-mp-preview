@@ -39,7 +39,7 @@
 .file-item-content-name {
   font-size: 30rpx;
   line-height: 45rpx;
-  font-weight: 600;
+  font-weight: 700;
 }
 .file-item-content-time {
   font-size: 28rpx;

@@ -5,9 +5,6 @@ export default Behavior({
   created () {
     this.$toast = Toast
   },
-  definitionFilter (defFields) {
-    console.log(defFields);
-  },
   methods: {
     // 获取节点信息
     $uGetRect(selector, all) {
