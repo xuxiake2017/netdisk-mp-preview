@@ -3,7 +3,8 @@
     "pages/home/home",
     "pages/index/index",
     "pages/logs/logs",
-    "pages/fileList/fileList"
+    "pages/fileList/fileList",
+    "pages/user/login"
   ],
   "entryPagePath": "pages/home/home",
   "window": {

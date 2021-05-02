@@ -1,0 +1,2 @@
+// 自动登录完成
+export const AUTO_LOGIN_COMPLATE = 'AUTO_LOGIN_COMPLATE'

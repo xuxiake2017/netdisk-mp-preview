@@ -1,0 +1,55 @@
+<view class="login-container">
+  <view class="icon-svg svg__login-bg login-bg"></view>
+  <view class="u-p-40 u-m-t-30 login-control">
+    <view class="login-control__title">
+      欢迎登录
+    </view>
+    <view class="u-m-t-20">
+      <login-field
+        type="number"
+        limit="{{ 11 }}"
+        placeholder="请输入手机号"
+        left-icon="icon-shoji"
+        model:value="{{ phone }}"
+      ></login-field>
+      <login-field
+        type="number"
+        limit="{{ 4 }}"
+        placeholder="请输入短信验证码"
+        left-icon="icon-yuechi"
+        showRight
+        model:value="{{ smsCaptcha }}"
+      >
+        <van-button slot="right" plain size="small" color="#5679FB" bind:click="getCaptcha">
+          {{ showCountDown ? countDownTime + '秒' : '获取验证码' }}
+        </van-button>
+      </login-field>
+      <view class="u-m-t-40">
+        <van-button
+          round
+          color="#5679FB"
+          size="large"
+          icon="wechat"
+          bind:click="login"
+        >登录</van-button>
+      </view>
+    </view>
+  </view>
+</view>
+<custom-model
+  title="{{ dialogTitle }}"
+  show="{{ dialogShow }}"
+  width="250px"
+  bind:confirm="onDialogConfirm"
+  bind:cancel="onDialogCancel"
+  bind:close="onDialogClose"
+>
+  <view class="captcha-popup u-p-40">
+    <view class="captcha-popup__img-wrap" bind:tap="getCaptcha">
+      <image class="captcha-popup__img" mode="aspectFit" src="{{ verifyCaptcha.captchaBASE64 }}" />
+    </view>
+    <view class="captcha-popup__input">
+      <custom-field model:value="{{ captcha }}" bind:rightClick="clearInput"></custom-field>
+    </view>
+  </view>
+</custom-model>

@@ -30,7 +30,7 @@ export default Behavior({
     // 是否展示文件操作弹窗
     show: false,
     // 加载中
-    loading: false,
+    loading: true,
     // 加载结束
     finished: false,
     optFile: {

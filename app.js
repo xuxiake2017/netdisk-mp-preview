@@ -1,5 +1,9 @@
 import EventEmitter2 from 'eventemitter2'
 const { FILE_TYPE } = require('./utils/fileUtils')
+import CONFIG from './conf/index';
+import { AutoLogin } from './api/user';
+import Toast from './common/behaviors/Toast';
+
 App({
   emitter: new EventEmitter2({
 
@@ -25,35 +29,31 @@ App({
     ignoreErrors: false
   }),
   onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
+    this.$toast = Toast
+    wx.getStorage({
+      key: 'X-Token',
+      complete: (res1) => {
+        CONFIG.token = res1.data ? res1.data : ''
+        wx.login({
+          success: (res2) => {
+            if (res2.code) {
+              const params = {
+                code: res2.code,
               }
+              AutoLogin(params).then(res3 => {
+                wx.setStorage({
+                  key: "X-Token",
+                  data: res3.data
+                })
+                CONFIG.token = res3.data
+              }).catch(err => {
+                this.$toast(err.msg || '登录失败！')
+              })
+            } else {
+              this.$toast('登录失败！' + res2.errMsg)
             }
-          })
-        }
+          }
+        })
       }
     })
   },

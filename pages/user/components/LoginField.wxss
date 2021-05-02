@@ -1,0 +1,30 @@
+.login-field {
+  box-sizing: content-box;
+  padding: 40rpx 20rpx;
+  background: #FFF;
+  line-height: 48rpx;
+  height: 48rpx;
+  border-bottom: 1px solid #F4F4F4;
+}
+.login-field__control {
+  flex: 1;
+  display: inline-block;
+  line-height: 48rpx;
+  height: 48rpx;
+  color: var(--u-main-color);
+}
+.login-field__control-placeholder {
+  color: #CBCBCB;
+}
+.login-field__left-icon {
+  line-height: 48rpx;
+  height: 48rpx;
+}
+.login-field__left-icon .iconfont {
+  color: #CBCBCB;
+  font-size: 30rpx;
+}
+.login-field__right {
+  line-height: 48rpx;
+  height: 48rpx;
+}

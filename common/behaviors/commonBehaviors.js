@@ -7,7 +7,7 @@ export default Behavior({
   },
   methods: {
     // 获取节点信息
-    $uGetRect(selector, all) {
+    $uGetRect (selector, all) {
       return new Promise(resolve => {
         wx.createSelectorQuery().
         in(this)[all ? 'selectAll' : 'select'](selector)
@@ -22,7 +22,7 @@ export default Behavior({
           .exec()
       })
     },
-    $showModal(title = '提示', content = '确认删除？') {
+    $showModal (title = '提示', content = '确认删除？') {
       return new Promise((resolve, reject) => {
         wx.showModal({
           title,
@@ -37,11 +37,14 @@ export default Behavior({
         })
       })
     },
-    $showLoading(options = '加载中') {
+    $hideLoading () {
+      wx.hideLoading()
+    },
+    $showLoading (options = '加载中') {
       return new Promise((resolve, reject) => {
         if (typeof options === 'string') {
           wx.showLoading({
-            options,
+            title: options,
             mask: true,
             success: resolve,
             fail: reject,

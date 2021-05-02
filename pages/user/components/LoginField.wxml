@@ -1,0 +1,16 @@
+<view class="u-flex login-field">
+  <view class="login-field__left-icon u-flex u-row-center" bind:tap="onRightClick">
+    <text class="u-m-l-10 u-m-r-10 iconfont {{ leftIcon }}"></text>
+  </view>
+  <input
+    model:value="{{ value }}"
+    type="{{ type }}"
+    class="login-field__control"
+    placeholder-class="login-field__control-placeholder"
+    placeholder="{{ placeholder }}"
+    bind:input="onInput"
+  />
+  <view wx:if="{{ showRight }}" class="login-field__right u-m-l-10 u-m-r-10 u-flex u-row-center">
+    <slot name="right"></slot>
+  </view>
+</view>

@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "login-field": "/pages/user/components/LoginField",
+    "van-button": "@vant/weapp/button/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "custom-model": "/components/CustomModel/CustomModel",
+    "custom-field": "/components/CustomField/CustomField"
+  },
+  "navigationBarTitleText": "登录"
+}

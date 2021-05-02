@@ -1,17 +1,19 @@
+import CONFIG, { getToken } from '../conf/index';
 const {
   BASE_API,
-  token
-} = require('../conf/index')
-const requestParams = {
-  header: {
-    'content-type': 'application/x-www-form-urlencoded',
-    'X-Token': token
-  },
-  timeout: 60000,
-  dataType: 'json'
-}
+} = CONFIG
 
-export const post = (url, data = {}, options = {}) => {
+const request = async (url, method, data = {}, options = {}) => {
+
+  const token = await getToken()
+  const requestParams = {
+    header: {
+      'content-type': 'application/x-www-form-urlencoded',
+      'X-Token': token
+    },
+    timeout: 60000,
+    dataType: 'json'
+  }
   url = `${BASE_API}/${url}`
   return new Promise((resolve, reject) => {
     const requestParams_ = Object.assign({}, requestParams, {
@@ -23,6 +25,10 @@ export const post = (url, data = {}, options = {}) => {
         if (res.data) {
           if (res.data.code === 20000) {
             resolve(res.data)
+          } else if (res.data.code === 41000) {
+            wx.reLaunch({
+              url: '/pages/user/login'
+            })
           } else {
             reject(res.data)
           }
@@ -36,20 +42,18 @@ export const post = (url, data = {}, options = {}) => {
   })
 }
 export const get = (url, data, options) => {
-  url = `${BASE_API}/${url}`
-  return new Promise((resolve, reject) => {
-    const requestParams_ = Object.assign({}, requestParams, {
-      url,
-      data,
-      ...options,
-      method: 'get',
-      success: (res) => {
-        resolve(res.data)
-      },
-      fail: (res) => {
-        reject(res.data)
-      },
-    })
-    wx.request(requestParams_)
+  return request(url, 'get', data, options)
+}
+export const post = (url, data, options) => {
+  return request(url, 'get', data, options)
+}
+export const postJSON = async (url, data) => {
+  const token = await getToken()
+  return request(url, 'post', data, {
+    header: {
+      'content-type': 'application/json',
+      'X-Token': token
+    }
   })
 }
+export default request
