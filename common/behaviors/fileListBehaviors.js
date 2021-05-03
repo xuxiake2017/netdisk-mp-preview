@@ -65,9 +65,6 @@ export default Behavior({
       }
       setTimeout(() => {
         GetFileList(params).then(res => {
-          this.setData({
-            loading: false
-          })
           const data = res.data
           const {
             list,
@@ -88,6 +85,9 @@ export default Behavior({
               total
             },
             finished
+          })
+          this.setData({
+            loading: false
           })
           if (this.data.hasOwnProperty('pathname')) {
             this.setData({
