@@ -7,6 +7,8 @@
   line-height: 90rpx;
   position: fixed;
   left: 0;
+  background: #FFF;
+  z-index: 9;
 }
 .page-header__left {
   color: #333;

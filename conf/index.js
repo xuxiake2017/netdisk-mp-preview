@@ -2,6 +2,7 @@ const CONFIG = {
   BASE_API: 'http://127.0.0.1:8080/netdisk',
   token: '',
   appid: 'wx14b170f0e0445918',
+  version: 'v1.0.1'
 }
 export const getToken = () => {
   return new Promise((resolve, reject) => {
