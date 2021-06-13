@@ -3,8 +3,10 @@ const { FILE_TYPE } = require('./utils/fileUtils')
 import CONFIG from './conf/index';
 import { AutoLogin } from './api/user';
 import Toast from './common/behaviors/Toast';
+import { AUTO_LOGIN_COMPLATE } from './common/events';
 
 App({
+  // 在小程序上使用全局的消息订阅
   emitter: new EventEmitter2({
 
     // set this to `true` to use wildcards
@@ -46,8 +48,18 @@ App({
                   data: res3.data
                 })
                 CONFIG.token = res3.data
+                this.globalData.inited = true
+                this.emitter.emit(AUTO_LOGIN_COMPLATE)
               }).catch(err => {
+                this.globalData.inited = true
                 this.$toast(err.msg || '登录失败！')
+                if (err.code === 20011) { // 未注册
+                  setTimeout(() => {
+                    wx.reLaunch({
+                      url: '/pages/user/login'
+                    })
+                  }, 500);
+                }
               })
             } else {
               this.$toast('登录失败！' + res2.errMsg)
@@ -59,6 +71,10 @@ App({
   },
   globalData: {
     userInfo: null,
-    FILE_TYPE
+    FILE_TYPE,
+    // 小程序是否完成初始化
+    inited: false,
+    // 要操作移动的文件
+    moveOptFile: {}
   }
 })

@@ -22,3 +22,11 @@ npm install
 
 - [微信官方](https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html)
 - [Vant](https://vant-contrib.gitee.io/vant-weapp/#/quickstart)
+
+> 更新日志
+
+##### 2021-06-13
+
+- 优化小程序的登陆体验
+- 增加文件上传（图片、视频、聊天对话选择文件）
+- 增加文件移动

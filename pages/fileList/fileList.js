@@ -1,6 +1,8 @@
 // 小程序官方的计算属性插件
 import { behavior as computedBehavior } from 'miniprogram-computed';
 import fileListBehaviors from '../../common/behaviors/fileListBehaviors';
+import { MOVE_FILE_SUCCESS } from '../../common/events';
+const app = getApp()
 
 Component({ // 使用 Component 构造器构造页面
 
@@ -22,10 +24,6 @@ Component({ // 使用 Component 构造器构造页面
   },
   // 计算属性
   computed: {
-    // 注意： computed 函数中不能访问 this ，只有 data 对象可供访问
-    showEmpty: data => {
-      return !data.loading && data.fileList.length === 0
-    },
   },
 
   methods: {
@@ -37,6 +35,9 @@ Component({ // 使用 Component 构造器构造页面
         'filters.parentId': this.data.fileId
       })
       this.getFileList()
+      app.emitter.on(MOVE_FILE_SUCCESS, () => {
+        this.resetFileList()
+      })
     },
     // 触底
     onReachBottom() {

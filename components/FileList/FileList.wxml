@@ -2,19 +2,19 @@
 <!-- 文件列表 -->
 <view class="file-list-wrap">
   <view class="file-list">
-    <van-cell custom-class="file-item" wx:for="{{ fileList }}" wx:key="id" wx:for-item="file" data-file="{{ file }}" bind:click="onFileClick">
+    <van-cell custom-class="file-item {{ transparentBg ? 'background-none' : '' }}" wx:for="{{ fileList }}" wx:key="id" wx:for-item="file" data-file="{{ file }}" bind:click="onFileClick">
       <view slot="title" class="file-item-content">
         <view class="file-item-content-img-wrap">
           <text class="file-item-content-img icon-svg {{ tools.fileIcoFilter(file.fileType) }}"></text>
         </view>
         <view class="file-item-content-main">
           <view class="file-item-content-name van-ellipsis">{{ file.fileName }}</view>
-          <view class="file-item-content-time">
+          <view wx:if="{{ showDetail }}" class="file-item-content-time">
             {{ tools.formatDate(file.updateTime) }}
             <text wx:if="{{ FILE_TYPE.FILE_TYPE_OF_DIR !== file.fileType }}" class="u-p-l-10">{{ tools.formatFileSize(file.fileSize) }}</text>
           </view>
         </view>
-        <view class="file-item-content-opt" data-file="{{ file }}" catch:tap="fileOptHandler">
+        <view wx:if="{{ showFileOpt }}" class="file-item-content-opt" data-file="{{ file }}" catch:tap="fileOptHandler">
           <text class="iconfont icon-ellipsis"></text>
         </view>
       </view>

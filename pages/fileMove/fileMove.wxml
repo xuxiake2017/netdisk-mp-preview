@@ -1,0 +1,51 @@
+<view>
+  <view class="custom-nav">
+    <custom-nav title="{{ pathname }}"></custom-nav>
+  </view>
+  <view class="page-header-wrap">
+    <view class="u-flex u-p-l-30 u-p-r-30 u-row-between page-header" style="{{ headerStyle }}">
+      <view class="u-flex-1 page-header__left">
+        当前位置：{{ currentDirName }}
+      </view>
+      <view class="u-text-right u-flex-1 page-header__right" bind:tap="goBack">
+        取消
+      </view>
+    </view>
+  </view>
+  <view class="u-p-30 page-content">
+    <block wx:if="{{ !showEmpty }}">
+      <!-- 文件列表 -->
+      <file-list
+        file-list="{{ dirList }}"
+        show-file-opt="{{ false }}"
+        transparent-bg="{{ true }}"
+        bind:file-click="onFileClick"
+        bind:file-opt="fileOptHandler"
+      ></file-list>
+      <!-- 文件列表加载 -->
+      <view wx:if="{{ loading }}" class="u-text-center u-p-t-20 u-p-b-20">
+        <van-loading size="45rpx" vertical>加载中...</van-loading>
+      </view>
+      <load-finished wx:if="{{ !loading }}"></load-finished>
+    </block>
+    <block wx:if="{{ showEmpty }}">
+      <common-show-empty></common-show-empty>
+    </block>
+  </view>
+  <view class="page-footer-wrap">
+    <view class="u-flex u-p-l-30 u-p-r-30 u-row-between page-footer">
+      <view class="u-flex-1 page-footer__left">
+        新建文件夹
+      </view>
+      <view class="u-text-right u-flex-1 page-footer__right">
+        <van-button
+          color="linear-gradient(to right, #4bb0ff, #6149f6)"
+          round
+          size="normal"
+          custom-style="height: 80rpx; width: 180rpx"
+          bind:click="moveConfirm"
+        >移动</van-button>
+      </view>
+    </view>
+  </view>
+</view>

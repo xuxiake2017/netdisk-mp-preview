@@ -6,6 +6,8 @@ Page {
   --u-light-color: #c0c4cc;
   --u-border-color: #e4e7ed;
   --u-bg-color: #f3f4f6;
+  --primary-color: #6149f6;
+  --primary-light-color: #4bb0ff;
 }
 
 page {

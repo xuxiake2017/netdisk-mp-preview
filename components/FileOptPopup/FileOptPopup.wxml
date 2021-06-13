@@ -13,7 +13,7 @@
         <!-- <text class="icon-svg icon-file_dir"></text> -->
         <text class="icon-svg {{ tools.fileIcoFilter(file.fileType) }}"></text>
       </view>
-      <view class="home_opt-popup-title-file-name">
+      <view class="u-line-1 home_opt-popup-title-file-name">
         {{ file.fileName }}
       </view>
     </view>

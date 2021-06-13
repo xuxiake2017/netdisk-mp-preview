@@ -1,0 +1,46 @@
+.page-header-wrap {
+  height: 90rpx;
+}
+.page-header {
+  height: 90rpx;
+  width: 100%;
+  line-height: 90rpx;
+  position: fixed;
+  left: 0;
+}
+.page-header__left {
+  color: #333;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.page-header__right {
+  color: var(--primary-color);
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.page-content {
+  background: linear-gradient(to bottom, #fafafa, #FFF);
+}
+.page-footer-wrap {
+  height: 100rpx;
+  width: 100%;
+  box-sizing: content-box;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.page-footer {
+  box-sizing: content-box;
+  height: 100rpx;
+  width: calc(100% - 60rpx);
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+  background: #fafafa;
+}
+.page-footer__left {
+  color: var(--primary-color);
+  font-size: 30rpx;
+  font-weight: 600;
+}

@@ -4,7 +4,8 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/fileList/fileList",
-    "pages/user/login"
+    "pages/user/login",
+    "pages/fileMove/fileMove"
   ],
   "entryPagePath": "pages/home/home",
   "window": {

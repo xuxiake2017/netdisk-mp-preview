@@ -1,4 +1,8 @@
 import { post } from '../utils/request'
+import CONFIG from '../conf/index';
+const {
+  BASE_API,
+} = CONFIG
 
 export const GetFileList = params => {
   return post('file/listFile', params)
@@ -59,3 +63,5 @@ export const FindById = params => {
 export const GetFileMediaInfo = params => {
   return post('file/getFileMediaInfo', params)
 }
+
+export const fileUploadAction = `${BASE_API}/file/fileUpload`

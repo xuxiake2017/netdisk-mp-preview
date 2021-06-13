@@ -4,21 +4,37 @@
   <common-tabs active="{{ active }}" tabs="{{ tabs }}" line-width="{{ 50 }}" bind:tab-click="onTabClick"></common-tabs>
   <view class="home-container-wrap" wx:if="{{ active === 1 }}">
     <view class="home-container">
-      <!-- 文件搜索条 -->
-      <view class="home__search-bar">
-        <view class="home__search-bar-input-wrap">
-          <text class="iconfont icon-search"></text>
-          <input placeholder="搜索网盘文件" placeholder-style="font-weight: 600; font-size: 30rpx; color: #c2c2c2;" />
+      <block wx:if="{{ !showEmpty }}">
+        <!-- 文件搜索条 -->
+        <view class="home__search-bar">
+          <view class="home__search-bar-input-wrap">
+            <text class="iconfont icon-search"></text>
+            <input placeholder="搜索网盘文件" placeholder-style="font-weight: 600; font-size: 30rpx; color: #c2c2c2;" />
+          </view>
+          <text class="iconfont icon-descending"></text>
         </view>
-        <text class="iconfont icon-descending"></text>
-      </view>
-      <!-- 文件列表 -->
-      <file-list file-list="{{ fileList }}" bind:file-click="onFileClick" bind:file-opt="fileOptHandler"></file-list>
-      <!-- 文件列表加载 -->
-      <view wx:if="{{ loading }}" class="home_file-list-loading">
-        <van-loading size="45rpx" vertical>加载中...</van-loading>
-      </view>
-      <load-finished wx:if="{{ finished }}"></load-finished>
+        <!-- 文件列表 -->
+        <file-list file-list="{{ fileList }}" bind:file-click="onFileClick" bind:file-opt="fileOptHandler"></file-list>
+        <!-- 文件列表加载 -->
+        <view wx:if="{{ loading }}" class="home_file-list-loading">
+          <van-loading size="45rpx" vertical>加载中...</van-loading>
+        </view>
+        <load-finished wx:if="{{ finished }}"></load-finished>
+      </block>
+      <block wx:if="{{ showEmpty }}">
+        <common-show-empty></common-show-empty>
+        <view class="u-text-center u-m-t-20">
+          <van-button
+            size="small"
+            round
+            color="linear-gradient(to right, #4bb0ff, #6149f6)"
+            custom-class="upload-btn"
+            bind:click="onUploadFile"
+          >
+            上传
+          </van-button>
+        </view>
+      </block>
       <footer-bar
         bind:uploadFile="onUploadFile"
       ></footer-bar>

@@ -3,10 +3,16 @@ import {
   ReName,
   GetFileMediaInfo,
   MkDir,
+  CheckMd5,
+  UploadMD5,
+  fileUploadAction,
+  DeleteFile
 } from '../../api/file'
 import { behavior as computedBehavior } from 'miniprogram-computed';
 import commonBehaviors from './commonBehaviors';
 import { verifyFileName } from '../../utils/validate';
+import { getToken } from '../../conf/index';
+const app = getApp()
 
 export default Behavior({
   behaviors: [
@@ -42,7 +48,7 @@ export default Behavior({
     fileName: '',
     uploadPopupShow: false
   },
-  computed: {
+  computed: { // 注意： computed 函数中不能访问 this ，只有 data 对象可供访问
     // 对话框标题
     optDialogTitle: data => {
       switch (data.dialogAction) {
@@ -51,7 +57,10 @@ export default Behavior({
         case 'makeDir':
           return '新建文件夹'
       }
-    }
+    },
+    showEmpty: data => {
+      return !data.loading && data.fileList.length === 0
+    },
   },
   methods: {
     // 获取文件列表
@@ -63,45 +72,50 @@ export default Behavior({
         ...this.data.pagination,
         ...this.data.filters
       }
-      setTimeout(() => {
-        GetFileList(params).then(res => {
-          const data = res.data
-          const {
-            list,
+      GetFileList(params).then(res => {
+        const data = res.data
+        const {
+          list,
+          pageNum,
+          pageSize,
+          total
+        } = data.pageInfo
+        let finished = false
+        // 判断是否结束加载
+        if(pageNum * pageSize >= total) {
+          finished = true
+        }
+        this.setData({
+          fileList: [ ...this.data.fileList, ...list ],
+          pagination: {
             pageNum,
             pageSize,
             total
-          } = data.pageInfo
-          let finished = false
-          // 判断是否结束加载
-          if(pageNum * pageSize >= total) {
-            finished = true
-          }
-          this.setData({
-            fileList: [ ...this.data.fileList, ...list ],
-            pagination: {
-              pageNum,
-              pageSize,
-              total
-            },
-            finished
-          })
-          this.setData({
-            loading: false
-          })
-          if (this.data.hasOwnProperty('pathname')) {
-            this.setData({
-              pathname: data.pathname
-            })
-          }
-        }).catch(res => {
-          console.error(res)
-          this.setData({
-            loading: false,
-            finished: true
-          })
+          },
+          finished
         })
-      }, 500)
+        this.setData({
+          loading: false
+        })
+        if (this.data.hasOwnProperty('pathname')) {
+          this.setData({
+            pathname: data.pathname
+          })
+        }
+      }).catch(res => {
+        console.error(res)
+        this.setData({
+          loading: false,
+          finished: true
+        })
+      })
+    },
+    resetFileList () {
+      this.setData({
+        'pagination.pageNum': 1,
+        fileList: [],
+      })
+      this.getFileList()
     },
     // 对文件进行操作
     fileOptHandler(event) {
@@ -119,6 +133,7 @@ export default Behavior({
     },
     // 文件操作项点击
     onOptClick (e) {
+      console.log(e);
       this.setData({
         show: false,
       })
@@ -129,6 +144,15 @@ export default Behavior({
             dialogAction: 'reName',
             optDialogShow: true,
             fileName: this.data.optFile.fileName
+          })
+          break
+        case 'delete':
+          this.DeleteFileWrap()
+          break
+        case 'move':
+          app.globalData.moveOptFile = this.data.optFile
+          wx.navigateTo({
+            url: '/pages/fileMove/fileMove'
           })
           break
       }
@@ -253,37 +277,62 @@ export default Behavior({
       this.setData({
         uploadPopupShow: true
       })
-      // wx.chooseImage({
-      //   success (res) {
-      //     const tempFilePaths = res.tempFilePaths
-      //     console.log(tempFilePaths);
-
-      //     wx.getFileInfo({
-      //       filePath: tempFilePaths[0],
-      //       success (res) {
-      //         console.log(res.size)
-      //         console.log(res.digest)
-      //       }
-      //     })
-      //     // wx.uploadFile({
-      //     //   url: 'https://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
-      //     //   filePath: tempFilePaths[0],
-      //     //   name: 'file',
-      //     //   formData: {
-      //     //     'user': 'test'
-      //     //   },
-      //     //   success (res){
-      //     //     const data = res.data
-      //     //     //do something
-      //     //   }
-      //     // })
-      //   }
-      // })
     },
     onUploadPopupClose () {
       this.setData({
         uploadPopupShow: false
       })
+    },
+    /**
+     * 检查文件MD5
+     * @param {String} tempFilePath 文件临时路径
+     * @param {String} md5Hex 文件MD5值
+     * @param {Number} fileSize 文件大小
+     * @param {String} fileRealName 文件名
+     */
+    async checkMd5Wrap (tempFilePath, md5Hex, fileSize, fileRealName = '') {
+      const checkMd5Result = await CheckMd5({ md5Hex })
+      if (checkMd5Result.data === 20033) { // 不存在该MD5值
+        const formData = {
+          md5Hex,
+          parentId: this.data.filters.parentId,
+          lastModifiedDate: new Date().getTime(),
+          fileRealName
+        }
+        const token = await getToken()
+        const header = {
+          'X-Token': token
+        }
+        wx.uploadFile({
+          url: fileUploadAction,
+          filePath: tempFilePath,
+          name: 'file',
+          formData,
+          header,
+          success: res => {
+            const result = JSON.parse(res.data)
+            if (result.code === 20000) {
+              this.$toast.success('上传成功！')
+              this.resetFileList()
+            } else {
+              this.$toast(result.msg || '上传失败！')
+            }
+          }
+        })
+      } else if (checkMd5Result.data === 20034) { // 存在该MD5值
+        const params = {
+          md5Hex,
+          fileSize,
+          parentId: this.data.filters.parentId,
+          fileRealName
+        }
+        UploadMD5(params).then((result) => {
+          this.$toast.success('上传成功！')
+          this.resetFileList()
+        }).catch((err) => {
+          this.$toast(err.msg || '上传失败！')
+        });
+      }
     },
     onUploadItemClick (e) {
       this.setData({
@@ -292,8 +341,37 @@ export default Behavior({
       const type = e.detail.type
       switch (type) {
         case 'pic':
+          wx.chooseImage({
+            success: res => {
+              const tempFilePaths = res.tempFilePaths
+              tempFilePaths.forEach(tempFilePath => {
+                const fileRealName = tempFilePath.split('http://tmp/')[1] // 小程序无法取到文件的真实名称（wx.chooseMessageFile可以）
+                wx.getFileInfo({
+                  filePath: tempFilePath,
+                  success: res => {
+                    this.checkMd5Wrap(tempFilePath, res.digest, res.size, fileRealName)
+                  }
+                })
+              })
+            }
+          })
           break
         case 'video':
+          wx.chooseVideo({
+            sourceType: ['album','camera'],
+            maxDuration: 60,
+            camera: 'back',
+            success: res => {
+              const tempFilePath = res.tempFilePath
+              const fileRealName = tempFilePath.split('http://tmp/')[1] // 小程序无法取到文件的真实名称（wx.chooseMessageFile可以）
+              wx.getFileInfo({
+                filePath: tempFilePath,
+                success: res => {
+                  this.checkMd5Wrap(tempFilePath, res.digest, res.size, fileRealName)
+                }
+              })
+            }
+          })
           break
         case 'dir':
           this.setData({
@@ -302,8 +380,42 @@ export default Behavior({
           })
           break
         case 'wechat':
+          wx.chooseMessageFile({
+            count: 10,
+            type: 'all',
+            success: res => {
+              const tempFilePaths = res.tempFiles
+              tempFilePaths.forEach(({
+                name,
+                path,
+                size,
+              }) => {
+                wx.getFileInfo({
+                  filePath: path,
+                  success: res => {
+                    this.checkMd5Wrap(path, res.digest, size, name)
+                  }
+                })
+              })
+            }
+          })
           break
       }
+    },
+    // 文件删除
+    DeleteFileWrap () {
+      this.$showModal('提示', '确认删除该文件？').then(() => {
+        const params = {
+          fileKey: this.data.optFile.key
+        }
+        DeleteFile(params).then((result) => {
+          this.$toast.success('删除成功！')
+          this.resetFileList()
+        }).catch((err) => {
+          this.$toast('删除失败！')
+        });
+      }).catch((err) => {
+      });
     }
   }
 })

@@ -37,6 +37,9 @@ $u-type-info-light: #f4f4f5;
 $u-form-item-height: 70rpx;
 $u-form-item-border-color: #dcdfe6;
 
+$primary-color: #6149f6;
+$primary-light-color: #4bb0ff;
+
 Page {
   --u-main-color: #{$u-main-color};
   --u-content-color: #{$u-content-color};
@@ -44,4 +47,7 @@ Page {
   --u-light-color: #{$u-light-color};
   --u-border-color: #{$u-border-color};
   --u-bg-color: #{$u-bg-color};
+
+  --primary-color: #{$primary-color};
+  --primary-light-color: #{$primary-light-color};
 }

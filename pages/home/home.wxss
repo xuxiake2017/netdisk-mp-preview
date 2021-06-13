@@ -39,3 +39,6 @@
 .van-dialog__content {
   padding: 40rpx 40rpx;
 }
+.upload-btn {
+  width: 200rpx;
+}

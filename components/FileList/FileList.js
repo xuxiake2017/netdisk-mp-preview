@@ -5,9 +5,25 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    // 文件列表
     fileList: {
       type: Array
-    }
+    },
+    // 是否显示文件详情
+    showDetail: {
+      type: Boolean,
+      value: true
+    },
+    // 是否显示文件操作按钮
+    showFileOpt: {
+      type: Boolean,
+      value: true
+    },
+    // 是否是透明背景
+    transparentBg: {
+      type: Boolean,
+      value: false
+    },
   },
   options: {
     // 组件样式隔离 apply-shared 表示页面 wxss 样式将影响到自定义组件

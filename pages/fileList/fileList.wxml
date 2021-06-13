@@ -18,11 +18,15 @@
           round
           color="linear-gradient(to right, #4bb0ff, #6149f6)"
           custom-class="upload-btn"
+          bind:click="onUploadFile"
         >
           上传
         </van-button>
       </view>
     </block>
+    <footer-bar
+      bind:uploadFile="onUploadFile"
+    ></footer-bar>
   </view>
   <file-opt-popup
     show="{{ show }}"
@@ -30,4 +34,9 @@
     bind:popup-close="onPopupClose"
     bind:opt-click="onOptClick"
   ></file-opt-popup>
+  <file-upload-popup
+    show="{{ uploadPopupShow }}"
+    bind:popupClose="onUploadPopupClose"
+    bind:uploadItemClick="onUploadItemClick"
+  ></file-upload-popup>
 </div>

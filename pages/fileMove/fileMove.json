@@ -5,10 +5,7 @@
     "load-finished": "/components/LoadFinished/LoadFinished",
     "common-show-empty": "/components/CommonShowEmpty/CommonShowEmpty",
     "van-loading": "@vant/weapp/loading/index",
-    "van-button": "@vant/weapp/button/index",
-    "file-opt-popup": "/components/FileOptPopup/FileOptPopup",
-    "file-upload-popup": "/components/FileUploadPopup/FileUploadPopup",
-    "footer-bar": "/components/FooterBar/FooterBar"
+    "van-button": "@vant/weapp/button/index"
   },
   "navigationStyle": "custom"
 }

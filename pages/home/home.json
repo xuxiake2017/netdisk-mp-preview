@@ -11,7 +11,9 @@
     "custom-field": "/components/CustomField/CustomField",
     "custom-model": "/components/CustomModel/CustomModel",
     "footer-bar": "/components/FooterBar/FooterBar",
-    "file-upload-popup": "/components/FileUploadPopup/FileUploadPopup"
+    "file-upload-popup": "/components/FileUploadPopup/FileUploadPopup",
+    "common-show-empty": "/components/CommonShowEmpty/CommonShowEmpty",
+    "van-button": "@vant/weapp/button/index"
   },
   "navigationBarTitleText": "首页"
 }

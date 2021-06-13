@@ -13,14 +13,14 @@
 }
 .home_opt-popup-title-file-icon {
   height: 100%;
-  flex: 1;
+  width: 90rpx;
   display: flex;
   align-items: center;
 }
 .home_opt-popup-title-file-name {
   height: 100%;
-  flex: 6;
-  display: flex;
+  line-height: 90rpx;
+  width: calc(100% - 90rpx);
   align-items: center;
   color: #999999;
   font-weight: 600;

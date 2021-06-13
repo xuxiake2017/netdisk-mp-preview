@@ -16,11 +16,11 @@ Component({
     fileOptions: {
       type: Array,
       value: [
-        {
-          name: '分享',
-          icon: 'icon-share',
-          value: 'share'
-        },
+        // {
+        //   name: '分享',
+        //   icon: 'icon-share',
+        //   value: 'share'
+        // },
         {
           name: '复制',
           icon: 'icon-copy',
@@ -35,6 +35,11 @@ Component({
           name: '删除',
           icon: 'icon-delete',
           value: 'delete'
+        },
+        {
+          name: '移动',
+          icon: 'icon-move',
+          value: 'move'
         },
       ],
     },
