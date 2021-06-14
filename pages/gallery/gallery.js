@@ -44,13 +44,10 @@ Page({
    */
   onLoad: function (options) {
     this.GetImgListWrap()
-    wx.getSystemInfoSync({
-      success: ({
-        windowWidth,
-        ...rest
-      }) => {
+    wx.getSystemInfo({
+      success: res => {
         this.setData({
-          windowWidth,
+          windowWidth: res.windowWidth
         })
       }
     })
