@@ -1,11 +1,18 @@
-<!-- <wxs src="../../../common/wxs/file.wxs" module="tools"></wxs> -->
 <view class="gallery-item">
   <view class="gallery-item__title">
     {{ imgDate }}
   </view>
   <view class="gallery-item__list">
     <view wx:for="{{ imgList }}" wx:key="key" class="gallery-item__img" style="{{ imgStyle }}">
-      <image src="{{ item.fileOrigin.previewUrl }}" class="full-w-h" mode="aspectFill" data-img="{{ item }}" bind:tap="onImgClick" />
+      <van-image
+        lazy-load
+        width="{{ imgWidth }}"
+        height="{{ imgWidth }}"
+        src="{{ item.fileOrigin.previewUrl }}"
+        fit="cover"
+        radius="5px"
+        data-img="{{ item }}" bind:click="onImgClick"
+      />
     </view>
     <view class="clearfix"></view>
   </view>
