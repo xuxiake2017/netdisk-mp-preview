@@ -29,7 +29,7 @@ Page({
     pagination: {
       total: 0,
       pageNum: 1,
-      pageSize: 10
+      pageSize: 20
     },
     // 加载中
     loading: true,

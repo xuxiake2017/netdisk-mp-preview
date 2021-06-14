@@ -12,6 +12,7 @@ import { behavior as computedBehavior } from 'miniprogram-computed';
 import commonBehaviors from './commonBehaviors';
 import { verifyFileName } from '../../utils/validate';
 import { getToken } from '../../conf/index';
+import timeFormat from '../../utils/timeFormat';
 const app = getApp()
 
 export default Behavior({
@@ -285,52 +286,67 @@ export default Behavior({
     /**
      * 检查文件MD5
      * @param {String} tempFilePath 文件临时路径
-     * @param {String} md5Hex 文件MD5值
-     * @param {Number} fileSize 文件大小
      * @param {String} fileRealName 文件名
      */
-    async checkMd5Wrap (tempFilePath, md5Hex, fileSize, fileRealName = '') {
-      const checkMd5Result = await CheckMd5({ md5Hex })
-      if (checkMd5Result.data === 20033) { // 不存在该MD5值
-        const formData = {
-          md5Hex,
-          parentId: this.data.filters.parentId,
-          lastModifiedDate: new Date().getTime(),
-          fileRealName
-        }
-        const token = await getToken()
-        const header = {
-          'X-Token': token
-        }
-        wx.uploadFile({
-          url: fileUploadAction,
+    async checkMd5Wrap (tempFilePath, fileRealName = '') {
+      const {
+        digest: md5Hex,
+        size: fileSize,
+      } = await new Promise((resolve, reject) => {
+        wx.getFileInfo({
           filePath: tempFilePath,
-          name: 'file',
-          formData,
-          header,
           success: res => {
-            const result = JSON.parse(res.data)
-            if (result.code === 20000) {
-              this.$toast.success('上传成功！')
-              this.resetFileList()
-            } else {
-              this.$toast(result.msg || '上传失败！')
-            }
+            resolve(res)
           }
         })
-      } else if (checkMd5Result.data === 20034) { // 存在该MD5值
-        const params = {
-          md5Hex,
-          fileSize,
-          parentId: this.data.filters.parentId,
-          fileRealName
+      })
+      if (!fileRealName) {
+        // 扩展名，包含.
+        const extName = tempFilePath.substring(tempFilePath.lastIndexOf('.'), tempFilePath.length)
+        const current = new Date()
+        fileRealName = `${timeFormat(current.getTime(), 'yyyy-mm-dd_hhMMss')}_${md5Hex.substring(0, 4)}${extName}`
+      }
+      try {
+        const checkMd5Result = await CheckMd5({ md5Hex })
+        if (checkMd5Result.data === 20033) { // 不存在该MD5值
+          const formData = {
+            md5Hex,
+            parentId: this.data.filters.parentId,
+            lastModifiedDate: new Date().getTime(),
+            fileRealName
+          }
+          const token = await getToken()
+          const header = {
+            'X-Token': token
+          }
+          await new Promise((resolve, reject) => {
+            wx.uploadFile({
+              url: fileUploadAction,
+              filePath: tempFilePath,
+              name: 'file',
+              formData,
+              header,
+              success: res => {
+                const result = JSON.parse(res.data)
+                if (result.code === 20000) {
+                  resolve()
+                } else {
+                  reject(result)
+                }
+              }
+            })
+          })
+        } else if (checkMd5Result.data === 20034) { // 存在该MD5值
+          const params = {
+            md5Hex,
+            fileSize,
+            parentId: this.data.filters.parentId,
+            fileRealName
+          }
+          await UploadMD5(params)
         }
-        UploadMD5(params).then((result) => {
-          this.$toast.success('上传成功！')
-          this.resetFileList()
-        }).catch((err) => {
-          this.$toast(err.msg || '上传失败！')
-        });
+      } catch (error) {
+        this.$toast(error.msg || error.message || '文件上传失败！')
       }
     },
     onUploadItemClick (e) {
@@ -343,14 +359,15 @@ export default Behavior({
           wx.chooseImage({
             success: res => {
               const tempFilePaths = res.tempFilePaths
+              const resset = []
               tempFilePaths.forEach(tempFilePath => {
-                const fileRealName = tempFilePath.split('http://tmp/')[1] // 小程序无法取到文件的真实名称（wx.chooseMessageFile可以）
-                wx.getFileInfo({
-                  filePath: tempFilePath,
-                  success: res => {
-                    this.checkMd5Wrap(tempFilePath, res.digest, res.size, fileRealName)
-                  }
-                })
+                resset.push(this.checkMd5Wrap(tempFilePath))
+              })
+              this.$showLoading('上传中')
+              Promise.all(resset).then((result) => {
+                this.$hideLoading()
+                this.$toast.success('上传成功！')
+                this.resetFileList()
               })
             }
           })
@@ -362,12 +379,11 @@ export default Behavior({
             camera: 'back',
             success: res => {
               const tempFilePath = res.tempFilePath
-              const fileRealName = tempFilePath.split('http://tmp/')[1] // 小程序无法取到文件的真实名称（wx.chooseMessageFile可以）
-              wx.getFileInfo({
-                filePath: tempFilePath,
-                success: res => {
-                  this.checkMd5Wrap(tempFilePath, res.digest, res.size, fileRealName)
-                }
+              this.$showLoading('上传中')
+              this.checkMd5Wrap(tempFilePath).then((result) => {
+                this.$hideLoading()
+                this.$toast.success('上传成功！')
+                this.resetFileList()
               })
             }
           })
@@ -384,17 +400,19 @@ export default Behavior({
             type: 'all',
             success: res => {
               const tempFilePaths = res.tempFiles
+              const resset = []
               tempFilePaths.forEach(({
                 name,
                 path,
                 size,
               }) => {
-                wx.getFileInfo({
-                  filePath: path,
-                  success: res => {
-                    this.checkMd5Wrap(path, res.digest, size, name)
-                  }
-                })
+                resset.push(this.checkMd5Wrap(path, name))
+              })
+              this.$showLoading('上传中')
+              Promise.all(resset).then((result) => {
+                this.$hideLoading()
+                this.$toast.success('上传成功！')
+                this.resetFileList()
               })
             }
           })
