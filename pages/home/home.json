@@ -15,5 +15,5 @@
     "common-show-empty": "/components/CommonShowEmpty/CommonShowEmpty",
     "van-button": "@vant/weapp/button/index"
   },
-  "navigationBarTitleText": "首页"
+  "navigationBarTitleText": "相册文件"
 }

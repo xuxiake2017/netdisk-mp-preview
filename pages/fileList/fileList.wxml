@@ -1,9 +1,9 @@
 <div>
   <custom-nav title="{{ pathname }}"></custom-nav>
-  <view class="u-p-30">
+  <view class="u-p-30 page-content">
     <block wx:if="{{ !showEmpty }}">
       <!-- 文件列表 -->
-      <file-list file-list="{{ fileList }}" bind:file-click="onFileClick" bind:file-opt="fileOptHandler"></file-list>
+      <file-list file-list="{{ fileList }}" transparent-bg="{{ true }}" bind:file-click="onFileClick" bind:file-opt="fileOptHandler"></file-list>
       <!-- 文件列表加载 -->
       <view wx:if="{{ loading }}" class="u-text-center u-p-t-20 u-p-b-20">
         <van-loading size="45rpx" vertical>加载中...</van-loading>
@@ -39,4 +39,17 @@
     bind:popupClose="onUploadPopupClose"
     bind:uploadItemClick="onUploadItemClick"
   ></file-upload-popup>
+  <custom-model
+    title="{{ optDialogTitle }}"
+    show="{{ optDialogShow }}"
+    bind:confirm="onDialogConfirm"
+    bind:cancel="onDialogCancel"
+    bind:close="onDialogClose"
+  >
+    <block wx:if="{{ dialogAction === 'reName' || dialogAction === 'makeDir' }}">
+      <view class="van-dialog__content">
+        <custom-field model:value="{{ fileName }}" bind:rightClick="clearInput"></custom-field>
+      </view>
+    </block>
+  </custom-model>
 </div>

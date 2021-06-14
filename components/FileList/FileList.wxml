@@ -2,7 +2,7 @@
 <!-- 文件列表 -->
 <view class="file-list-wrap">
   <view class="file-list">
-    <van-cell custom-class="file-item {{ transparentBg ? 'background-none' : '' }}" wx:for="{{ fileList }}" wx:key="id" wx:for-item="file" data-file="{{ file }}" bind:click="onFileClick">
+    <van-cell custom-class="file-item" wx:for="{{ fileList }}" wx:key="id" wx:for-item="file" data-file="{{ file }}" bind:click="onFileClick">
       <view slot="title" class="file-item-content">
         <view class="file-item-content-img-wrap">
           <text class="file-item-content-img icon-svg {{ tools.fileIcoFilter(file.fileType) }}"></text>

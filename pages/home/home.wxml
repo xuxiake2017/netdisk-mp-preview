@@ -2,7 +2,7 @@
 <view>
   <!-- tabs标签栏 -->
   <common-tabs active="{{ active }}" tabs="{{ tabs }}" line-width="{{ 50 }}" bind:tab-click="onTabClick"></common-tabs>
-  <view class="home-container-wrap" wx:if="{{ active === 1 }}">
+  <view class="home-container-wrap">
     <view class="home-container">
       <block wx:if="{{ !showEmpty }}">
         <!-- 文件搜索条 -->
@@ -14,7 +14,7 @@
           <text class="iconfont icon-descending"></text>
         </view>
         <!-- 文件列表 -->
-        <file-list file-list="{{ fileList }}" bind:file-click="onFileClick" bind:file-opt="fileOptHandler"></file-list>
+        <file-list file-list="{{ fileList }}" transparent-bg="{{ true }}" bind:file-click="onFileClick" bind:file-opt="fileOptHandler"></file-list>
         <!-- 文件列表加载 -->
         <view wx:if="{{ loading }}" class="home_file-list-loading">
           <van-loading size="45rpx" vertical>加载中...</van-loading>
@@ -40,8 +40,6 @@
       ></footer-bar>
     </view>
   </view>
-  <view wx:if="{{ active === 2 }}"></view>
-  <view wx:if="{{ active === 3 }}"></view>
   <file-opt-popup
     show="{{ show }}"
     file="{{ optFile }}"

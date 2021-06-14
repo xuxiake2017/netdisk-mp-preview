@@ -8,7 +8,9 @@
     "van-button": "@vant/weapp/button/index",
     "file-opt-popup": "/components/FileOptPopup/FileOptPopup",
     "file-upload-popup": "/components/FileUploadPopup/FileUploadPopup",
-    "footer-bar": "/components/FooterBar/FooterBar"
+    "footer-bar": "/components/FooterBar/FooterBar",
+    "custom-field": "/components/CustomField/CustomField",
+    "custom-model": "/components/CustomModel/CustomModel"
   },
   "navigationStyle": "custom"
 }

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "common-tabs": "/components/CommonTabs/CommonTabs"
+  },
+  "navigationBarTitleText": "个人中心"
+}

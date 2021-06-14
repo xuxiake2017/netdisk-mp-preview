@@ -133,7 +133,6 @@ export default Behavior({
     },
     // 文件操作项点击
     onOptClick (e) {
-      console.log(e);
       this.setData({
         show: false,
       })

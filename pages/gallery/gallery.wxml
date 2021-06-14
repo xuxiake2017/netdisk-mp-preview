@@ -1,0 +1,21 @@
+<view>
+  <!-- tabs标签栏 -->
+  <common-tabs active="{{ active }}" tabs="{{ tabs }}" line-width="{{ 50 }}" bind:tab-click="onTabClick"></common-tabs>
+  <view class="u-p-t-30 u-p-b-30">
+    <gallery-item
+      wx:key="index"
+      wx:for="{{ imgList }}"
+      img-obj="{{ item }}"
+      window-width="{{ windowWidth }}"
+      bind:imgclick="onImgClick"
+    ></gallery-item>
+    <!-- 文件列表加载 -->
+    <view wx:if="{{ loading }}" class="u-text-center u-p-t-20 u-p-b-20">
+      <van-loading size="45rpx" vertical>加载中...</van-loading>
+    </view>
+    <load-finished wx:if="{{ finished }}"></load-finished>
+  </view>
+  <view class="page-footer-wrap">
+    <view class="page-footer"></view>
+  </view>
+</view>

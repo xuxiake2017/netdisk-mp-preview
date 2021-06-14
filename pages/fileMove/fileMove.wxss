@@ -13,15 +13,15 @@
 .page-header__left {
   color: #333;
   font-size: 30rpx;
-  font-weight: 600;
+  font-weight: 700;
 }
 .page-header__right {
   color: var(--primary-color);
   font-size: 30rpx;
-  font-weight: 600;
+  font-weight: 700;
 }
 .page-content {
-  background: linear-gradient(to bottom, #fafafa, #FFF);
+  background: linear-gradient(to bottom, #fbfbfb, #FFF);
 }
 .page-footer-wrap {
   height: 100rpx;
@@ -44,5 +44,9 @@
 .page-footer__left {
   color: var(--primary-color);
   font-size: 30rpx;
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.van-dialog__content {
+  padding: 40rpx 40rpx;
 }

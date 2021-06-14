@@ -1,0 +1,4 @@
+<view>
+  <!-- tabs标签栏 -->
+  <common-tabs active="{{ active }}" tabs="{{ tabs }}" line-width="{{ 50 }}" bind:tab-click="onTabClick"></common-tabs>
+</view>

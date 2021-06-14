@@ -21,3 +21,9 @@ page {
 view {
   box-sizing: border-box;
 }
+.clearfix {
+  display: block; 
+  height: 0; 
+  clear: both; 
+  visibility: hidden;  
+}

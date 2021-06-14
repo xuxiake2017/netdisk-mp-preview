@@ -26,7 +26,7 @@
       </van-button>
       <van-button
         wx:if="{{ showConfirmButton }}"
-        type="danger"
+        color="#6149f6"
         plain
         size="large"
         custom-class="custom-model__confirm"

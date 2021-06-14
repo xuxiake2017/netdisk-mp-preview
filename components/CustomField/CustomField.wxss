@@ -1,8 +1,9 @@
 .custom-field {
-  padding: 10rpx 20rpx;
-  background: #f6f7f9;
+  padding: 15rpx 20rpx;
+  background: #F4F8FB;
+  border-radius: 8rpx;
   line-height: 48rpx;
-  height: 68rpx;
+  height: 78rpx;
 }
 .custom-field__control {
   width: calc(100% - 50rpx);

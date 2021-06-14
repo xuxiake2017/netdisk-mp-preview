@@ -17,7 +17,7 @@ Component({
       type: Array,
     },
     active: {
-      type: Number,
+      type: String,
     },
     // 底部条宽度，默认单位rpx
     lineWidth: {

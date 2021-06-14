@@ -13,20 +13,20 @@ Page({
    */
   data: {
     // 当前tab
-    active: 1,
+    active: 'home',
     // tabs
     tabs: [
       {
-        label: '网盘文件',
-        value: 1
+        label: '相册文件',
+        value: 'home'
       },
       {
-        label: '文件分享',
-        value: 2
+        label: '我的相册',
+        value: 'gallery'
       },
       {
         label: '个人中心',
-        value: 3
+        value: 'user'
       }
     ],
   },
@@ -45,6 +45,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.hideTabBar()
     if (app.globalData.inited) {
       this.getFileList()
     }
@@ -73,9 +74,24 @@ Page({
   },
   onTabClick(e) {
     const tab = e.detail.tab
-    this.setData({
-      active: tab.value
-    })
+    if (this.data.active === tab.value) return
+    switch (tab.value) {
+      case 'home':
+        wx.switchTab({
+          url: '/pages/home/home'
+        })
+        break
+      case 'gallery':
+        wx.switchTab({
+          url: '/pages/gallery/gallery'
+        })
+        break
+      case 'user':
+        wx.switchTab({
+          url: '/pages/user/user'
+        })
+        break
+    }
   },
 
   clearInput () {

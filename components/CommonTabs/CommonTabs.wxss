@@ -13,6 +13,7 @@
   background: #FFF;
   color: #666;
   z-index: 9;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, .1);
 }
 .tabs__line {
   height: 2px;

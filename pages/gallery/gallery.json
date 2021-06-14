@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "common-tabs": "/components/CommonTabs/CommonTabs",
+    "gallery-item": "/pages/gallery/components/GalleryItem",
+    "load-finished": "/components/LoadFinished/LoadFinished",
+    "common-show-empty": "/components/CommonShowEmpty/CommonShowEmpty",
+    "van-loading": "@vant/weapp/loading/index"
+  },
+  "navigationBarTitleText": "我的相册"
+}

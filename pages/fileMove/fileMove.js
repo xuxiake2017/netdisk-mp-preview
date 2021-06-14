@@ -4,9 +4,11 @@ import commonBehaviors from '../../common/behaviors/commonBehaviors';
 import {
   ListAllDir,
   MoveFile,
+  MkDir,
 } from '../../api/file';
 import { styleObj2StyleStr } from '../../utils/util';
 import { MOVE_FILE_SUCCESS } from '../../common/events';
+import { verifyFileName } from '../../utils/validate';
 const app = getApp()
 
 Component({ // 使用 Component 构造器构造页面
@@ -38,6 +40,8 @@ Component({ // 使用 Component 构造器构造页面
     // 加载中
     loading: true,
     navHeight: 88,
+    dialogShow: false,
+    fileName: '',
   },
 
   computed: { // 注意： computed 函数中不能访问 this ，只有 data 对象可供访问
@@ -126,6 +130,52 @@ Component({ // 使用 Component 构造器构造页面
       }).catch((err) => {
         this.$toast(err.msg || '移动失败！')
       });
-    }
+    },
+    openDialog () {
+      this.setData({
+        dialogShow: true,
+      })
+    },
+    // 对话框点击确认
+    onDialogConfirm () {
+      this.makeDirHandler()
+    },
+    // 对话框点击取消
+    onDialogCancel () {
+      this.setData({
+        dialogShow: false,
+        fileName: ''
+      })
+    },
+    // 对话框关闭（点击遮罩层触发）
+    onDialogClose () {
+    },
+    clearInput () {
+      this.setData({
+        fileName: ''
+      })
+    },
+    // 新建文件夹操作
+    makeDirHandler () {
+      try {
+        verifyFileName(this.data.fileName)
+        const params = {
+          parentId: this.data.parentId,
+          fileName: this.data.fileName,
+        }
+        MkDir(params).then(res => {
+          this.$toast.success('新建文件夹成功！')
+          this.setData({
+            dialogShow: false,
+          })
+          this.ListAllDirWrap()
+        }).catch(res => {
+          this.$toast(res.msg || '新建文件夹失败！')
+        })
+      } catch (error) {
+        console.log(error.message);
+        this.$toast(error.message)
+      }
+    },
   }
 })

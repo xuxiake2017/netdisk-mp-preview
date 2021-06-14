@@ -1,12 +1,25 @@
 {
   "pages": [
     "pages/home/home",
-    "pages/index/index",
-    "pages/logs/logs",
     "pages/fileList/fileList",
     "pages/user/login",
-    "pages/fileMove/fileMove"
+    "pages/fileMove/fileMove",
+    "pages/gallery/gallery",
+    "pages/user/user"
   ],
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/home/home"
+      },
+      {
+        "pagePath": "pages/gallery/gallery"
+      },
+      {
+        "pagePath": "pages/user/user"
+      }
+    ]
+  },
   "entryPagePath": "pages/home/home",
   "window": {
     "backgroundTextStyle": "light",

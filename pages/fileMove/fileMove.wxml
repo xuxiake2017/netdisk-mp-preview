@@ -34,7 +34,7 @@
   </view>
   <view class="page-footer-wrap">
     <view class="u-flex u-p-l-30 u-p-r-30 u-row-between page-footer">
-      <view class="u-flex-1 page-footer__left">
+      <view class="u-flex-1 page-footer__left" bind:tap="openDialog">
         新建文件夹
       </view>
       <view class="u-text-right u-flex-1 page-footer__right">
@@ -48,4 +48,15 @@
       </view>
     </view>
   </view>
+  <custom-model
+    title="新建文件夹"
+    show="{{ dialogShow }}"
+    bind:confirm="onDialogConfirm"
+    bind:cancel="onDialogCancel"
+    bind:close="onDialogClose"
+  >
+    <view class="van-dialog__content">
+      <custom-field model:value="{{ fileName }}" bind:rightClick="clearInput"></custom-field>
+    </view>
+  </custom-model>
 </view>

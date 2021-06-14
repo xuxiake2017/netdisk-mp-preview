@@ -2,6 +2,7 @@
   padding-left: 30rpx;
   padding-right: 30rpx;
   padding-top: 40rpx;
+  /* background: linear-gradient(to bottom, #fbfbfb, #FFF); */
 }
 .home-container {
   width: 100%;
