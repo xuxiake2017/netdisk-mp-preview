@@ -67,7 +67,8 @@ export default Behavior({
     // 获取文件列表
     getFileList() {
       this.setData({
-        loading: true
+        loading: true,
+        finished: false,
       })
       const params = {
         ...this.data.pagination,
