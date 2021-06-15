@@ -7,7 +7,7 @@
   left: 0;
   width: 100%;
   background: #FFF;
-  z-index: 9;
+  z-index: 10;
 }
 .custom-header__opt-button {
   border: 1px #dcdcdc solid;

@@ -346,8 +346,12 @@ export default Behavior({
           }
           await UploadMD5(params)
         }
+        return true
       } catch (error) {
+        console.log(error);
+        this.$hideLoading()
         this.$toast(error.msg || error.message || '文件上传失败！')
+        return false
       }
     },
     onUploadItemClick (e) {
@@ -366,9 +370,11 @@ export default Behavior({
               })
               this.$showLoading('上传中')
               Promise.all(resset).then((result) => {
-                this.$hideLoading()
-                this.$toast.success('上传成功！')
-                this.resetFileList()
+                if (result.every(item => item)) {
+                  this.$hideLoading()
+                  this.$toast.success('上传成功！')
+                  this.resetFileList()
+                }
               })
             }
           })
@@ -382,9 +388,11 @@ export default Behavior({
               const tempFilePath = res.tempFilePath
               this.$showLoading('上传中')
               this.checkMd5Wrap(tempFilePath).then((result) => {
-                this.$hideLoading()
-                this.$toast.success('上传成功！')
-                this.resetFileList()
+                if (result) {
+                  this.$hideLoading()
+                  this.$toast.success('上传成功！')
+                  this.resetFileList()
+                }
               })
             }
           })
@@ -400,21 +408,28 @@ export default Behavior({
             count: 10,
             type: 'all',
             success: res => {
+              console.log(res);
               const tempFilePaths = res.tempFiles
-              const resset = []
-              tempFilePaths.forEach(({
-                name,
-                path,
-                size,
-              }) => {
-                resset.push(this.checkMd5Wrap(path, name))
-              })
-              this.$showLoading('上传中')
-              Promise.all(resset).then((result) => {
-                this.$hideLoading()
-                this.$toast.success('上传成功！')
-                this.resetFileList()
-              })
+              if (tempFilePaths && tempFilePaths.length > 0) {
+                const resset = []
+                tempFilePaths.forEach(({
+                  name,
+                  path,
+                  size,
+                }) => {
+                  resset.push(this.checkMd5Wrap(path, name))
+                })
+                this.$showLoading('上传中')
+                Promise.all(resset).then((result) => {
+                  if (result.every(item => item)) {
+                    this.$hideLoading()
+                    this.$toast.success('上传成功！')
+                    this.resetFileList()
+                  }
+                })
+              } else {
+                this.$toast('请选择文件！')
+              }
             }
           })
           break

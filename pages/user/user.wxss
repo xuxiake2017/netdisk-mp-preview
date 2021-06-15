@@ -1,1 +1,22 @@
-/* pages/user/user.wxss */
+.page-content {
+  padding: 80rpx 20rpx 0 20rpx;
+}
+.user-info {
+  height: 160rpx;
+}
+.user-info__avatar {
+  width: 160rpx;
+  height: 160rpx;
+}
+.user-info__right {
+  width: calc(100% - 160rpx);
+  padding: 10rpx 0 10rpx 20rpx;
+  height: 100%;
+}
+.user-info__nickname {
+  font-size: 30rpx;
+  font-weight: 700;
+}
+.user-info__nickname .icon-VIP {
+  font-size: 30rpx;
+}

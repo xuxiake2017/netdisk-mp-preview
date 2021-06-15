@@ -1,4 +1,9 @@
-// pages/user/user.js
+import {
+  GetInfo,
+  GetDetail,
+} from '../../api/user';
+import { USER_STATUS_MAP } from '../../common/constant';
+
 Page({
 
   /**
@@ -22,13 +27,16 @@ Page({
         value: 'user'
       }
     ],
+    userInfo: {},
+    USER_STATUS_MAP,
+    loading: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // this.GetInfoWrap()
   },
 
   /**
@@ -42,42 +50,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+    this.GetDetailWrap()
   },
 
   onTabClick(e) {
@@ -100,5 +73,22 @@ Page({
         })
         break
     }
+  },
+  GetInfoWrap () {
+    GetInfo().then((result) => {
+      console.log(result);
+    })
+  },
+  GetDetailWrap () {
+    this.setData({
+      loading: true
+    })
+    GetDetail().then((result) => {
+      console.log(result);
+      this.setData({
+        userInfo: result.data,
+        loading: false
+      })
+    })
   },
 })

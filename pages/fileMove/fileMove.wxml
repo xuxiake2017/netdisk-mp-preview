@@ -18,7 +18,6 @@
       <file-list
         file-list="{{ dirList }}"
         show-file-opt="{{ false }}"
-        transparent-bg="{{ true }}"
         bind:file-click="onFileClick"
         bind:file-opt="fileOptHandler"
       ></file-list>

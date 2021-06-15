@@ -1,0 +1,9 @@
+<wxs src="../../../common/wxs/file.wxs" module="tools"></wxs>
+<view class="custom-progress">
+  <view class="custom-progress__content">
+    <view class="custom-progress__bar" style="{{ progressBarStyle }}"></view>
+  </view>
+  <view class="custom-progress__desc">
+    容量（{{ tools.formatFileSize(usedMemory) }} / {{ tools.formatFileSize(totalMemory) }} {{ percentage }}）
+  </view>
+</view>

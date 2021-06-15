@@ -1,11 +1,8 @@
 @font-face {
-  font-family: 'iconfont';  /* project id 2216115 */
-  src: url('https://at.alicdn.com/t/font_2216115_fb24fqe0ghu.eot');
-  src: url('https://at.alicdn.com/t/font_2216115_fb24fqe0ghu.eot?#iefix') format('embedded-opentype'),
-  url('https://at.alicdn.com/t/font_2216115_fb24fqe0ghu.woff2') format('woff2'),
-  url('https://at.alicdn.com/t/font_2216115_fb24fqe0ghu.woff') format('woff'),
-  url('https://at.alicdn.com/t/font_2216115_fb24fqe0ghu.ttf') format('truetype'),
-  url('https://at.alicdn.com/t/font_2216115_fb24fqe0ghu.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* Project id 2216115 */
+  src: url('https://at.alicdn.com/t/font_2216115_micw5i7nnag.woff2?t=1623770594931') format('woff2'),
+       url('https://at.alicdn.com/t/font_2216115_micw5i7nnag.woff?t=1623770594931') format('woff'),
+       url('https://at.alicdn.com/t/font_2216115_micw5i7nnag.ttf?t=1623770594931') format('truetype');
 }
 
 .iconfont {
@@ -15,6 +12,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-VIP:before {
+  content: "\e7d7";
 }
 
 .icon-shoji:before {

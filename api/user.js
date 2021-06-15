@@ -19,3 +19,11 @@ export const VerifyCaptcha = params => {
 export const SendSMSCaptcha = params => {
   return postJSON('wechat/sendSMSCaptcha', params)
 }
+
+export const GetInfo = params => {
+  return postJSON('user/getInfo', params)
+}
+
+export const GetDetail = params => {
+  return postJSON('user/detail', params)
+}
