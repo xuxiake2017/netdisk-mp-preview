@@ -9,7 +9,7 @@
         <view class="home__search-bar">
           <view class="home__search-bar-input-wrap">
             <text class="iconfont icon-search"></text>
-            <input placeholder="搜索网盘文件" placeholder-style="font-weight: 600; font-size: 30rpx; color: #c2c2c2;" />
+            <input placeholder="搜索网盘文件" placeholder-style="font-weight: 600; font-size: 30rpx; color: #c2c2c2;" bind:tap="onSearchInputClick" />
           </view>
           <text class="iconfont icon-descending"></text>
         </view>
@@ -37,6 +37,7 @@
       </block>
       <footer-bar
         bind:uploadFile="onUploadFile"
+        bind:uploadImg="onUploadImg"
       ></footer-bar>
     </view>
   </view>

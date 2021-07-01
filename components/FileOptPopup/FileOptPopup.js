@@ -21,11 +21,11 @@ Component({
         //   icon: 'icon-share',
         //   value: 'share'
         // },
-        {
-          name: '复制',
-          icon: 'icon-copy',
-          value: 'copy'
-        },
+        // {
+        //   name: '复制',
+        //   icon: 'icon-copy',
+        //   value: 'copy'
+        // },
         {
           name: '重命名',
           icon: 'icon-rename',

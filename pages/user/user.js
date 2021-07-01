@@ -1,10 +1,16 @@
 import {
   GetInfo,
   GetDetail,
+  Logout
 } from '../../api/user';
 import { USER_STATUS_MAP } from '../../common/constant';
+import commonBehaviors from '../../common/behaviors/commonBehaviors';
 
 Page({
+
+  behaviors: [
+    commonBehaviors
+  ],
 
   /**
    * 页面的初始数据
@@ -91,4 +97,17 @@ Page({
       })
     })
   },
+  onLogout () {
+    this.$showModal('提示', '确认切换账号？').then((result) => {
+      Logout().then((result) => {
+        setTimeout(() => {
+          wx.reLaunch({
+            url: '/pages/user/login'
+          })
+        }, 500)
+      }).catch((err) => {
+        this.$toast('账号切换失败！')
+      });
+    })
+  }
 })

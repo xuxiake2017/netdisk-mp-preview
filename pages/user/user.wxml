@@ -26,5 +26,15 @@
         </view>
       </view>
     </van-skeleton>
+    <view class="user-info__btn">
+      <van-button
+        size="large"
+        color="linear-gradient(to right, #4bb0ff, #6149f6)"
+        round
+        bind:click="onLogout"
+      >
+        切换账号
+      </van-button>
+    </view>
   </view>
 </view>

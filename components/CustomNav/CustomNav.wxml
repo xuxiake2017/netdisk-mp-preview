@@ -28,7 +28,7 @@
             </view>
         </block>
       </view>
-      <view class="u-flex-1 u-text-center custom-header__title">
+      <view class="u-flex-1 u-line-1 u-text-center custom-header__title">
         <block wx:if="{{ $slots.title }}">
           <slot name="title">
           </slot>

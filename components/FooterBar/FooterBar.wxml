@@ -6,13 +6,13 @@
         上传
       </view>
     </view>
-    <view class="u-flex-1 u-flex-col u-row-center u-col-center footer-bar-item" bind:tap="onSelectFile">
+    <!-- <view class="u-flex-1 u-flex-col u-row-center u-col-center footer-bar-item" bind:tap="onSelectFile">
       <van-icon custom-style="font-weight: 700" class="footer-bar-item__icon" size="22" name="passed" />
       <view class="footer-bar-item__text">
         选择
       </view>
-    </view>
-    <view class="u-flex-2 u-text-center" bind:tap="onShareFile">
+    </view> -->
+    <!-- <view class="u-flex-2 u-text-center" bind:tap="onShareFile">
       <van-button
         icon="wechat"
         color="linear-gradient(to right, #4bb0ff, #6149f6)"
@@ -20,6 +20,15 @@
         size="normal"
         custom-style="height: 80rpx"
       >分享文件</van-button>
+    </view> -->
+    <view class="u-flex-2 u-text-center" bind:tap="onUploadImg">
+      <van-button
+        icon="photo"
+        color="linear-gradient(to right, #4bb0ff, #6149f6)"
+        round
+        size="normal"
+        custom-style="height: 80rpx"
+      >上传图片</van-button>
     </view>
   </view>
 </view>

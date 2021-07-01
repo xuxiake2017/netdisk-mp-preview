@@ -75,6 +75,10 @@ Page({
     })
     this.GetImgListWrap()
   },
+  // 监听用户下拉刷新事件
+  onPullDownRefresh () {
+    this.resetImgList()
+  },
 
   onTabClick(e) {
     const tab = e.detail.tab
@@ -96,6 +100,13 @@ Page({
         })
         break
     }
+  },
+  resetImgList () {
+    this.setData({
+      'pagination.pageNum': 1,
+      imgList: []
+    })
+    this.GetImgListWrap()
   },
   GetImgListWrap () {
     const params = {
@@ -125,11 +136,13 @@ Page({
         finished,
         allImgs: this.data.allImgs.concat(list_)
       })
+      wx.stopPullDownRefresh()
     }).catch((err) => {
       this.setData({
         loading: false,
         finished: true
       })
+      wx.stopPullDownRefresh()
     });
   },
   onImgClick (e) {

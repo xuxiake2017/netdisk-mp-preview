@@ -65,7 +65,7 @@ export default Behavior({
   },
   methods: {
     // 获取文件列表
-    getFileList() {
+    async getFileList() {
       this.setData({
         loading: true,
         finished: false,
@@ -74,7 +74,8 @@ export default Behavior({
         ...this.data.pagination,
         ...this.data.filters
       }
-      GetFileList(params).then(res => {
+      try {
+        const res = await GetFileList(params)
         const data = res.data
         const {
           list,
@@ -104,20 +105,24 @@ export default Behavior({
             pathname: data.pathname
           })
         }
-      }).catch(res => {
-        console.error(res)
+        wx.stopPullDownRefresh()
+        return res
+      } catch (error) {
+        console.error(error)
         this.setData({
           loading: false,
           finished: true
         })
-      })
+        wx.stopPullDownRefresh()
+        return undefined
+      }
     },
     resetFileList () {
       this.setData({
         'pagination.pageNum': 1,
         fileList: [],
       })
-      this.getFileList()
+      return this.getFileList()
     },
     // 对文件进行操作
     fileOptHandler(event) {
@@ -195,6 +200,12 @@ export default Behavior({
                 }
               ]
             })
+          })
+          break
+        case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_MUSIC: // 视频
+          console.log('music')
+          GetFileMediaInfo({ fileKey }).then(res => {
+            console.log(res);
           })
           break
       }
@@ -354,6 +365,25 @@ export default Behavior({
         return false
       }
     },
+    uploadImg () {
+      wx.chooseImage({
+        success: res => {
+          const tempFilePaths = res.tempFilePaths
+          const resset = []
+          tempFilePaths.forEach(tempFilePath => {
+            resset.push(this.checkMd5Wrap(tempFilePath))
+          })
+          this.$showLoading('上传中')
+          Promise.all(resset).then((result) => {
+            if (result.every(item => item)) {
+              this.$hideLoading()
+              this.$toast.success('上传成功！')
+              this.resetFileList()
+            }
+          })
+        }
+      })
+    },
     onUploadItemClick (e) {
       this.setData({
         uploadPopupShow: false
@@ -361,23 +391,7 @@ export default Behavior({
       const type = e.detail.type
       switch (type) {
         case 'pic':
-          wx.chooseImage({
-            success: res => {
-              const tempFilePaths = res.tempFilePaths
-              const resset = []
-              tempFilePaths.forEach(tempFilePath => {
-                resset.push(this.checkMd5Wrap(tempFilePath))
-              })
-              this.$showLoading('上传中')
-              Promise.all(resset).then((result) => {
-                if (result.every(item => item)) {
-                  this.$hideLoading()
-                  this.$toast.success('上传成功！')
-                  this.resetFileList()
-                }
-              })
-            }
-          })
+          this.uploadImg()
           break
         case 'video':
           wx.chooseVideo({
@@ -449,6 +463,14 @@ export default Behavior({
         });
       }).catch((err) => {
       });
-    }
+    },
+    onUploadImg () {
+      this.uploadImg()
+    },
+    clearInput () {
+      this.setData({
+        fileName: ''
+      })
+    },
   }
 })

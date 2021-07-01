@@ -1,0 +1,14 @@
+{
+  "usingComponents": {
+    "custom-nav": "/components/CustomNav/CustomNav",
+    "file-list": "/components/FileList/FileList",
+    "load-finished": "/components/LoadFinished/LoadFinished",
+    "common-show-empty": "/components/CommonShowEmpty/CommonShowEmpty",
+    "van-loading": "@vant/weapp/loading/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "file-opt-popup": "/components/FileOptPopup/FileOptPopup",
+    "custom-field": "/components/CustomField/CustomField",
+    "custom-model": "/components/CustomModel/CustomModel"
+  },
+  "navigationStyle": "custom"
+}

@@ -26,6 +26,7 @@
     </block>
     <footer-bar
       bind:uploadFile="onUploadFile"
+      bind:uploadImg="onUploadImg"
     ></footer-bar>
   </view>
   <file-opt-popup

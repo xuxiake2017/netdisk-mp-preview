@@ -15,5 +15,7 @@
     "common-show-empty": "/components/CommonShowEmpty/CommonShowEmpty",
     "van-button": "@vant/weapp/button/index"
   },
-  "navigationBarTitleText": "相册文件"
+  "navigationBarTitleText": "相册文件",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
 }

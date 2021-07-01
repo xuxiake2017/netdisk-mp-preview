@@ -39,5 +39,8 @@ Component({
     onShareFile () {
       this.$emit('shareFile')
     },
+    onUploadImg () {
+      this.$emit('uploadImg')
+    }
   }
 })

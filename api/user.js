@@ -20,6 +20,10 @@ export const SendSMSCaptcha = params => {
   return postJSON('wechat/sendSMSCaptcha', params)
 }
 
+export const Logout = params => {
+  return postJSON('wechat/logout', params)
+}
+
 export const GetInfo = params => {
   return postJSON('user/getInfo', params)
 }

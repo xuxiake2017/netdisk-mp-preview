@@ -1,0 +1,81 @@
+<view>
+  <view class="custom-nav">
+    <custom-nav title="搜索文件"></custom-nav>
+  </view>
+  <view class="page-header-wrap full-w" style="{{ headerWrapStyle }}">
+    <view class="page-header full-w u-p-l-30 u-p-r-30 u-p-t-40 u-p-b-10" style="{{ headerStyle }}">
+      <!-- 文件搜索条 -->
+      <view class="search-bar">
+        <view class="search-bar-input-wrap u-flex-1">
+          <text class="iconfont icon-search"></text>
+          <!-- <van-icon name="search" /> -->
+          <input
+            placeholder="搜索网盘文件"
+            placeholder-style="font-weight: 600; font-size: 30rpx; color: #c2c2c2;"
+            model:value="{{ searchContent }}"
+            bind:tap="onInputClick"
+            bind:confirm="onSearch"
+          />
+          <van-icon name="clear" color="#bdbdbd" size="38rpx" wx:if="{{ searchContent && showSearchHistory }}" bind:click="onClearInput" />
+        </view>
+        <view wx:if="{{ showSearchHistory }}" class="search-bar__btn" bind:tap="onSearch">{{ searchContent ? '搜索' : '取消' }}</view>
+      </view>
+      <view wx:if="{{ !showSearchHistory }}" class="search-result-note">搜索结果（{{ searchResult }}）</view>
+    </view>
+  </view>
+  <view class="page-container">
+    <view class="page-content">
+
+      <block wx:if="{{ showSearchHistory }}">
+        <view class="u-flex search-history-header">
+          <view class="u-flex-1 search-history-header__left">
+            搜索历史
+          </view>
+          <view class="u-flex u-col-center u-row-right u-flex-1 search-history-header__right" bind:tap="clearHistoryList">
+            <van-icon name="delete" size="20px" color="#D4D4D4" />
+          </view>
+        </view>
+        <view class="search-history-list">
+          <view wx:for="{{ searchHistoryList }}" wx:key="index" class="search-history-item u-p-15 u-p-l-25 u-p-r-25 u-m-r-20 u-m-t-20" data-item="{{ item }}" bind:tap="onHistoryItemClick">{{ item }}</view>
+          <view class="clearfix"></view>
+        </view>
+      </block>
+      <block wx:else>
+        <block wx:if="{{ !showEmpty }}">
+          <!-- 文件列表 -->
+          <file-list file-list="{{ fileList }}" transparent-bg="{{ true }}" bind:file-click="onFileClick" bind:file-opt="fileOptHandler"></file-list>
+          <!-- 文件列表加载 -->
+          <view wx:if="{{ loading }}" class="u-text-center u-p-t-20 u-p-b-20">
+            <van-loading size="45rpx" vertical>加载中...</van-loading>
+          </view>
+          <load-finished wx:if="{{ finished }}"></load-finished>
+        </block>
+        <block wx:if="{{ showEmpty }}">
+          <common-show-empty note="无搜索结果"></common-show-empty>
+        </block>
+      </block>
+    </view>
+  </view>
+  <view class="page-footer-wrap">
+    <view class="page-footer"></view>
+  </view>
+  <file-opt-popup
+    show="{{ show }}"
+    file="{{ optFile }}"
+    bind:popup-close="onPopupClose"
+    bind:opt-click="onOptClick"
+  ></file-opt-popup>
+  <custom-model
+    title="{{ optDialogTitle }}"
+    show="{{ optDialogShow }}"
+    bind:confirm="onDialogConfirm"
+    bind:cancel="onDialogCancel"
+    bind:close="onDialogClose"
+  >
+    <block wx:if="{{ dialogAction === 'reName' || dialogAction === 'makeDir' }}">
+      <view class="van-dialog__content">
+        <custom-field model:value="{{ fileName }}" bind:rightClick="clearInput"></custom-field>
+      </view>
+    </block>
+  </custom-model>
+</view>

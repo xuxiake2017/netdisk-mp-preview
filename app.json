@@ -5,7 +5,8 @@
     "pages/user/login",
     "pages/fileMove/fileMove",
     "pages/gallery/gallery",
-    "pages/user/user"
+    "pages/user/user",
+    "pages/searchPage/searchPage"
   ],
   "tabBar": {
     "list": [

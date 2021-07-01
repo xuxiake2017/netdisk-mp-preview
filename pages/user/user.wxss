@@ -20,3 +20,6 @@
 .user-info__nickname .icon-VIP {
   font-size: 30rpx;
 }
+.user-info__btn {
+  margin-top: 80rpx;
+}

@@ -30,17 +30,6 @@ Page({
       }
     ],
   },
-  // tab切换
-  onChange(event) {
-    this.setData({
-      active: event.detail.name
-    })
-    wx.showToast({
-      title: `切换到标签 ${event.detail.name}`,
-      icon: 'none',
-    });
-  },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -72,6 +61,22 @@ Page({
     })
     this.getFileList()
   },
+  // 监听用户下拉刷新事件
+  onPullDownRefresh () {
+    this.resetFileList()
+  },
+
+
+  // tab切换
+  onChange(event) {
+    this.setData({
+      active: event.detail.name
+    })
+    wx.showToast({
+      title: `切换到标签 ${event.detail.name}`,
+      icon: 'none',
+    });
+  },
   onTabClick(e) {
     const tab = e.detail.tab
     if (this.data.active === tab.value) return
@@ -93,10 +98,9 @@ Page({
         break
     }
   },
-
-  clearInput () {
-    this.setData({
-      fileName: ''
+  onSearchInputClick () {
+    wx.navigateTo({
+      url: `/pages/searchPage/searchPage`
     })
   }
 })

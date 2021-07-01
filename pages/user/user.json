@@ -3,7 +3,8 @@
     "common-tabs": "/components/CommonTabs/CommonTabs",
     "van-image": "@vant/weapp/image/index",
     "custom-progress": "/pages/user/components/CustomProgress",
-    "van-skeleton": "@vant/weapp/skeleton/index"
+    "van-skeleton": "@vant/weapp/skeleton/index",
+    "van-button": "@vant/weapp/button/index"
   },
   "navigationBarTitleText": "个人中心"
 }
