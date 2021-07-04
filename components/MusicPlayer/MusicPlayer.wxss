@@ -1,0 +1,63 @@
+.music-player {
+  width: 600rpx;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.music-player__poster {
+  height: 600rpx;
+  width: 600rpx;
+}
+.music-player__content {
+  width: 600rpx;
+  height: 600rpx;
+  color: #FFF;
+  position: relative;
+  transition: all ease-in-out 0.4s;
+}
+.music-player__btn {
+  height: 90rpx;
+  line-height: 90rpx;
+  margin-top: 40rpx;
+}
+.music-player__btn .iconfont {
+  color: #FFF;
+}
+.music-player__progress {
+  margin-top: 60rpx;
+  position: relative;
+}
+.music-player__current-time {
+  position: absolute;
+  left: 0;
+  bottom: 40rpx;
+  transform: translateX(50%);
+}
+.music-player__duration {
+  position: absolute;
+  right: 0;
+  bottom: 40rpx;
+  transform: translateX(-50%);
+}
+.music-player__volume-progress {
+  position: absolute;
+  bottom: calc(90rpx - 30rpx - 10px);
+  right: 50%;
+  height: 200rpx;
+  transform: translateX(50%);
+}
+
+.musice-title {
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 32rpx;
+  line-height: 1.8;
+}
+
+.musice-author {
+  width: 100%;
+  text-align: center;
+  font-size: 26rpx;
+  line-height: 1.8;
+}
+
+/*# sourceMappingURL=MusicPlayer.wxss.map */

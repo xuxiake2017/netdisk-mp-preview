@@ -75,6 +75,8 @@ App({
     // 小程序是否完成初始化
     inited: false,
     // 要操作移动的文件
-    moveOptFile: {}
+    moveOptFile: {},
+    // 排序方式
+    orderBy: 'fileName',
   }
 })

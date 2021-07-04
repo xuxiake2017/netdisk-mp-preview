@@ -11,7 +11,9 @@
             <text class="iconfont icon-search"></text>
             <input placeholder="搜索网盘文件" placeholder-style="font-weight: 600; font-size: 30rpx; color: #c2c2c2;" bind:tap="onSearchInputClick" />
           </view>
-          <text class="iconfont icon-descending"></text>
+          <picker bind:change="onOrderByChange" value="{{ orderByIndex }}" range="{{ orderByList }}" range-key="label" header-text="排序方式">
+            <text class="iconfont icon-descending"></text>
+          </picker>
         </view>
         <!-- 文件列表 -->
         <file-list file-list="{{ fileList }}" transparent-bg="{{ true }}" bind:file-click="onFileClick" bind:file-opt="fileOptHandler"></file-list>

@@ -1,0 +1,13 @@
+<!-- <view class="full-w u-p-40">
+  <view class="u-flex u-row-center page-content">
+    <music-player
+      audio="{{ audio }}"
+    ></music-player>
+  </view>
+</view> -->
+<view catch:touchmove>
+  <music-player
+    audio="{{ audio }}"
+    loopMode="random"
+  ></music-player>
+</view>

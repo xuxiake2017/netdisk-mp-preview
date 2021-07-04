@@ -1,0 +1,62 @@
+<view class="music-player" style="{{ commonWidth }}">
+  <view class="music-player__poster" style="{{ commonWidth }}{{ commonHeight }}">
+    <canvas type="2d" id="canvas" canvas-id="myCanvas" class="full-w-h" />
+  </view>
+  <view class="music-player__content u-p-20" style="{{ contentStyle }}{{ commonWidth }}{{ commonHeight }}">
+    <view class="u-p-t-20">
+      <view class="musice-title full-w u-text-center u-line-2">
+        {{ currentAudio.name }}
+      </view>
+      <view class="musice-author full-w u-text-center">
+        {{ currentAudio.artist }}
+      </view>
+    </view>
+    <view class="u-flex music-player__btn">
+      <view class="u-flex-1 u-flex u-row-center u-col-center" bind:tap="onLoopModeChange">
+        <text class="iconfont {{ loopIcon }}"></text>
+      </view>
+      <view class="u-flex-1 u-flex u-row-center u-col-center" bind:tap="playLast">
+        <text class="iconfont icon-shangyiqu"></text>
+      </view>
+      <view class="u-flex-1 u-flex u-row-center u-col-center" bind:tap="onPauseClick">
+        <text class="iconfont {{ paused ? 'icon-zanting' : 'icon-bofangzhong' }}" style="font-size: 80rpx;"></text>
+      </view>
+      <view class="u-flex-1 u-flex u-row-center u-col-center" bind:tap="playNext">
+        <text class="iconfont icon-xiayiqu"></text>
+      </view>
+      <view class="u-flex-1 u-flex u-row-center u-col-center" style="position: relative;" bind:tap="onVolumeClick">
+        <text class="iconfont icon-yinliang"></text>
+        <view class="music-player__volume-progress" wx:if="{{ showVolumeProgress }}" catch:tap>
+          <slider-vertical
+            activeColor="#FFF"
+            block-size="12"
+            step="1"
+            min="0" 
+            max="10"
+            value="{{ volumeCurrent }}"
+            disabled="{{ false }}"
+            show-value="{{ false }}"
+            bind:change="onVolumeChange"
+          ></slider-vertical>
+        </view>
+      </view>
+    </view>
+    <view class="music-player__progress">
+      <slider
+        activeColor="#FFF"
+        block-size="12"
+        min="0"
+        max="{{ duration }}"
+        value="{{ currentTime }}"
+        bind:change="onPlayProgressChange"
+        bind:changing="onPlayProgressChanging"
+      ></slider>
+      <view class="music-player__current-time">
+        {{ currentTimeFormat }}
+      </view>
+      <view class="music-player__duration">
+        {{ durationFormat }}
+      </view>
+    </view>
+  </view>
+</view>

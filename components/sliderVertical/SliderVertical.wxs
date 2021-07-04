@@ -1,0 +1,138 @@
+var notInt = function(num) {
+  return num !== parseInt(num)
+}
+/*
+ * state:共享临时数据对象
+ * state.max:最大值
+ * state.min:最小值
+ * state.offset:当前高度，即value-min的值（未按照step纠正的值）
+ * state.step:步长
+ * ins:页面或组件实例
+ */
+var calculate = function(instance,state,changeCallback){
+  var max = state.max
+  var min = state.min
+  var offset = state.offset
+  var step = state.step
+  // 1、计算 offset 按照 step 算应该是几个。
+  // Math.round(offset % step / step) 计算的是 offset 对 step 取模后剩下的长度四舍五入，就是多出来的部分是否该算一步
+  // Math.floor(offset / step) 计算的是 offset 中包含多少个完整的 step
+  var stepNum = Math.round(offset % step / step) + Math.floor(offset / step)
+  // 2、纠正后的当前高度
+  var current = stepNum * step
+
+  // 3、当前高度所占比例，由于 offset 的大小已经在进方法前经过了修正，所以这里不需要再判断是否小于0或者大于100了
+  var percent = current * 100 / (max - min)
+
+  instance.selectComponent("#upper").setStyle({
+    height: (100 - percent) + "%"
+  })
+  instance.selectComponent("#lower").setStyle({
+    height: percent + "%"
+  })
+  if(state.current !== current){
+    state.current = current
+    changeCallback(current+min)
+  }
+}
+
+module.exports = {
+  propsChange: function(newValue, oldValue, ins) {
+    var state = ins.getState()
+    var step = newValue.step;
+    var min = newValue.min;
+    var max = newValue.max;
+    var value = newValue.value;
+    if (notInt(step) || notInt(min) || notInt(max) || notInt(value)) {
+      console.log("你不把 step min max value 设成正整数，我没法做啊")
+      return
+    }
+    if (min > max) {
+      min = oldValue.min
+      max = oldValue.max
+    }
+    if (value > max) {
+      console.log("value的值比max大，将value强制设为max")
+      value = max
+    } else if (value < min) {
+      console.log("value的值比min小，将value强制设为min："+min)
+      value = min
+    }
+    if (step <= 0 || (max - min) % step != 0) {
+      console.log("step只能是正整数且必须被(max-min)整除，否则将step强制设为1")
+      step = 1
+    }
+    state.min = min
+    state.max = max
+    state.step = step
+    state.offset = value - min
+    state.disabled = newValue.disabled
+    state.totalTop = newValue.totalTop
+    state.totalHeight = newValue.totalHeight
+    if (newValue.totalTop !== null && newValue.totalHeight !== null) {
+      calculate(ins, state, function(currentValue){
+        ins.callMethod("setCurrent", {value: state.current + state.min})
+      })
+    }
+  },
+  tapEndPoint: function(e, ins){
+    var state = ins.getState()
+    if (state.disabled) return
+    var percent = e.currentTarget.dataset.percent
+    state.offset = (state.max - state.min) * percent
+    calculate(ins, state, function (currentValue) {
+      ins.triggerEvent("change", {
+        value: currentValue
+      })
+      ins.callMethod("setCurrent", {value: currentValue})
+    })
+  },
+  tap: function(e, ins) {
+    var state = ins.getState()
+    if (state.disabled) return
+    // （总高度+头部高度-点击点高度）/ 总高度 = 点击点在组件的位置
+    // 点击事件只在线条上，所以percent是不可能小于0，也不可能超过100%，无需另加判断
+    var percent = (state.totalHeight - e.changedTouches[0].pageY + state.totalTop) / state.totalHeight
+    state.offset = (state.max - state.min) * percent
+    calculate(ins, state, function(currentValue){
+      ins.triggerEvent("change", {
+        value: currentValue
+      })
+      ins.callMethod("setCurrent", {value: currentValue})
+    })
+  },
+  start: function(e, ins) {
+    var state = ins.getState()
+    if (state.disabled) return
+    state.startPoint = e.changedTouches[0]
+    // 本次滑动之前的高度px = 当前高度value / (最大值-最小值) * 最大高度
+    var currentPx = state.current / (state.max - state.min) * state.totalHeight
+    state.currentPx = currentPx
+  },
+  move: function(e, ins) {
+    var state = ins.getState()
+    if (state.disabled) return
+    var startPoint = state.startPoint
+    var endPoint = e.changedTouches[0]
+    // 当前的高度px = 滑动之前的高度px + 起始点高度 - 当前点高度
+    var currentPx = state.currentPx + startPoint.pageY - endPoint.pageY
+    var percent = currentPx / state.totalHeight
+    // 由于可能滑出slider范围，所以要限制比例在 0-1之间
+    percent = percent>1?1:percent
+    percent = percent<0?0:percent
+    state.offset = (state.max - state.min) * percent
+    calculate(ins, state, function(currentValue){
+      ins.triggerEvent("changing", {
+        value: currentValue
+      })
+      ins.callMethod("setCurrent", {value: currentValue})
+    })
+  },
+  end: function(e, ins) {
+    var state = ins.getState()
+    if (state.disabled) return
+    ins.triggerEvent("change", {
+      value: state.current + state.min
+    })
+  }
+}

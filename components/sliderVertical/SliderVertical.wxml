@@ -1,0 +1,23 @@
+<wxs module="eventHandle" src="./SliderVertical.wxs"></wxs>
+<view class="slider" catchtouchmove="empty">
+  <view class="slider-append" data-percent="1" bindtap="{{eventHandle.tapEndPoint}}"></view>
+  <view class="slider-container" change:prop="{{eventHandle.propsChange}}" prop="{{ {max,min,step,value,totalTop,totalHeight,disabled} }}" >
+    <view class="slider-upper" id="upper" catchtap="{{eventHandle.tap}}">
+      <view class="slider-upper-line" style="background-color: {{backgroundColor}}"></view>
+    </view>
+    <view class="slider-middle">
+      <view 
+        class="slider-block" 
+        style="background-color:{{blockColor}};box-shadow:{{blockColor=='#ffffff'?'0 0 2px 2px rgba(0,0,0,0.2)':'none'}};width:{{blockSize}}px;height:{{blockSize}}px" 
+        catchtouchstart="{{eventHandle.start}}" 
+        catchtouchmove="{{eventHandle.move}}"
+        catchtouchend="{{eventHandle.end}}"
+        ></view>
+    </view>
+    <view class="slider-lower" id="lower" catchtap="{{eventHandle.tap}}">
+      <view class="slider-lower-line" style="background-color: {{activeColor}}"></view>
+    </view>
+  </view>
+  <view class="slider-append" data-percent="0" bindtap="{{eventHandle.tapEndPoint}}"></view>
+  <view class="slider-value" wx:if="{{showValue}}">{{currentValue}}</view>
+</view>

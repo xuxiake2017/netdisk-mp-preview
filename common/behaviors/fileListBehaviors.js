@@ -72,7 +72,8 @@ export default Behavior({
       })
       const params = {
         ...this.data.pagination,
-        ...this.data.filters
+        ...this.data.filters,
+        orderBy: app.globalData.orderBy
       }
       try {
         const res = await GetFileList(params)
@@ -202,10 +203,10 @@ export default Behavior({
             })
           })
           break
-        case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_MUSIC: // 视频
+        case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_MUSIC: // 音频
           console.log('music')
-          GetFileMediaInfo({ fileKey }).then(res => {
-            console.log(res);
+          wx.navigateTo({
+            url: `/pages/MediaPreview/MediaPreview?fileKey=${fileKey}`
           })
           break
       }

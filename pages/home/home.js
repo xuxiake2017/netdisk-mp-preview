@@ -29,6 +29,19 @@ Page({
         value: 'user'
       }
     ],
+    // 排序方式索引
+    orderByIndex: 0,
+    // 排序方式列表
+    orderByList: [
+      {
+        value: 'fileName',
+        label: '文件名',
+      },
+      {
+        value: 'uploadTime',
+        label: '上传时间',
+      },
+    ]
   },
   /**
    * 生命周期函数--监听页面加载
@@ -64,6 +77,13 @@ Page({
   // 监听用户下拉刷新事件
   onPullDownRefresh () {
     this.resetFileList()
+  },
+  onShareAppMessage () {
+    return {
+      title: '使用「我的照片墙」小程序，立即备份本地照片',
+      path: '/pages/home/home',
+      imageUrl: '/static/onShareAppMessage_bg.jpg'
+    }
   },
 
 
@@ -102,5 +122,14 @@ Page({
     wx.navigateTo({
       url: `/pages/searchPage/searchPage`
     })
+  },
+  // 排序方式改变处理
+  onOrderByChange (e) {
+    const orderByIndex = Number(e.detail.value)
+    this.setData({
+      orderByIndex,
+    })
+    app.globalData.orderBy = this.data.orderByList[orderByIndex].value
+    this.resetFileList()
   }
 })
