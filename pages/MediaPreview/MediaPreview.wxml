@@ -8,6 +8,6 @@
 <view catch:touchmove>
   <music-player
     audio="{{ audio }}"
-    loopMode="random"
+    loopMode="sequence"
   ></music-player>
 </view>
