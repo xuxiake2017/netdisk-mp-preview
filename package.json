@@ -1,6 +1,6 @@
 {
   "name": "netdisk-mp-preview",
-  "version": "1.0.0",
+  "version": "v1.0.3",
   "description": "netdisk power by weixin miniprogram",
   "main": "app.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/xuxiake2017/netdisk-mp-preview.git"
   },
   "author": "xuxiake",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/xuxiake2017/netdisk-mp-preview/issues"
   },

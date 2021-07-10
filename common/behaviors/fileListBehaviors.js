@@ -190,7 +190,7 @@ export default Behavior({
         case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_VIDEO: // 视频
           console.log('video')
           GetFileMediaInfo({ fileKey }).then(res => {
-            if (!data.fileMedia) {
+            if (!res.data.fileMedia) {
               this.$toast('暂不支持该文件预览！')
               return
             }
