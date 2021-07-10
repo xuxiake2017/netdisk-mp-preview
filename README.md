@@ -1,4 +1,4 @@
-## Netdisk 小程序
+## Netdisk 小程序（我的照片墙）
 
 #### 运行项目之前
 
@@ -23,7 +23,22 @@ npm install
 - [微信官方](https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html)
 - [Vant](https://vant-contrib.gitee.io/vant-weapp/#/quickstart)
 
-> 更新日志
+#### 项目截图
+<div align="left">
+    <img src="https://github.com/xuxiake2017/netdisk-mp-preview/blob/master/pic/preview_1.jpg?raw=true" width="200" title="preview_1" /><img src="https://github.com/xuxiake2017/netdisk-mp-preview/blob/master/pic/preview_2.jpg?raw=true" width="200" title="preview_2" /><img src="https://github.com/xuxiake2017/netdisk-mp-preview/blob/master/pic/preview_3.jpg?raw=true" width="200" title="preview_3" /><img src="https://github.com/xuxiake2017/netdisk-mp-preview/blob/master/pic/preview_4.jpg?raw=true" width="200" title="preview_4" />
+  </div>
+
+#### 项目预览
+
+<div align="left">
+    <img src="https://github.com/xuxiake2017/netdisk-mp-preview/blob/master/pic/gh_3c0eeb9635a2_258.jpg?raw=true" width="200" title="preview_1" />
+  </div>
+
+#### 鸣谢
+
+全局样式（`padding`、`margin`以及`flex`）和部分工具函数使用的[uView](https://github.com/YanxinNet/uView)里面的
+
+#### 更新日志
 
 ##### 2021-06-13
 
