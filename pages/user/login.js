@@ -50,7 +50,8 @@ Component({ // 使用 Component 构造器构造页面
     phone: '',
     loginAndRegisterParam: {
       uuid: ''
-    }
+    },
+    timer: null
   },
 
   methods: {
@@ -71,6 +72,12 @@ Component({ // 使用 Component 构造器构造页面
         }
       })
     },
+    onUnload () {
+      if (this.data.timer) {
+        clearInterval(this.data.timer)
+      }
+    },
+
     // 登录注册
     login () {
       if (!this.data.phone) {
@@ -120,6 +127,13 @@ Component({ // 使用 Component 构造器构造页面
             LoginAndRegister(params).then(res1 => {
               this.$toast.success(res1.msg)
               CONFIG.token = res1.data
+              if (this.data.timer) {
+                clearInterval(this.data.timer)
+              }
+              wx.setStorage({
+                key: "REGISTER_COUNT_DOWN_TIME",
+                data: 0,
+              })
               wx.setStorage({
                 key: "X-Token",
                 data: res1.data,
@@ -220,6 +234,9 @@ Component({ // 使用 Component 构造器构造页面
           })
         }
       }, 1000)
+      this.setData({
+        timer
+      })
     },
     // 发送短信验证码
     sendSMSCaptcha () {
