@@ -8,7 +8,7 @@
       <login-field
         type="number"
         limit="{{ 11 }}"
-        placeholder="请输入手机号"
+        placeholder="请输入手机号(未注册将直接注册)"
         left-icon="icon-shoji"
         model:value="{{ phone }}"
       ></login-field>

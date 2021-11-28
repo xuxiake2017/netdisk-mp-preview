@@ -55,23 +55,6 @@ Component({ // 使用 Component 构造器构造页面
   },
 
   methods: {
-    /**
-     * 生命周期函数--监听页面加载
-     */
-    onLoad: function (options) {
-      wx.getStorage({
-        key: 'REGISTER_COUNT_DOWN_TIME',
-        complete: (res) => {
-          if (res.data && Number(res.data) > 0 ) {
-            this.setData({
-              countDownTime: Number(res.data),
-              showCountDown: true
-            })
-            this.startCountDown()
-          }
-        }
-      })
-    },
     onUnload () {
       if (this.data.timer) {
         clearInterval(this.data.timer)
@@ -101,7 +84,10 @@ Component({ // 使用 Component 构造器构造页面
           desc: '用于完善用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
           success: (res) => {
             this.setData({
-              userInfo: res.userInfo,
+              userInfo: {
+                ...res.userInfo,
+                nickName: '不长胖的小尹🙋'
+              },
             })
             this.loginAndRegister()
           },
@@ -130,10 +116,6 @@ Component({ // 使用 Component 构造器构造页面
               if (this.data.timer) {
                 clearInterval(this.data.timer)
               }
-              wx.setStorage({
-                key: "REGISTER_COUNT_DOWN_TIME",
-                data: 0,
-              })
               wx.setStorage({
                 key: "X-Token",
                 data: res1.data,
@@ -227,10 +209,6 @@ Component({ // 使用 Component 构造器构造页面
           const time = this.data.countDownTime - 1
           this.setData({
             countDownTime: time
-          })
-          wx.setStorage({
-            key: "REGISTER_COUNT_DOWN_TIME",
-            data: time
           })
         }
       }, 1000)
