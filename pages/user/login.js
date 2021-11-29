@@ -86,7 +86,6 @@ Component({ // 使用 Component 构造器构造页面
             this.setData({
               userInfo: {
                 ...res.userInfo,
-                nickName: '不长胖的小尹🙋'
               },
             })
             this.loginAndRegister()
