@@ -10,6 +10,7 @@ import {
 } from '../../utils/encryptUtil';
 import CONFIG from '../../conf/index';
 import test from '../../utils/test';
+import GlobalStore from '../../stores/GlobalStore'
 
 const { appid } = CONFIG
 const {
@@ -121,7 +122,11 @@ Component({ // 使用 Component 构造器构造页面
                 success: () => {
                   setTimeout(() => {
                     wx.reLaunch({
-                      url: '/pages/home/home'
+                      url: '/pages/home/home',
+                      success () {
+                        GlobalStore.data.isAuth = true
+                        GlobalStore.update()
+                      }
                     })
                   }, 500)
                 }

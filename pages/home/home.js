@@ -1,8 +1,14 @@
 import fileListBehaviors from '../../common/behaviors/fileListBehaviors';
 import { AUTO_LOGIN_COMPLATE, MOVE_FILE_SUCCESS } from '../../common/events';
+import create from 'mini-stores'
+import GlobalStore from '../../stores/GlobalStore'
+
+const stores = {
+  '$data': GlobalStore,
+}
 
 const app = getApp()
-Page({
+create.Page(stores, {
 
   // 混入（相当于vue的mixins）
   behaviors: [
@@ -41,7 +47,8 @@ Page({
         value: 'uploadTime',
         label: '上传时间',
       },
-    ]
+    ],
+    isAuth: app.globalData.isAuth,
   },
   /**
    * 生命周期函数--监听页面加载

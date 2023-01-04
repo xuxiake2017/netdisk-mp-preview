@@ -2,7 +2,7 @@
 <view>
   <!-- tabs标签栏 -->
   <common-tabs active="{{ active }}" tabs="{{ tabs }}" line-width="{{ 50 }}" bind:tab-click="onTabClick"></common-tabs>
-  <view class="home-container-wrap">
+  <view class="home-container-wrap" wx:if="{{ !$data.showNoAuth }}">
     <view class="home-container">
       <block wx:if="{{ !showEmpty }}">
         <!-- 文件搜索条 -->
@@ -43,6 +43,9 @@
       ></footer-bar>
     </view>
   </view>
+  <no-auth
+    wx:else
+  />
   <file-opt-popup
     show="{{ show }}"
     file="{{ optFile }}"

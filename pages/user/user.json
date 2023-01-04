@@ -4,7 +4,8 @@
     "van-image": "@vant/weapp/image/index",
     "custom-progress": "/pages/user/components/CustomProgress",
     "van-skeleton": "@vant/weapp/skeleton/index",
-    "van-button": "@vant/weapp/button/index"
+    "van-button": "@vant/weapp/button/index",
+    "no-auth": "/components/NoAuth/NoAuth"
   },
   "navigationBarTitleText": "个人中心"
 }

@@ -4,7 +4,8 @@
     "gallery-item": "/pages/gallery/components/GalleryItem",
     "load-finished": "/components/LoadFinished/LoadFinished",
     "common-show-empty": "/components/CommonShowEmpty/CommonShowEmpty",
-    "van-loading": "@vant/weapp/loading/index"
+    "van-loading": "@vant/weapp/loading/index",
+    "no-auth": "/components/NoAuth/NoAuth"
   },
   "navigationBarTitleText": "我的相册",
   "enablePullDownRefresh": true,

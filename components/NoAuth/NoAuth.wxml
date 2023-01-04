@@ -1,0 +1,17 @@
+<view class="full-w u-p-t-40 u-p-l-30 u-p-r-30">
+  <view class="no-auth-top">
+    <view class="icon-svg svg__no-auth-bg no-auth-img"></view>
+    <view class="no-auth-desc">
+      登录后享受快捷的本地照片备份服务
+    </view>
+  </view>
+  <view class="u-m-t-40 u-m-l-40 u-m-r-40">
+    <van-button
+      size="large"
+      color="linear-gradient(to right, #4bb0ff, #6149f6)"
+      icon="wechat"
+      round
+      bind:click="onLogin"
+    >授权登录</van-button>
+  </view>
+</view>

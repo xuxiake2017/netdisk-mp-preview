@@ -4,6 +4,7 @@ import CONFIG from './conf/index';
 import { AutoLogin } from './api/user';
 import Toast from './common/behaviors/Toast';
 import { AUTO_LOGIN_COMPLATE } from './common/events';
+import GlobalStore from './stores/GlobalStore';
 
 App({
   // 在小程序上使用全局的消息订阅
@@ -42,24 +43,35 @@ App({
               const params = {
                 code: res2.code,
               }
+              wx.showLoading({
+                title: '加载中',
+              })
               AutoLogin(params).then(res3 => {
                 wx.setStorage({
                   key: "X-Token",
                   data: res3.data
                 })
                 CONFIG.token = res3.data
-                this.globalData.inited = true
+                // this.globalData.inited = true
                 this.emitter.emit(AUTO_LOGIN_COMPLATE)
+                GlobalStore.data.isAuth = true
+                // GlobalStore.update()
               }).catch(err => {
-                this.globalData.inited = true
+                // this.globalData.inited = true
                 this.$toast(err.msg || '登录失败！')
                 if (err.code === 20011) { // 未注册
-                  setTimeout(() => {
-                    wx.reLaunch({
-                      url: '/pages/user/login'
-                    })
-                  }, 500);
+                  // setTimeout(() => {
+                  //   wx.reLaunch({
+                  //     url: '/pages/user/login'
+                  //   })
+                  // }, 500);
                 }
+                GlobalStore.data.isAuth = false
+                // GlobalStore.update()
+              }).finally(() => {
+                wx.hideLoading()
+                this.globalData.inited = true
+                GlobalStore.update()
               })
             } else {
               this.$toast('登录失败！' + res2.errMsg)

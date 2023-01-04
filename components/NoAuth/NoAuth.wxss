@@ -1,0 +1,14 @@
+.no-auth-top {
+  padding: 100rpx 50rpx;
+  width: 100%;
+}
+.no-auth-img {
+  width: 100%;
+  height: 500rpx;
+}
+
+.no-auth-desc {
+  margin-top: 40rpx;
+  text-align: center;
+  width: 100%;
+}

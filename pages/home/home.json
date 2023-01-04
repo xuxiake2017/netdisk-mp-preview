@@ -13,7 +13,8 @@
     "footer-bar": "/components/FooterBar/FooterBar",
     "file-upload-popup": "/components/FileUploadPopup/FileUploadPopup",
     "common-show-empty": "/components/CommonShowEmpty/CommonShowEmpty",
-    "van-button": "@vant/weapp/button/index"
+    "van-button": "@vant/weapp/button/index",
+    "no-auth": "/components/NoAuth/NoAuth"
   },
   "navigationBarTitleText": "相册文件",
   "enablePullDownRefresh": true,

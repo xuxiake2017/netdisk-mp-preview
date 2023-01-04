@@ -5,8 +5,14 @@ import {
 } from '../../api/user';
 import { USER_STATUS_MAP } from '../../common/constant';
 import commonBehaviors from '../../common/behaviors/commonBehaviors';
+import create from 'mini-stores'
+import GlobalStore from '../../stores/GlobalStore'
 
-Page({
+const stores = {
+  '$data': GlobalStore,
+}
+
+create.Page(stores, {
 
   behaviors: [
     commonBehaviors
@@ -100,6 +106,8 @@ Page({
   onLogout () {
     this.$showModal('提示', '确认切换账号？').then((result) => {
       Logout().then((result) => {
+        GlobalStore.data.isAuth = false
+        GlobalStore.update()
         setTimeout(() => {
           wx.reLaunch({
             url: '/pages/user/login'

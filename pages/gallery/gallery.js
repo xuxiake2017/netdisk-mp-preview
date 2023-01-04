@@ -1,6 +1,12 @@
 import { GetImgList } from '../../api/img';
+import create from 'mini-stores'
+import GlobalStore from '../../stores/GlobalStore'
 
-Page({
+const stores = {
+  '$data': GlobalStore,
+}
+
+create.Page(stores, {
 
   /**
    * 页面的初始数据

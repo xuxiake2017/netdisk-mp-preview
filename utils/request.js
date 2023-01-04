@@ -25,10 +25,6 @@ const request = async (url, method, data = {}, options = {}) => {
         if (res.data) {
           if (res.data.code === 20000) {
             resolve(res.data)
-          } else if (res.data.code === 41000) {
-            wx.reLaunch({
-              url: '/pages/user/login'
-            })
           } else {
             reject(res.data)
           }

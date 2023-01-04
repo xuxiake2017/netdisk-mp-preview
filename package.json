@@ -1,6 +1,6 @@
 {
   "name": "netdisk-mp-preview",
-  "version": "v1.0.3",
+  "version": "v1.0.5",
   "description": "netdisk power by weixin miniprogram",
   "main": "app.js",
   "scripts": {
@@ -19,6 +19,7 @@
   "dependencies": {
     "@vant/weapp": "^1.6.8",
     "eventemitter2": "^6.4.4",
+    "mini-stores": "^1.0.5",
     "miniapp-color-thief": "^1.0.5",
     "miniprogram-computed": "^4.0.3",
     "wxmp-rsa": "^1.1.1"

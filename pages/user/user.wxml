@@ -1,7 +1,7 @@
 <view>
   <!-- tabs标签栏 -->
   <common-tabs active="{{ active }}" tabs="{{ tabs }}" line-width="{{ 50 }}" bind:tab-click="onTabClick"></common-tabs>
-  <view class="page-content">
+  <view class="page-content" wx:if="{{ !$data.showNoAuth }}">
     <van-skeleton avatar-size="80px" title avatar row="2" loading="{{ loading }}">
       <view class="u-flex user-info">
         <view class="user-info__avatar">
@@ -37,4 +37,7 @@
       </van-button>
     </view>
   </view>
+  <no-auth
+    wx:else
+  />
 </view>

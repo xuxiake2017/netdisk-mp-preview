@@ -1,7 +1,7 @@
 <view>
   <!-- tabs标签栏 -->
   <common-tabs active="{{ active }}" tabs="{{ tabs }}" line-width="{{ 50 }}" bind:tab-click="onTabClick"></common-tabs>
-  <view class="u-p-t-30 u-p-b-30">
+  <view class="u-p-t-30 u-p-b-30" wx:if="{{ !$data.showNoAuth }}">
     <gallery-item
       wx:key="index"
       wx:for="{{ imgList }}"
@@ -15,6 +15,9 @@
     </view>
     <load-finished wx:if="{{ finished }}"></load-finished>
   </view>
+  <no-auth
+    wx:else
+  />
   <view class="page-footer-wrap">
     <view class="page-footer"></view>
   </view>
