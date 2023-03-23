@@ -8,7 +8,7 @@ import commonBehaviors from '../../common/behaviors/commonBehaviors';
 import {
   makeSign,
 } from '../../utils/encryptUtil';
-import CONFIG from '../../conf/index';
+import CONFIG, { setToken } from '../../conf/index';
 import test from '../../utils/test';
 import GlobalStore from '../../stores/GlobalStore'
 
@@ -101,7 +101,7 @@ Component({ // 使用 Component 构造器构造页面
     },
     loginAndRegister () {
       wx.login({
-        success: (res) => {
+        success: async (res) => {
           if (res.code) {
             const params = {
               code: res.code,
@@ -110,30 +110,25 @@ Component({ // 使用 Component 构造器构造页面
               phone: this.data.phone,
               wechatUserInfo: this.data.userInfo
             }
-            LoginAndRegister(params).then(res1 => {
-              this.$toast.success(res1.msg)
-              CONFIG.token = res1.data
+            try {
+              const res = await LoginAndRegister(params)
+              this.$toast.success(res.msg)
               if (this.data.timer) {
                 clearInterval(this.data.timer)
               }
-              wx.setStorage({
-                key: "X-Token",
-                data: res1.data,
-                success: () => {
-                  setTimeout(() => {
-                    wx.reLaunch({
-                      url: '/pages/home/home',
-                      success () {
-                        GlobalStore.data.isAuth = true
-                        GlobalStore.update()
-                      }
-                    })
-                  }, 500)
-                }
-              })
-            }).catch(err => {
-              this.$toast(err.msg)
-            })
+              await setToken(res.data)
+              setTimeout(() => {
+                wx.reLaunch({
+                  url: '/pages/home/home',
+                  success () {
+                    GlobalStore.data.isAuth = true
+                    GlobalStore.update()
+                  }
+                })
+              }, 500)
+            } catch (error) {
+              this.$toast(error.msg || '登录失败！')
+            }
           } else {
             console.log('登录失败！' + res.errMsg)
           }

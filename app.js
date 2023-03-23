@@ -43,7 +43,7 @@ App({
       })
       try {
         const { data: token } = await AutoLogin(params)
-        setToken(token)
+        await setToken(token)
         this.emitter.emit(AUTO_LOGIN_COMPLATE)
         GlobalStore.data.isAuth = true
       } catch (error) {

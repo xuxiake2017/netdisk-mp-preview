@@ -21,10 +21,16 @@ export const getToken = () => {
 }
 
 export const setToken = (token) => {
-  wx.setStorage({
-    key: "X-Token",
-    data: token
+  return new Promise((resolve, reject) => {
+    CONFIG.token = token
+    wx.setStorage({
+      key: "X-Token",
+      data: token,
+      complete: () => {
+        resolve()
+      }
+    })
   })
-  CONFIG.token = token
+  
 }
 export default CONFIG
