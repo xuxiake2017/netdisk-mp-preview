@@ -1,0 +1,16 @@
+{
+  "usingComponents": {
+    "custom-nav": "/components/CustomNav/CustomNav",
+    "file-list": "/components/FileList/FileList",
+    "load-finished": "/components/LoadFinished/LoadFinished",
+    "common-show-empty": "/components/CommonShowEmpty/CommonShowEmpty",
+    "van-loading": "@vant/weapp/loading/index",
+    "van-button": "@vant/weapp/button/index",
+    "custom-field": "/components/CustomField/CustomField",
+    "custom-model": "/components/CustomModel/CustomModel",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-image": "@vant/weapp/image/index"
+  },
+  "navigationStyle": "custom"
+}

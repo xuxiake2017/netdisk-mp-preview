@@ -1,4 +1,6 @@
 import CONFIG, { getToken } from '../conf/index';
+import GlobalStore from '../stores/GlobalStore';
+import Toast from '../common/behaviors/Toast';
 const {
   BASE_API,
 } = CONFIG
@@ -25,6 +27,11 @@ const request = async (url, method, data = {}, options = {}) => {
         if (res.data) {
           if (res.data.code === 20000) {
             resolve(res.data)
+          } else if (res.data.code === 41000) {
+            Toast.error('登录失效')
+            GlobalStore.data.isAuth = false
+            GlobalStore.update()
+            reject(res.data)
           } else {
             reject(res.data)
           }

@@ -1,6 +1,6 @@
-<view class="u-flex custom-field">
-  <input model:value="{{ value }}" class="custom-field__control" />
+<view class="u-flex custom-field {{ border && 'custom-field--border' }}" style="{{ customStyle }}">
+  <input model:value="{{ value }}" class="custom-field__control" placeholder="{{ placeholder }}" password="{{ password }}" />
   <view class="custom-field__right-icon u-flex u-row-center" bind:tap="onRightClick">
-    <van-icon name="clear" color="#d8dcdf" size="36rpx" />
+    <van-icon name="clear" color="#d8dcdf" size="36rpx" custom-class="u-p-8" />
   </view>
 </view>

@@ -88,7 +88,6 @@ create.Page(stores, {
   },
   GetInfoWrap () {
     GetInfo().then((result) => {
-      console.log(result);
     })
   },
   GetDetailWrap () {
@@ -96,7 +95,6 @@ create.Page(stores, {
       loading: true
     })
     GetDetail().then((result) => {
-      console.log(result);
       this.setData({
         userInfo: result.data,
         loading: false
@@ -116,6 +114,11 @@ create.Page(stores, {
       }).catch((err) => {
         this.$toast('账号切换失败！')
       });
+    })
+  },
+  goToUserInfo () {
+    wx.navigateTo({
+      url: '/pages/UserInfo/UserInfo'
     })
   }
 })

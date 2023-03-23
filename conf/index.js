@@ -1,5 +1,5 @@
 const CONFIG = {
-  BASE_API: 'http://127.0.0.1:8080/netdisk',
+  BASE_API: 'https://netdisk.xikcloud.com/netdisk',
   token: '',
   appid: 'wx14b170f0e0445918',
   version: 'v1.0.5'
@@ -18,5 +18,13 @@ export const getToken = () => {
     })
 
   })
+}
+
+export const setToken = (token) => {
+  wx.setStorage({
+    key: "X-Token",
+    data: token
+  })
+  CONFIG.token = token
 }
 export default CONFIG

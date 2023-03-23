@@ -1,0 +1,72 @@
+<wxs src="../../common/wxs/file.wxs" module="tools"></wxs>
+
+<view>
+  <view class="custom-nav">
+    <custom-nav title="用户信息" bind:on-ready="onNavReady"></custom-nav>
+  </view>
+  <view class="page-content" style="{{ contentStyle }}">
+    <van-cell-group>
+      <van-cell title="头像" custom-class="u-flex" is-link bind:click="onAvatarClick">
+        <van-image
+          round
+          width="50"
+          height="50"
+          fit="cover"
+          src="{{ userInfo.avatar }}"
+          custom-class="avatar"
+        />
+      </van-cell>
+      <van-cell title="昵称" value="{{ userInfo.nickName }}" is-link bind:click="updateNickName" />
+      <van-cell title="手机号" value="{{ userInfo.phone || '-' }}" />
+      <van-cell title="邮箱" value="{{ userInfo.email || '-' }}" />
+      <van-cell title="容量">
+        {{ tools.formatFileSize(userInfo.usedMemory) }} / {{ tools.formatFileSize(userInfo.totalMemory) }}
+      </van-cell>
+      <van-cell title="修改密码" value="" border="{{ false }}" custom-class="u-m-t-30" is-link bind:click="updatePassword" />
+    </van-cell-group>
+
+    <view class="u-p-l-24 u-p-r-24 u-m-t-75">
+      <van-button
+        size="large"
+        color="linear-gradient(to right, #4bb0ff, #6149f6)"
+        round
+        bind:click="onSubmit"
+      >
+        保存
+      </van-button>
+    </view>
+  </view>
+</view>
+
+<custom-model
+  title="{{ modifyDialogTitle }}"
+  show="{{ modifyDialogShow }}"
+  bind:confirm="onDialogConfirm"
+  bind:cancel="onDialogCancel"
+  bind:close="onDialogClose"
+>
+  <view class="van-dialog__content">
+    <block wx:if="{{ modifyDialogAction === 'updateNickName' }}">
+      <custom-field model:value="{{ fieldValue }}" bind:rightClick="clearInput" placeholder="请输入昵称" data-field="fieldValue"></custom-field>
+    </block>
+    <block wx:else>
+      <custom-field
+        model:value="{{ newPassword }}"
+        placeholder="请输入新密码"
+        border
+        password
+        customStyle="border-bottom-left-radius: unset; border-bottom-right-radius: unset;"
+        bind:rightClick="clearInput"
+        data-field="newPassword"
+      />
+      <custom-field
+        model:value="{{ repeatPassword }}"
+        placeholder="请确认密码"
+        customStyle="border-top-left-radius: unset; border-top-right-radius: unset;"
+        password
+        bind:rightClick="clearInput"
+        data-field="repeatPassword"
+      />
+    </block>
+  </view>
+</custom-model>

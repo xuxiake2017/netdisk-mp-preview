@@ -6,6 +6,21 @@ Component({
   properties: {
     value: {
       type: String
+    },
+    placeholder: {
+      type: String,
+      value: '',
+    },
+    border: {
+      type: Boolean,
+      value: false,
+    },
+    customStyle: {
+      type: String,
+    },
+    password: {
+      type: Boolean,
+      value: false,
     }
   },
   behaviors: [

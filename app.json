@@ -7,7 +7,9 @@
     "pages/gallery/gallery",
     "pages/user/user",
     "pages/searchPage/searchPage",
-    "pages/MediaPreview/MediaPreview"
+    "pages/MediaPreview/MediaPreview",
+    "pages/UserInfo/UserInfo",
+    "pages/UserInfo/AvatarCropper/AvatarCropper"
   ],
   "tabBar": {
     "list": [

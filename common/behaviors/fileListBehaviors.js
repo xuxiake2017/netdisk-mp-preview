@@ -27,7 +27,7 @@ export default Behavior({
     pagination: {
       total: 0,
       pageNum: 1,
-      pageSize: 10
+      pageSize: 20
     },
     // 查询过滤条件
     filters: {

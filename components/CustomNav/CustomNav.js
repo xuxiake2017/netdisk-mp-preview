@@ -57,6 +57,10 @@ Component({
           menuButtonHeight: height,
           menuButtonWidth: width,
         })
+        this.triggerEvent('on-ready', {
+          statusBarHeight,
+          navBarHeight,
+        })
       })
     },
   },

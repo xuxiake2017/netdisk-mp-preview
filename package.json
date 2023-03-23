@@ -22,6 +22,7 @@
     "mini-stores": "^1.0.5",
     "miniapp-color-thief": "^1.0.5",
     "miniprogram-computed": "^4.0.3",
+    "we-cropper": "^1.4.0",
     "wxmp-rsa": "^1.1.1"
   },
   "devDependencies": {

@@ -204,6 +204,14 @@ function code(value, len = 6) {
 	return new RegExp(`^\\d{${len}}$`).test(value);
 }
 
+/**
+ * 验证密码
+ */
+function password(value) {
+	const reg = /^[0-9a-zA-Z!"#$%&'()*+,\-./:;<=>?@\[\\\]\^_`{|}~]*$/g;
+	return reg.test(value);
+}
+
 
 export default {
 	email,
@@ -228,5 +236,6 @@ export default {
 	landline,
 	object,
 	array,
-	code
+	code,
+	password,
 }

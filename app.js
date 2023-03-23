@@ -1,6 +1,6 @@
 import EventEmitter2 from 'eventemitter2'
 const { FILE_TYPE } = require('./utils/fileUtils')
-import CONFIG from './conf/index';
+import { setToken } from './conf/index';
 import { AutoLogin } from './api/user';
 import Toast from './common/behaviors/Toast';
 import { AUTO_LOGIN_COMPLATE } from './common/events';
@@ -31,55 +31,33 @@ App({
     // disable throwing uncaughtException if an error event is emitted and it has no listeners
     ignoreErrors: false
   }),
-  onLaunch: function () {
+  onLaunch: async function () {
     this.$toast = Toast
-    wx.getStorage({
-      key: 'X-Token',
-      complete: (res1) => {
-        CONFIG.token = res1.data ? res1.data : ''
-        wx.login({
-          success: (res2) => {
-            if (res2.code) {
-              const params = {
-                code: res2.code,
-              }
-              wx.showLoading({
-                title: '加载中',
-              })
-              AutoLogin(params).then(res3 => {
-                wx.setStorage({
-                  key: "X-Token",
-                  data: res3.data
-                })
-                CONFIG.token = res3.data
-                // this.globalData.inited = true
-                this.emitter.emit(AUTO_LOGIN_COMPLATE)
-                GlobalStore.data.isAuth = true
-                // GlobalStore.update()
-              }).catch(err => {
-                // this.globalData.inited = true
-                this.$toast(err.msg || '登录失败！')
-                if (err.code === 20011) { // 未注册
-                  // setTimeout(() => {
-                  //   wx.reLaunch({
-                  //     url: '/pages/user/login'
-                  //   })
-                  // }, 500);
-                }
-                GlobalStore.data.isAuth = false
-                // GlobalStore.update()
-              }).finally(() => {
-                wx.hideLoading()
-                this.globalData.inited = true
-                GlobalStore.update()
-              })
-            } else {
-              this.$toast('登录失败！' + res2.errMsg)
-            }
-          }
-        })
+    const { code, errMsg } = await wx.login()
+    if (code) {
+      const params = {
+        code,
       }
-    })
+      wx.showLoading({
+        title: '加载中',
+      })
+      try {
+        const { data: token } = await AutoLogin(params)
+        setToken(token)
+        this.emitter.emit(AUTO_LOGIN_COMPLATE)
+        GlobalStore.data.isAuth = true
+      } catch (error) {
+        wx.hideLoading()
+        this.$toast(error.msg || '登录失败！')
+        GlobalStore.data.isAuth = false
+      } finally {
+        wx.hideLoading()
+        this.globalData.inited = true
+        GlobalStore.update()
+      }
+    } else {
+      this.$toast('登录失败！' + errMsg)
+    }
 
     const updateManager = wx.getUpdateManager()
 

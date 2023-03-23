@@ -1,0 +1,15 @@
+.page-header-wrap {
+  height: 90rpx;
+}
+.page-content {
+  background: #eff2f5;
+  padding-top: 30rpx;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.van-dialog__content {
+  padding: 40rpx 40rpx;
+}
+.avatar {
+  border: 2px solid var(--primary-color);
+}
