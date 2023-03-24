@@ -2,7 +2,7 @@ const CONFIG = {
   BASE_API: 'https://netdisk.xikcloud.com/netdisk',
   token: '',
   appid: 'wx14b170f0e0445918',
-  version: 'v1.0.5'
+  version: 'v1.0.6'
 }
 export const getToken = () => {
   return new Promise((resolve, reject) => {
@@ -33,4 +33,8 @@ export const setToken = (token) => {
   })
   
 }
+
+export const rect = wx.getMenuButtonBoundingClientRect()
+export const device = wx.getSystemInfoSync()
+
 export default CONFIG

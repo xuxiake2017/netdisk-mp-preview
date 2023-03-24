@@ -2,6 +2,7 @@ import { behavior as computedBehavior } from 'miniprogram-computed';
 import { styleObj2StyleStr, formateSecond, throttle } from '../../utils/util';
 import colorThief from "miniapp-color-thief";
 import commonBehaviors from '../../common/behaviors/commonBehaviors';
+import { device } from '../../conf/index';
 
 Component({
 
@@ -120,7 +121,7 @@ Component({
 
   lifetimes: {
     attached () {
-      const windowWidth = wx.getSystemInfoSync().windowWidth
+      const windowWidth = device.windowWidth
       if (this.data.loopMode === 'random') {
         this.setData({
           volumeCurrent: this.data.volume,
@@ -211,7 +212,7 @@ Component({
               canvasHeight: height,
             })
   
-            const dpr = wx.getSystemInfoSync().pixelRatio
+            const dpr = device.pixelRatio
             canvas.width = width * dpr
             canvas.height = height * dpr
             ctx.scale(dpr, dpr)

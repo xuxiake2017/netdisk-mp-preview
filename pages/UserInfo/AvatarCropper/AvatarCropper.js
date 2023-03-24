@@ -1,6 +1,7 @@
 import WeCropper from 'we-cropper'
 
-const device = wx.getSystemInfoSync() // 获取设备信息
+import { device } from '../../../conf/index';
+
 const width = device.windowWidth // 示例为一个与屏幕等宽的正方形裁剪框
 const height = width
 

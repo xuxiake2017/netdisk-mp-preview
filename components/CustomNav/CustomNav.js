@@ -1,3 +1,5 @@
+import { device, rect } from '../../conf/index';
+
 /**
  * 自定义导航栏
  */
@@ -40,27 +42,25 @@ Component({
    */
    lifetimes: {
     ready: function() {
-      this.getSystemInfo().then(({ info, rect }) => {
-        const {
-          statusBarHeight
-        } = info
-        let {
-          top,
-          height,
-          width
-        } = rect
-        top += 2
-        const navBarHeight = (top - statusBarHeight) * 2 + height
-        this.setData({
-          statusBarHeight,
-          navBarHeight,
-          menuButtonHeight: height,
-          menuButtonWidth: width,
-        })
-        this.triggerEvent('on-ready', {
-          statusBarHeight,
-          navBarHeight,
-        })
+      const {
+        statusBarHeight
+      } = device
+      let {
+        top,
+        height,
+        width
+      } = rect
+      top += 2
+      const navBarHeight = (top - statusBarHeight) * 2 + height
+      this.setData({
+        statusBarHeight,
+        navBarHeight,
+        menuButtonHeight: height,
+        menuButtonWidth: width,
+      })
+      this.triggerEvent('on-ready', {
+        statusBarHeight,
+        navBarHeight,
       })
     },
   },
@@ -69,18 +69,6 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    getSystemInfo() {
-      return new Promise((resolve, reject) => {
-        const rect = wx.getMenuButtonBoundingClientRect()
-        wx.getSystemInfo({
-          success: info => {
-            resolve({
-              info, rect
-            })
-          }
-        })
-      })
-    },
     goBack() {
       wx.navigateBack()
     },

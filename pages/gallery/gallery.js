@@ -1,6 +1,7 @@
 import { GetImgList } from '../../api/img';
 import create from 'mini-stores'
 import GlobalStore from '../../stores/GlobalStore'
+import { device } from '../../conf/index'
 
 const stores = {
   '$data': GlobalStore,
@@ -50,12 +51,8 @@ create.Page(stores, {
    */
   onLoad: function (options) {
     this.GetImgListWrap()
-    wx.getSystemInfo({
-      success: res => {
-        this.setData({
-          windowWidth: res.windowWidth
-        })
-      }
+    this.setData({
+      windowWidth: device.windowWidth
     })
   },
 
