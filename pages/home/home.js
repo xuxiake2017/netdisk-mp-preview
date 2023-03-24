@@ -48,7 +48,6 @@ create.Page(stores, {
         label: '上传时间',
       },
     ],
-    isAuth: app.globalData.isAuth,
   },
   /**
    * 生命周期函数--监听页面加载
@@ -56,9 +55,11 @@ create.Page(stores, {
   onLoad: function (options) {
     wx.hideTabBar()
     if (app.globalData.inited) {
+      this.setOrderByIndex()
       this.getFileList()
     }
     app.emitter.once(AUTO_LOGIN_COMPLATE, () => {
+      this.setOrderByIndex()
       this.getFileList()
     })
     app.emitter.on(MOVE_FILE_SUCCESS, () => {
@@ -131,12 +132,19 @@ create.Page(stores, {
     })
   },
   // 排序方式改变处理
-  onOrderByChange (e) {
+  async onOrderByChange (e) {
     const orderByIndex = Number(e.detail.value)
     this.setData({
       orderByIndex,
     })
-    app.globalData.orderBy = this.data.orderByList[orderByIndex].value
+    await app.setOrderBy(this.data.orderByList[orderByIndex].value)
     this.resetFileList()
+  },
+  setOrderByIndex () {
+    const orderBy = app.globalData.orderBy
+    const index = this.data.orderByList.findIndex(item => item.value === orderBy)
+    this.setData({
+      orderByIndex: index,
+    })
   }
 })

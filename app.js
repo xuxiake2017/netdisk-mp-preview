@@ -42,6 +42,7 @@ App({
         title: '加载中',
       })
       try {
+        this.globalData.orderBy = await this.getOrderBy()
         const { data: token } = await AutoLogin(params)
         await setToken(token)
         this.emitter.emit(AUTO_LOGIN_COMPLATE)
@@ -92,5 +93,27 @@ App({
     moveOptFile: {},
     // 排序方式
     orderBy: 'fileName',
+  },
+  async setOrderBy (orderBy) {
+    this.globalData.orderBy = orderBy
+    return new Promise((resolve, reject) => {
+      wx.setStorage({
+        key: 'orderBy',
+        data: orderBy,
+        complete: (res) => {
+          resolve()
+        }
+      })
+    })
+  },
+  async getOrderBy () {
+    return new Promise((resolve, reject) => {
+      wx.getStorage({
+        key: 'orderBy',
+        complete: (res) => {
+          resolve(res.data || 'fileName')
+        }
+      })
+    })
   }
 })
