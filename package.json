@@ -1,6 +1,6 @@
 {
   "name": "netdisk-mp-preview",
-  "version": "v1.0.7",
+  "version": "v2.0.1",
   "description": "netdisk power by weixin miniprogram",
   "main": "app.js",
   "scripts": {
