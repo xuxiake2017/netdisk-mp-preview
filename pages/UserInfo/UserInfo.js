@@ -10,6 +10,8 @@ import {
 } from '../../api/user';
 import { getToken } from '../../conf/index';
 import Toast from '../../common/behaviors/Toast';
+import commonBehaviors from '../../common/behaviors/commonBehaviors';
+import { isFileExist, removeFile, removeDir } from '../../utils/wxFile';
 
 const app = getApp()
 const {
@@ -40,7 +42,8 @@ const updateHandler = async (params) => {
 
 Component({
   behaviors: [
-    computedBehavior
+    computedBehavior,
+    commonBehaviors,
   ],
   data: {
     customNavHeight: 0,
@@ -51,6 +54,7 @@ Component({
     newPassword: '',
     repeatPassword: '',
     userInfo: {},
+    downloadCacheSize: 0,
   },
   computed: {
     contentStyle: data => {
@@ -211,6 +215,71 @@ Component({
       }
       updateHandler(params)
     },
+    async clearDownloadCache () {
+      if (this.data.downloadCacheSize === 0) {
+        this.$toast('无需清除')
+        return
+      }
+      const dirPath = `${wx.env.USER_DATA_PATH}/download`
+      try {
+        await this.$showModal('提示', '确认清除下载缓存？')
+        if (isFileExist(dirPath)) {
+          const fs = wx.getFileSystemManager()
+          fs.stat({
+            path: dirPath,
+            recursive: true,
+            success: async ({ stats }) => {
+              try {
+                if (stats instanceof Array) {
+                  await Promise.all(
+                    stats.filter(item => item.path !== '/')
+                      .reverse()
+                      .map(item => {
+                        const filePath = `${dirPath}${item.path.startsWith('/') ? '' : '/'}${item.path}`
+                        return item.stats.isDirectory() ? removeDir(filePath) : removeFile(filePath)
+                      })
+                  )
+                }
+                this.getDownloadCacheSize()
+                this.$toast.success('清除成功')
+              } catch (error) {
+                console.log(error);
+                this.$toast.error('清除失败')
+              }
+            }
+          })
+        }
+      } catch (error) {
+      }
+    },
+    getDownloadCacheSize () {
+      const dirPath = `${wx.env.USER_DATA_PATH}/download`
+      if (isFileExist(dirPath)) {
+        const fs = wx.getFileSystemManager()
+        fs.stat({
+          path: dirPath,
+          recursive: true,
+          success: ({ stats }) => {
+            if (stats instanceof Array) {
+              const downloadCacheSize = stats.reduce((previousValue, currentValue) => {
+                return previousValue + (currentValue.stats.isDirectory() ? 0 : currentValue.stats.size)
+              }, 0)
+              this.setData({
+                downloadCacheSize,
+              })
+            } else {
+              this.setData({
+                downloadCacheSize: 0,
+              })
+            }
+          }
+        })
+      } else {
+        this.setData({
+          downloadCacheSize: 0,
+        })
+      }
+    }
   },
   lifetimes: {
     ready () {
@@ -218,6 +287,7 @@ Component({
       app.emitter.on('avatarCropperOver', tempFilePath => {
         this.uploadAvatar(tempFilePath)
       })
+      this.getDownloadCacheSize()
     }
   }
 })

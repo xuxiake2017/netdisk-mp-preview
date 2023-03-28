@@ -6,15 +6,43 @@ import {
   CheckMd5,
   UploadMD5,
   fileUploadAction,
-  DeleteFile
+  DeleteFile,
+  fileDownloadAction,
 } from '../../api/file'
 import { behavior as computedBehavior } from 'miniprogram-computed';
 import commonBehaviors from './commonBehaviors';
 import { verifyFileName } from '../../utils/validate';
 import { getToken } from '../../conf/index';
 import timeFormat from '../../utils/timeFormat';
+import { isFileExist, mkDir } from '../../utils/wxFile';
+
 const app = getApp()
 
+const fileOptionsDir = [
+  {
+    name: '重命名',
+    icon: 'icon-rename',
+    value: 'rename'
+  },
+  {
+    name: '删除',
+    icon: 'icon-delete',
+    value: 'delete'
+  },
+  {
+    name: '移动',
+    icon: 'icon-move',
+    value: 'move'
+  },
+]
+const fileOptionsFile = [
+  ...fileOptionsDir,
+  {
+    name: '下载',
+    icon: 'icon-xiazai',
+    value: 'download'
+  },
+]
 export default Behavior({
   behaviors: [
     computedBehavior,
@@ -47,7 +75,8 @@ export default Behavior({
     // dialog行为（重命名reName；新建文件夹makeDir）
     dialogAction: 'reName',
     fileName: '',
-    uploadPopupShow: false
+    uploadPopupShow: false,
+    fileOptions: [],
   },
   computed: { // 注意： computed 函数中不能访问 this ，只有 data 对象可供访问
     // 对话框标题
@@ -130,7 +159,9 @@ export default Behavior({
       const optFile = event.detail.file
       this.setData({
         show: true,
-        optFile
+        optFile,
+        fileOptions: optFile.isDir === app.globalData.FILE_TYPE.FILE_TYPE_OF_DIR ?
+          fileOptionsDir : fileOptionsFile
       })
     },
     // 文件操作对话框关闭
@@ -140,7 +171,7 @@ export default Behavior({
       })
     },
     // 文件操作项点击
-    onOptClick (e) {
+    async onOptClick (e) {
       this.setData({
         show: false,
       })
@@ -162,7 +193,100 @@ export default Behavior({
             url: '/pages/fileMove/fileMove'
           })
           break
+        case 'download':
+          this.downloadFileWrap()
+          break
       }
+    },
+    makeDownloadDir () {
+      const fileManager = wx.getFileSystemManager()
+      if (!isFileExist(`${wx.env.USER_DATA_PATH}/download`)) {
+        fileManager.mkdirSync(`${wx.env.USER_DATA_PATH}/download`)
+      }
+    },
+    openFile (filePath) {
+      const {
+        fileType
+      } = this.data.optFile
+      switch(fileType) {
+        case app.globalData.FILE_TYPE.FILE_TYPE_OF_PIC: // 图片
+          wx.previewImage({
+            urls: [
+              filePath
+            ],
+            showmenu: true,
+          })
+          break
+        case app.globalData.FILE_TYPE.FILE_TYPE_OF_VIDEO: // 视频
+          wx.previewMedia({
+            sources: [
+              {
+                url: filePath,
+                type: 'video',
+              }
+            ],
+            showmenu: true,
+          })
+          break
+        default:
+          wx.openDocument({
+            filePath,
+            showMenu: true,
+          })
+      }
+    },
+    async downloadFileWrap () {
+      const {
+        filePath,
+        fileName,
+      } = this.data.optFile
+      const filePathFull = `${wx.env.USER_DATA_PATH}/download${filePath}${fileName}`
+      if (isFileExist(filePathFull)) {
+        try {
+          await this.$showModal('提示', '该文件已存在是否重新下载？')
+          this.downloadFile()
+        } catch (error) {
+          this.openFile(filePathFull)
+        }
+      } else {
+        this.downloadFile()
+      }
+    },
+    async downloadFile () {
+      this.$showLoading('下载中')
+      const token = await getToken()
+      const header = {
+        'X-Token': token
+      }
+      const {
+        filePath,
+        fileName,
+        key,
+      } = this.data.optFile
+      const filePathFull = `${wx.env.USER_DATA_PATH}/download${filePath}${fileName}`
+      this.downloadTask = wx.downloadFile({
+        url: `${fileDownloadAction}?fileKey=${key}`,
+        header,
+        success: (res) => {
+          if (res.statusCode === 200) {
+            const fileManager = wx.getFileSystemManager()
+            mkDir(`${wx.env.USER_DATA_PATH}/download${filePath}`)
+            fileManager.saveFile({
+              tempFilePath: res.tempFilePath,
+              filePath: filePathFull,
+              success: (res) => {
+                this.$hideLoading()
+                this.$toast.success('下载成功')
+                this.openFile(filePathFull)
+              },
+              fail: err => {
+                this.$hideLoading()
+                this.$toast.error('下载失败')
+              }
+            })
+          }
+        },
+      })
     },
     // 文件点击事件处理
     onFileClick (event) {
@@ -174,20 +298,21 @@ export default Behavior({
         key: fileKey,
       } = file
       switch(fileType) {
-        case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_DIR:  // 文件夹
+        case app.globalData.FILE_TYPE.FILE_TYPE_OF_DIR:  // 文件夹
           wx.navigateTo({
             url: `/pages/fileList/fileList?fileId=${id}`
           })
           break
-        case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_PIC: // 图片
+        case app.globalData.FILE_TYPE.FILE_TYPE_OF_PIC: // 图片
           console.log('pic')
           wx.previewImage({
             urls: [
               file.thumbnailUrl
-            ]
+            ],
+            showmenu: true,
           })
           break
-        case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_VIDEO: // 视频
+        case app.globalData.FILE_TYPE.FILE_TYPE_OF_VIDEO: // 视频
           console.log('video')
           GetFileMediaInfo({ fileKey }).then(res => {
             if (!res.data.fileMedia) {
@@ -203,11 +328,12 @@ export default Behavior({
                   type: 'video',
                   poster: poster
                 }
-              ]
+              ],
+              showmenu: true,
             })
           })
           break
-        case getApp().globalData.FILE_TYPE.FILE_TYPE_OF_MUSIC: // 音频
+        case app.globalData.FILE_TYPE.FILE_TYPE_OF_MUSIC: // 音频
           console.log('music')
           wx.navigateTo({
             url: `/pages/MediaPreview/MediaPreview?fileKey=${fileKey}`
@@ -427,7 +553,6 @@ export default Behavior({
             count: 10,
             type: 'all',
             success: res => {
-              console.log(res);
               const tempFilePaths = res.tempFiles
               if (tempFilePaths && tempFilePaths.length > 0) {
                 const resset = []
@@ -477,5 +602,12 @@ export default Behavior({
         fileName: ''
       })
     },
+  },
+  lifetimes: {
+    detached () {
+      if (this.downloadTask) {
+        this.downloadTask.abort()
+      }
+    }
   }
 })

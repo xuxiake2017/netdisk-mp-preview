@@ -65,3 +65,5 @@ export const GetFileMediaInfo = params => {
 }
 
 export const fileUploadAction = `${BASE_API}/file/fileUpload`
+
+export const fileDownloadAction = `${BASE_API}/file/downLoad`

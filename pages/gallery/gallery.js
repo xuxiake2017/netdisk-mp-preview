@@ -154,7 +154,8 @@ create.Page(stores, {
     const urls = this.data.allImgs.map(item => item.fileOrigin.previewUrl)
     wx.previewImage({
       current, // 当前显示图片的http链接
-      urls // 需要预览的图片http链接列表
+      urls, // 需要预览的图片http链接列表
+      showmenu: true
     })
   }
 })

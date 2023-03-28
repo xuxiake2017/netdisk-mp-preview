@@ -41,6 +41,11 @@ Component({
           icon: 'icon-move',
           value: 'move'
         },
+        {
+          name: '下载',
+          icon: 'icon-xiazai',
+          value: 'download'
+        },
       ],
     },
   },

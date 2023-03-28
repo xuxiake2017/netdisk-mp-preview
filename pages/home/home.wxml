@@ -51,6 +51,7 @@
     file="{{ optFile }}"
     bind:popup-close="onPopupClose"
     bind:opt-click="onOptClick"
+    fileOptions="{{ fileOptions }}"
   ></file-opt-popup>
   <custom-model
     title="{{ optDialogTitle }}"

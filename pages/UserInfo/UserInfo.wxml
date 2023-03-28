@@ -22,6 +22,9 @@
       <van-cell title="容量">
         {{ tools.formatFileSize(userInfo.usedMemory) }} / {{ tools.formatFileSize(userInfo.totalMemory) }}
       </van-cell>
+      <van-cell title="清除下载缓存" value="" border="{{ false }}" custom-class="u-m-t-30" is-link bind:click="clearDownloadCache">
+        {{ tools.formatFileSize(downloadCacheSize) }}
+      </van-cell>
       <van-cell title="修改密码" value="" border="{{ false }}" custom-class="u-m-t-30" is-link bind:click="updatePassword" />
     </van-cell-group>
 
