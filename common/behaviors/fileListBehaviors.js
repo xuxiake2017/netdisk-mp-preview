@@ -135,7 +135,6 @@ export default Behavior({
             pathname: data.pathname
           })
         }
-        wx.stopPullDownRefresh()
         return res
       } catch (error) {
         console.error(error)
@@ -143,7 +142,6 @@ export default Behavior({
           loading: false,
           finished: true
         })
-        wx.stopPullDownRefresh()
         return undefined
       }
     },
@@ -196,12 +194,6 @@ export default Behavior({
         case 'download':
           this.downloadFileWrap()
           break
-      }
-    },
-    makeDownloadDir () {
-      const fileManager = wx.getFileSystemManager()
-      if (!isFileExist(`${wx.env.USER_DATA_PATH}/download`)) {
-        fileManager.mkdirSync(`${wx.env.USER_DATA_PATH}/download`)
       }
     },
     openFile (filePath) {
@@ -607,6 +599,7 @@ export default Behavior({
     detached () {
       if (this.downloadTask) {
         this.downloadTask.abort()
+        wx.hideLoading()
       }
     }
   }

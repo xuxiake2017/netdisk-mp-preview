@@ -1,43 +1,51 @@
-<view>
-  <!-- tabs标签栏 -->
-  <common-tabs active="{{ active }}" tabs="{{ tabs }}" line-width="{{ 50 }}" bind:tab-click="onTabClick"></common-tabs>
-  <view class="page-content" wx:if="{{ !$data.showNoAuth }}">
-    <van-skeleton avatar-size="80px" title avatar row="2" loading="{{ loading }}">
-      <view class="u-flex user-info" bind:tap="goToUserInfo">
-        <view class="user-info__avatar">
-          <van-image
-            src="{{ userInfo.avatar }}"
-            filt="contain"
-            round
-            custom-class="full-w-h"
-          ></van-image>
-        </view>
-        <view class="u-flex-col u-row-between user-info__right">
-          <view class="user-info__nickname">
-            {{ userInfo.nickName }}
-            <text class="iconfont icon-VIP" style="{{ userInfo.userStatus === USER_STATUS_MAP.USER_STATUS_VIP ? 'color: #FFD200;' : '' }}"></text>
+<block wx:if="{{ !$data.showNoAuth }}">
+  <scroll-view
+    class="full-w-h"
+    scroll-y
+    refresher-enabled
+    show-scrollbar="{{ false }}"
+    refresher-triggered="{{ refresherTriggered }}"
+    bindrefresherrefresh="onRefresherRefresh"
+  >
+    <view class="page-content">
+      <van-skeleton avatar-size="80px" title avatar row="2" loading="{{ loading }}">
+        <view class="u-flex user-info" bind:tap="goToUserInfo">
+          <view class="user-info__avatar">
+            <van-image
+              src="{{ userInfo.avatar }}"
+              filt="contain"
+              round
+              height="160rpx"
+              width="160rpx"
+            ></van-image>
           </view>
-          <view class="user-info__volume">
-            <custom-progress
-              total-memory="{{ userInfo.totalMemory }}"
-              used-memory="{{ userInfo.usedMemory }}"
-            ></custom-progress>
+          <view class="u-flex-col u-row-between user-info__right">
+            <view class="user-info__nickname">
+              {{ userInfo.nickName }}
+              <text class="iconfont icon-VIP" style="{{ userInfo.userStatus === USER_STATUS_MAP.USER_STATUS_VIP ? 'color: #FFD200;' : '' }}"></text>
+            </view>
+            <view class="user-info__volume">
+              <custom-progress
+                total-memory="{{ userInfo.totalMemory }}"
+                used-memory="{{ userInfo.usedMemory }}"
+              ></custom-progress>
+            </view>
           </view>
         </view>
+      </van-skeleton>
+      <view class="user-info__btn">
+        <van-button
+          size="large"
+          color="linear-gradient(to right, #4bb0ff, #6149f6)"
+          round
+          bind:click="onLogout"
+        >
+          切换账号
+        </van-button>
       </view>
-    </van-skeleton>
-    <view class="user-info__btn">
-      <van-button
-        size="large"
-        color="linear-gradient(to right, #4bb0ff, #6149f6)"
-        round
-        bind:click="onLogout"
-      >
-        切换账号
-      </van-button>
     </view>
-  </view>
-  <no-auth
-    wx:else
-  />
-</view>
+  </scroll-view>
+</block>
+<no-auth
+  wx:else
+/>

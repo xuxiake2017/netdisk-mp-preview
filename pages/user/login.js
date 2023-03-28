@@ -117,13 +117,10 @@ Component({ // 使用 Component 构造器构造页面
                 clearInterval(this.data.timer)
               }
               await setToken(res.data)
+              GlobalStore.loginSuccess()
               setTimeout(() => {
                 wx.reLaunch({
-                  url: '/pages/home/home',
-                  success () {
-                    GlobalStore.data.isAuth = true
-                    GlobalStore.update()
-                  }
+                  url: '/pages/IndexPage/IndexPage',
                 })
               }, 500)
             } catch (error) {

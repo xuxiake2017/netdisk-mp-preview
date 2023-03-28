@@ -1,0 +1,22 @@
+<view class="page-container">
+  <!-- tabs标签栏 -->
+  <common-tabs active="{{ $data.activeTab }}" tabs="{{ $data.tabs }}" line-width="{{ 50 }}" bind:tab-click="onTabClick"></common-tabs>
+
+  <view class="page-content">
+    <swiper
+      class="full-w-h"
+      current="{{ swiperIndex }}"
+      bind:change="onSwiperChange"
+    >
+      <swiper-item class="full-w-h">
+        <home wx:if="{{ $data.pageInitialized.home }}" />
+      </swiper-item>
+      <swiper-item class="full-w-h" style="overflow-y: auto;">
+        <gallery wx:if="{{ $data.pageInitialized.gallery }}" />
+      </swiper-item>
+      <swiper-item class="full-w-h" style="overflow-y: auto;">
+        <user wx:if="{{ $data.pageInitialized.user }}" />
+      </swiper-item>
+    </swiper>
+  </view>
+</view>

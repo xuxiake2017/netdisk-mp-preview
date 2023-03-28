@@ -1,4 +1,5 @@
-import { device, rect } from '../../conf/index';
+import { device, rect } from '../../conf/index';1
+import GlobalStore from '../../stores/GlobalStore';
 
 /**
  * 自定义导航栏
@@ -73,11 +74,9 @@ Component({
       wx.navigateBack()
     },
     goHome() {
-      // wx.redirectTo({
-      //   url: '/pages/home/home'
-      // })
+      GlobalStore.setActiveTab('home')
       wx.reLaunch({
-        url: '/pages/home/home'
+        url: '/pages/IndexPage/IndexPage'
       })
     },
   }

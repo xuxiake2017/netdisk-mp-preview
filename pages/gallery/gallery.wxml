@@ -1,24 +1,31 @@
-<view>
-  <!-- tabs标签栏 -->
-  <common-tabs active="{{ active }}" tabs="{{ tabs }}" line-width="{{ 50 }}" bind:tab-click="onTabClick"></common-tabs>
-  <view class="u-p-t-30 u-p-b-30" wx:if="{{ !$data.showNoAuth }}">
-    <gallery-item
-      wx:key="index"
-      wx:for="{{ imgList }}"
-      img-obj="{{ item }}"
-      window-width="{{ windowWidth }}"
-      bind:imgclick="onImgClick"
-    ></gallery-item>
-    <!-- 文件列表加载 -->
-    <view wx:if="{{ loading }}" class="u-text-center u-p-t-20 u-p-b-20">
-      <van-loading size="45rpx" vertical>加载中...</van-loading>
+<block wx:if="{{ !$data.showNoAuth }}">
+  <scroll-view
+    class="full-w-h"
+    scroll-y
+    refresher-enabled
+    refresher-triggered="{{ refresherTriggered }}"
+    enable-back-to-top
+    lower-threshold="{{ 100 }}"
+    show-scrollbar="{{ false }}"
+    bindrefresherrefresh="onRefresherRefresh"
+    bindscrolltolower="onScrollToLower"
+  >
+    <view class="u-p-t-30 u-p-b-30">
+      <gallery-item
+        wx:key="index"
+        wx:for="{{ imgList }}"
+        img-obj="{{ item }}"
+        window-width="{{ windowWidth }}"
+        bind:imgclick="onImgClick"
+      ></gallery-item>
+      <!-- 文件列表加载 -->
+      <view wx:if="{{ loading }}" class="u-text-center u-p-t-20 u-p-b-20">
+        <van-loading size="45rpx" vertical>加载中...</van-loading>
+      </view>
+      <load-finished wx:if="{{ finished }}"></load-finished>
     </view>
-    <load-finished wx:if="{{ finished }}"></load-finished>
-  </view>
-  <no-auth
-    wx:else
-  />
-  <view class="page-footer-wrap">
-    <view class="page-footer"></view>
-  </view>
-</view>
+  </scroll-view>
+</block>
+<no-auth
+  wx:else
+/>

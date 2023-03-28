@@ -1,75 +1,85 @@
 <wxs src="../../common/wxs/file.wxs" module="tools"></wxs>
-<view>
-  <!-- tabs标签栏 -->
-  <common-tabs active="{{ active }}" tabs="{{ tabs }}" line-width="{{ 50 }}" bind:tab-click="onTabClick"></common-tabs>
-  <view class="home-container-wrap" wx:if="{{ !$data.showNoAuth }}">
-    <view class="home-container">
-      <block wx:if="{{ !showEmpty }}">
-        <!-- 文件搜索条 -->
-        <view class="home__search-bar">
-          <view class="home__search-bar-input-wrap">
-            <text class="iconfont icon-search"></text>
-            <input placeholder="搜索网盘文件" placeholder-style="font-weight: 600; font-size: 30rpx; color: #c2c2c2;" bind:tap="onSearchInputClick" />
-          </view>
-          <picker bind:change="onOrderByChange" value="{{ orderByIndex }}" range="{{ orderByList }}" range-key="label" header-text="排序方式">
-            <text class="iconfont icon-descending"></text>
-          </picker>
-        </view>
-        <!-- 文件列表 -->
-        <file-list file-list="{{ fileList }}" transparent-bg="{{ true }}" bind:file-click="onFileClick" bind:file-opt="fileOptHandler"></file-list>
-        <!-- 文件列表加载 -->
-        <view wx:if="{{ loading }}" class="home_file-list-loading">
-          <van-loading size="45rpx" vertical>加载中...</van-loading>
-        </view>
-        <load-finished wx:if="{{ finished }}"></load-finished>
-      </block>
-      <block wx:if="{{ showEmpty }}">
-        <common-show-empty></common-show-empty>
-        <view class="u-text-center u-m-t-20">
-          <van-button
-            size="small"
-            round
-            color="linear-gradient(to right, #4bb0ff, #6149f6)"
-            custom-class="upload-btn"
-            bind:click="onUploadFile"
-          >
-            上传
-          </van-button>
-        </view>
-      </block>
-      <footer-bar
-        bind:uploadFile="onUploadFile"
-        bind:uploadImg="onUploadImg"
-      ></footer-bar>
-    </view>
-  </view>
-  <no-auth
-    wx:else
-  />
-  <file-opt-popup
-    show="{{ show }}"
-    file="{{ optFile }}"
-    bind:popup-close="onPopupClose"
-    bind:opt-click="onOptClick"
-    fileOptions="{{ fileOptions }}"
-  ></file-opt-popup>
-  <custom-model
-    title="{{ optDialogTitle }}"
-    show="{{ optDialogShow }}"
-    bind:confirm="onDialogConfirm"
-    bind:cancel="onDialogCancel"
-    bind:close="onDialogClose"
+<block wx:if="{{ !$data.showNoAuth }}">
+  <scroll-view
+    style="height: calc(100% - 100rpx);"
+    scroll-y
+    refresher-enabled
+    refresher-triggered="{{ refresherTriggered }}"
+    enable-back-to-top
+    lower-threshold="{{ 100 }}"
+    show-scrollbar="{{ false }}"
+    bindrefresherrefresh="onRefresherRefresh"
+    bindscrolltolower="onScrollToLower"
   >
-    <block wx:if="{{ dialogAction === 'reName' || dialogAction === 'makeDir' }}">
-      <view class="van-dialog__content">
-        <custom-field model:value="{{ fileName }}" bind:rightClick="clearInput"></custom-field>
+    <view class="home-container-wrap">
+      <view class="home-container">
+        <block wx:if="{{ !showEmpty }}">
+          <!-- 文件搜索条 -->
+          <view class="home__search-bar">
+            <view class="home__search-bar-input-wrap">
+              <text class="iconfont icon-search"></text>
+              <input placeholder="搜索网盘文件" placeholder-style="font-weight: 600; font-size: 30rpx; color: #c2c2c2;" bind:tap="onSearchInputClick" />
+            </view>
+            <picker bind:change="onOrderByChange" value="{{ orderByIndex }}" range="{{ orderByList }}" range-key="label" header-text="排序方式">
+              <text class="iconfont icon-descending"></text>
+            </picker>
+          </view>
+          <!-- 文件列表 -->
+          <file-list file-list="{{ fileList }}" transparent-bg="{{ true }}" bind:file-click="onFileClick" bind:file-opt="fileOptHandler"></file-list>
+          <!-- 文件列表加载 -->
+          <view wx:if="{{ loading }}" class="home_file-list-loading">
+            <van-loading size="45rpx" vertical>加载中...</van-loading>
+          </view>
+          <load-finished wx:if="{{ finished }}"></load-finished>
+        </block>
+        <block wx:if="{{ showEmpty }}">
+          <common-show-empty></common-show-empty>
+          <view class="u-text-center u-m-t-20">
+            <van-button
+              size="small"
+              round
+              color="linear-gradient(to right, #4bb0ff, #6149f6)"
+              custom-class="upload-btn"
+              bind:click="onUploadFile"
+            >
+              上传
+            </van-button>
+          </view>
+        </block>
       </view>
-    </block>
-    <!-- <block wx:elif="{{ dialogAction === 'makeDir' }}"></block> -->
-  </custom-model>
-  <file-upload-popup
-    show="{{ uploadPopupShow }}"
-    bind:popupClose="onUploadPopupClose"
-    bind:uploadItemClick="onUploadItemClick"
-  ></file-upload-popup>
-</view>
+    </view>
+  </scroll-view>
+  <footer-bar
+    bind:uploadFile="onUploadFile"
+    bind:uploadImg="onUploadImg"
+  ></footer-bar>
+</block>
+<no-auth
+  wx:else
+/>
+<file-opt-popup
+  show="{{ show }}"
+  file="{{ optFile }}"
+  bind:popup-close="onPopupClose"
+  bind:opt-click="onOptClick"
+  fileOptions="{{ fileOptions }}"
+></file-opt-popup>
+<custom-model
+  title="{{ optDialogTitle }}"
+  show="{{ optDialogShow }}"
+  bind:confirm="onDialogConfirm"
+  bind:cancel="onDialogCancel"
+  bind:close="onDialogClose"
+>
+  <block wx:if="{{ dialogAction === 'reName' || dialogAction === 'makeDir' }}">
+    <view class="van-dialog__content">
+      <custom-field model:value="{{ fileName }}" bind:rightClick="clearInput"></custom-field>
+    </view>
+  </block>
+  <!-- <block wx:elif="{{ dialogAction === 'makeDir' }}"></block> -->
+</custom-model>
+<file-upload-popup
+  show="{{ uploadPopupShow }}"
+  bind:popupClose="onUploadPopupClose"
+  bind:uploadItemClick="onUploadItemClick"
+></file-upload-popup>

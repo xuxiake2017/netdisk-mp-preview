@@ -1,13 +1,9 @@
 {
   "usingComponents": {
-    "van-cell": "@vant/weapp/cell/index",
-    "van-popup": "@vant/weapp/popup/index",
     "van-loading": "@vant/weapp/loading/index",
     "file-list": "/components/FileList/FileList",
-    "common-tabs": "/components/CommonTabs/CommonTabs",
     "file-opt-popup": "/components/FileOptPopup/FileOptPopup",
     "load-finished": "/components/LoadFinished/LoadFinished",
-    "van-dialog": "@vant/weapp/dialog/index",
     "custom-field": "/components/CustomField/CustomField",
     "custom-model": "/components/CustomModel/CustomModel",
     "footer-bar": "/components/FooterBar/FooterBar",
@@ -16,7 +12,5 @@
     "van-button": "@vant/weapp/button/index",
     "no-auth": "/components/NoAuth/NoAuth"
   },
-  "navigationBarTitleText": "相册文件",
-  "enablePullDownRefresh": true,
-  "backgroundTextStyle": "dark"
+  "component": true
 }
