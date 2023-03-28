@@ -27,6 +27,7 @@
     <footer-bar
       bind:uploadFile="onUploadFile"
       bind:uploadImg="onUploadImg"
+      safeAreaPadding
     ></footer-bar>
   </view>
   <file-opt-popup
