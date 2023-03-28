@@ -104,11 +104,13 @@ create.Page(stores, {
   onLogout () {
     this.$showModal('提示', '确认切换账号？').then((result) => {
       Logout().then((result) => {
-        GlobalStore.data.isAuth = false
-        GlobalStore.update()
         setTimeout(() => {
           wx.reLaunch({
-            url: '/pages/user/login'
+            url: '/pages/user/login',
+            success () {
+              GlobalStore.data.isAuth = false
+              GlobalStore.update()
+            }
           })
         }, 500)
       }).catch((err) => {
