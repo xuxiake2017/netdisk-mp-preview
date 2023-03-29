@@ -40,6 +40,8 @@ const updateHandler = async (params) => {
   }
 }
 
+const isDir = stats => stats.isDirectory() ? 1 : 0
+
 Component({
   behaviors: [
     computedBehavior,
@@ -231,13 +233,14 @@ Component({
             success: async ({ stats }) => {
               try {
                 if (stats instanceof Array) {
+                  const deleteFileList = stats.filter(item => item.path !== '/')
+                    .sort((a, b) => isDir(a.stats) - isDir(b.stats))
+                  console.log('deleteFile: ', deleteFile);
                   await Promise.all(
-                    stats.filter(item => item.path !== '/')
-                      .reverse()
-                      .map(item => {
-                        const filePath = `${dirPath}${item.path.startsWith('/') ? '' : '/'}${item.path}`
-                        return item.stats.isDirectory() ? removeDir(filePath) : removeFile(filePath)
-                      })
+                    deleteFileList.map(item => {
+                      const filePath = `${dirPath}${item.path.startsWith('/') ? '' : '/'}${item.path}`
+                      return item.stats.isDirectory() ? removeDir(filePath) : removeFile(filePath)
+                    })
                   )
                 }
                 this.getDownloadCacheSize()
