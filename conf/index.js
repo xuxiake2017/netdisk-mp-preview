@@ -2,7 +2,7 @@ const CONFIG = {
   BASE_API: 'https://netdisk.xikcloud.com/netdisk',
   token: '',
   appid: 'wx14b170f0e0445918',
-  version: 'v2.0.1'
+  version: 'v2.0.2'
 }
 export const getToken = () => {
   return new Promise((resolve, reject) => {
