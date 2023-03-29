@@ -20,7 +20,7 @@
   position: absolute;
   bottom: 5px;
   background: var(--primary-color);
-  transition: all ease .2s;
+  transition: all ease-in-out .35s;
 }
 .tab-item {
   height: 100%;
@@ -29,4 +29,7 @@
   position: relative;
   font-weight: 700;
   color: #333;
+}
+.tab-item--selected {
+  color: var(--primary-color);
 }

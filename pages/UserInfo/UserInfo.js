@@ -235,7 +235,7 @@ Component({
                 if (stats instanceof Array) {
                   const deleteFileList = stats.filter(item => item.path !== '/')
                     .sort((a, b) => isDir(a.stats) - isDir(b.stats))
-                  console.log('deleteFile: ', deleteFile);
+                  console.log('deleteFileList: ', deleteFileList);
                   await Promise.all(
                     deleteFileList.map(item => {
                       const filePath = `${dirPath}${item.path.startsWith('/') ? '' : '/'}${item.path}`
