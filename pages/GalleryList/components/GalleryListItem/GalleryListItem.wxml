@@ -1,0 +1,79 @@
+<view class="gallery-list-item-wrap">
+  <view style="padding-bottom: 100%; position: relative;">
+    <view class="gallery-list-item-img u-flex-col u-col-between" bind:longpress="onLongpress" hover-class="gallery-list-item-img--hover">
+      <van-image
+        lazy-load
+        width="100%"
+        height="100%"
+        src="{{ fileList[0].fileMedia.thumbnailUrl }}"
+        fit="cover"
+        wx:if="{{ fileList.length === 1 }}"
+        class="u-flex-1 full-h"
+      />
+      <block wx:else>
+        <view class="u-flex u-row-between full-w u-flex-1">
+          <view class="u-flex-1 full-h">
+            <van-image
+              lazy-load
+              width="100%"
+              height="100%"
+              src="{{ fileList[0].fileMedia.thumbnailUrl }}"
+              fit="cover"
+              wx:if="{{ fileList.length > 1 }}"
+            />
+          </view>
+          <view class="u-flex-1 full-h u-m-l-5">
+            <van-image
+              lazy-load
+              width="100%"
+              height="100%"
+              src="{{ fileList[1].fileMedia.thumbnailUrl }}"
+              fit="cover"
+              wx:if="{{ fileList.length >= 2 }}"
+            />
+          </view>
+        </view>
+        <view class="u-flex u-row-between full-w u-flex-1 u-m-t-5">
+          <view class="u-flex-1 full-h">
+            <van-image
+              lazy-load
+              width="100%"
+              height="100%"
+              src="{{ fileList[2].fileMedia.thumbnailUrl }}"
+              fit="cover"
+              wx:if="{{ fileList.length >= 3 }}"
+            />
+          </view>
+          <view class="u-flex-1 full-h u-m-l-5">
+            <van-image
+              lazy-load
+              width="100%"
+              height="100%"
+              src="{{ fileList[3].fileMedia.thumbnailUrl }}"
+              fit="cover"
+              wx:if="{{ fileList.length >= 4 }}"
+            />
+          </view>
+        </view>
+      </block>
+      <view
+        wx:if="{{ showOptMenu }}"
+        class="gallery-list-item-mask"
+        bind:tap="onClick"
+      >
+        <van-checkbox
+          value="{{ checked }}"
+          style="position: absolute; left: 10rpx; bottom: 10rpx;"
+        />
+      </view>
+    </view>
+  </view>
+  <view class="gallery-list-item-info">
+    <view class="gallery-list-item-info-title">
+      {{ galleryData.galleryName }}
+    </view>
+    <view class="gallery-list-item-info-num">
+      {{ galleryData.num }}
+    </view>
+  </view>
+</view>

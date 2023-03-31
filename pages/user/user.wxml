@@ -13,7 +13,7 @@
           <view class="user-info__avatar">
             <van-image
               src="{{ userInfo.avatar }}"
-              filt="contain"
+              fit="cover"
               round
               height="160rpx"
               width="160rpx"

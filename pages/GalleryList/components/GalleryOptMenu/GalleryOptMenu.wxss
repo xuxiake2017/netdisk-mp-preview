@@ -1,0 +1,33 @@
+.gallery-opt-menu-wrap {
+  height: 100rpx;
+  width: 100%;
+  box-sizing: content-box;
+  /* padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom); */
+}
+.gallery-opt-menu {
+  box-sizing: content-box;
+  height: 100rpx;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  /* padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom); */
+  background: #fcfcfc;
+}
+.gallery-opt-menu-item {
+  text-align: center;
+  line-height: 1;
+  height: 100%;
+  color: var(--u-main-color);
+}
+.gallery-opt-menu-item--disabled {
+  color: #c8c9cc;
+}
+.gallery-opt-menu-item__icon {
+  margin-bottom: 8rpx;
+}
+.gallery-opt-menu-item__text {
+  font-size: 24rpx;
+}

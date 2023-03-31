@@ -28,8 +28,26 @@
   text-align: center;
   position: relative;
   font-weight: 700;
-  color: #333;
+  color: #303133;
 }
 .tab-item--selected {
   color: var(--primary-color);
+}
+
+.gallery-opt-header {
+  position: fixed;
+  top: -90rpx;
+  left: 0;
+  height: 90rpx;
+  width: 100%;
+  background: #FFF;
+  z-index: 10;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #303133;
+  padding: 0 30rpx;
+  transition: all ease-in-out .35s;
+}
+.gallery-opt-header .icon-quanxuan {
+  color: #303133
 }

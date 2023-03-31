@@ -1,8 +1,16 @@
 // 小程序官方的计算属性插件
 import { behavior as computedBehavior } from 'miniprogram-computed';
+import create from 'mini-stores'
+
 import commonBehaviors  from '../../common/behaviors/commonBehaviors';
 import { styleObj2StyleStr } from '../../utils/util';
-Component({
+import GalleryStore from '../../stores/GalleryStore'
+
+const stores = {
+  '$gallery': GalleryStore,
+}
+
+create.Component(stores, {
   // 混入（相当于vue的mixins）
   behaviors: [computedBehavior, commonBehaviors],
   options: {
@@ -66,6 +74,16 @@ Component({
       }
       styleObject.transform = `translateX(${data.tabWidth * data.tabIndex + data.tabWidth / 2}px) translateX(-50%)`
       return styleObj2StyleStr(styleObject)
+    },
+    galleryOptHeaderStyle: data => {
+      const styleObject = {
+        top: data.$gallery.showOptMenu ? 0 : '-90rpx',
+      }
+      return styleObj2StyleStr(styleObject)
+    },
+    galleryOptHeaderText: data => {
+      const count = data.$gallery.selectedList.length
+      return count > 0 ? `已选择${count}项` : '请选择项目'
     }
   },
   /**
@@ -92,6 +110,12 @@ Component({
     onTabClick(e) {
       const tab = e.currentTarget.dataset.tab
       this.triggerEvent('tab-click', { tab })
+    },
+    onClose () {
+      GalleryStore.reset()
+    },
+    onSelectAll () {
+      GalleryStore.setSelectAll()
     }
   }
 })

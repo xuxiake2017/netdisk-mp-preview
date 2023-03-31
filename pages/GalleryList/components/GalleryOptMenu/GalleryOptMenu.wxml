@@ -1,0 +1,16 @@
+<view class="gallery-opt-menu-wrap {{ safeAreaPadding && 'safe-area-padding' }}">
+  <view class="u-p-l-10 u-p-r-10 u-flex gallery-opt-menu {{ safeAreaPadding && 'safe-area-padding' }}">
+    <view class="u-flex-1 u-flex-col u-row-center u-col-center gallery-opt-menu-item {{ renameDisabled && 'gallery-opt-menu-item--disabled' }}" bind:tap="onRename">
+      <van-icon custom-style="font-weight: 700" class="gallery-opt-menu-item__icon" size="22" name="edit" />
+      <view class="gallery-opt-menu-item__text">
+        重命名
+      </view>
+    </view>
+    <view class="u-flex-1 u-flex-col u-row-center u-col-center gallery-opt-menu-item {{ deleteDisabled && 'gallery-opt-menu-item--disabled' }}" bind:tap="onDelete">
+      <van-icon custom-style="font-weight: 700" class="gallery-opt-menu-item__icon" size="22" name="delete-o" />
+      <view class="gallery-opt-menu-item__text">
+        删除
+      </view>
+    </view>
+  </view>
+</view>

@@ -11,10 +11,11 @@
       <swiper-item class="full-w-h">
         <home wx:if="{{ $data.pageInitialized.home }}" />
       </swiper-item>
-      <swiper-item class="full-w-h" style="overflow-y: auto;">
-        <gallery wx:if="{{ $data.pageInitialized.gallery }}" />
+      <swiper-item class="full-w-h">
+        <!-- <gallery wx:if="{{ $data.pageInitialized.gallery }}" /> -->
+        <gallery-list wx:if="{{ $data.pageInitialized.gallery }}" />
       </swiper-item>
-      <swiper-item class="full-w-h" style="overflow-y: auto;">
+      <swiper-item class="full-w-h">
         <user wx:if="{{ $data.pageInitialized.user }}" />
       </swiper-item>
     </swiper>

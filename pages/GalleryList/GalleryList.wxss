@@ -1,0 +1,23 @@
+.upload-btn {
+  width: 200rpx;
+}
+
+.custom-divider {
+  width: 100%;
+  margin: 16px 0;
+  display: flex;
+  border-color: #ebedf0;
+  border-style: solid;
+  border-width: 0;
+}
+.custom-divider::before {
+  content: '';
+  transform: scaleY(0.5);
+  display: block;
+  flex: 1;
+  box-sizing: border-box;
+  height: 1px;
+  border-color: inherit;
+  border-style: inherit;
+  border-width: 1px 0 0;
+}

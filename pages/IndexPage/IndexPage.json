@@ -3,6 +3,7 @@
     "common-tabs": "/components/CommonTabs/CommonTabs",
     "home": "/pages/home/home",
     "gallery": "/pages/gallery/gallery",
+    "gallery-list": "/pages/GalleryList/GalleryList",
     "user": "/pages/user/user"
   },
   "navigationBarTitleText": "相册文件"

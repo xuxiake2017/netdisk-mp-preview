@@ -12,4 +12,21 @@
     </view>
     <view class="tabs__line" style="{{ lineStyle }}"></view>
   </view>
+  <view class="gallery-opt-header u-flex" style="{{ galleryOptHeaderStyle }}">
+    <view
+      class="u-flex-1 u-text-left"
+    >
+      <van-icon name="cross" size="40rpx" custom-style="font-weight: 700; padding: 10rpx;" bind:click="onClose" />
+    </view>
+    <view
+      class="u-flex-2 u-text-center"
+    >
+      {{ galleryOptHeaderText }}
+    </view>
+    <view
+      class="u-flex-1 u-text-right"
+    >
+      <text class="iconfont icon-quanxuan" style="padding: 10rpx; color: {{ $gallery.selectAll ? 'var(--primary-color)': '#303133' }}" bind:tap="onSelectAll"></text>
+    </view>
+  </view>
 </view>

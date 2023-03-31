@@ -1,0 +1,65 @@
+<block wx:if="{{ !$data.showNoAuth }}">
+  <scroll-view
+    class="full-w"
+    style="height: {{ $gallery.showOptMenu ? 'calc(100% - 100rpx)' : '100%' }}"
+    scroll-y
+    refresher-enabled
+    refresher-triggered="{{ refresherTriggered }}"
+    enable-back-to-top
+    show-scrollbar="{{ false }}"
+    bindrefresherrefresh="onRefresherRefresh"
+  >
+    <view class="full-w u-p-b-30 u-p-r-30">
+      <view wx:if="{{ loading }}" class="u-text-center u-p-t-20 u-p-b-20">
+        <van-loading size="45rpx" vertical>加载中...</van-loading>
+      </view>
+      <view wx:if="{{ $gallery.allImgGallery.length > 0 }}">
+        <gallery-list-item
+          wx:for="{{ $gallery.allImgGallery }}"
+          wx:key="parentId"
+          galleryData="{{ item }}"
+          isAllImgGallery
+          data-index="{{ index }}"
+          bind:custom-longpress="onLongpress"
+          bind:checked="onChecked"
+        />
+        <view class="clearfix"></view>
+        <view class="full-w u-p-l-30">
+          <view class="custom-divider"></view>
+        </view>
+      </view>
+      <gallery-list-item
+        wx:for="{{ $gallery.galleryList }}"
+        wx:key="parentId"
+        galleryData="{{ item }}"
+        showOptMenu="{{ $gallery.showOptMenu }}"
+        data-index="{{ index }}"
+        bind:custom-longpress="onLongpress"
+        bind:checked="onChecked"
+      />
+      <block wx:if="{{ showEmpty }}">
+        <common-show-empty note="相册空空如也，先上传点东西吧"></common-show-empty>
+        <view class="u-text-center u-m-t-20">
+          <van-button
+            size="small"
+            round
+            color="linear-gradient(to right, #4bb0ff, #6149f6)"
+            custom-class="upload-btn"
+            bind:click="onUploadFile"
+          >
+            上传
+          </van-button>
+        </view>
+      </block>
+      <view class="clearfix"></view>
+    </view>
+  </scroll-view>
+  <gallery-opt-menu
+    wx:if="{{ $gallery.showOptMenu }}"
+    showOptMenu="{{ $gallery.showOptMenu }}"
+  />
+</block>
+<no-auth
+  wx:else
+/>
+

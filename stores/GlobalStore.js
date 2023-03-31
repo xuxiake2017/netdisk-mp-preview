@@ -1,3 +1,5 @@
+import GalleryStore from './GalleryStore';
+
 class GlobalStore {
 
   data = {
@@ -38,6 +40,7 @@ class GlobalStore {
     }
     this.data.activeTab = val
     this.update()
+    GalleryStore.reset()
   }
 
   setPageInitialized (val) {

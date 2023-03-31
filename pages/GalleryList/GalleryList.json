@@ -1,0 +1,13 @@
+{
+  "usingComponents": {
+    "common-tabs": "/components/CommonTabs/CommonTabs",
+    "no-auth": "/components/NoAuth/NoAuth",
+    "gallery-list-item": "./components/GalleryListItem/GalleryListItem",
+    "gallery-opt-menu": "./components/GalleryOptMenu/GalleryOptMenu",
+    "van-loading": "@vant/weapp/loading/index",
+    "common-show-empty": "/components/CommonShowEmpty/CommonShowEmpty",
+    "van-button": "@vant/weapp/button/index",
+    "van-divider": "@vant/weapp/divider/index"
+  },
+  "component": true
+}
