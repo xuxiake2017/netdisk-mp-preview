@@ -76,6 +76,9 @@ create.Component(stores, {
       })
     },
     async onRefresherRefresh () {
+      if(this.data.loading) {
+        return
+      }
       this.setData({
         refresherTriggered: true,
       })

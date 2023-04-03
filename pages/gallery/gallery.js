@@ -4,6 +4,7 @@ import create from 'mini-stores'
 import { GetImgList } from '../../api/img';
 import GlobalStore from '../../stores/GlobalStore'
 import { device } from '../../conf/index'
+import { styleObj2StyleStr } from '../../utils/util'
 
 const stores = {
   '$data': GlobalStore,
@@ -16,6 +17,14 @@ create.Component(stores, {
   options: {
     // 组件样式隔离 apply-shared 表示页面 wxss 样式将影响到自定义组件
     styleIsolation: 'apply-shared'
+  },
+  properties: {
+    parentId: {
+      type: Number
+    },
+    galleryName: {
+      type: String
+    },
   },
   /**
    * 页面的初始数据
@@ -36,6 +45,15 @@ create.Component(stores, {
     windowWidth: 375,
     allImgs: [],
     refresherTriggered: false,
+    customNavHeight: 0,
+  },
+  computed: {
+    contentStyle: data => {
+      const styleObj = {
+        height: `calc(100vh - ${data.customNavHeight}px)`
+      }
+      return styleObj2StyleStr(styleObj)
+    }
   },
   lifetimes: {
     attached () {
@@ -48,7 +66,7 @@ create.Component(stores, {
   methods: {
     // 触底
     onScrollToLower () {
-      if(this.data.finished) {
+      if(this.data.finished || this.data.loading) {
         return
       }
       this.setData({
@@ -58,6 +76,9 @@ create.Component(stores, {
     },
     // 监听用户下拉刷新事件
     async onRefresherRefresh () {
+      if(this.data.loading) {
+        return
+      }
       this.setData({
         refresherTriggered: true,
       })
@@ -75,7 +96,8 @@ create.Component(stores, {
     },
     async GetImgListWrap () {
       const params = {
-        ...this.data.pagination
+        ...this.data.pagination,
+        parentId: this.data.parentId
       }
       this.setData({
         loading: true
@@ -118,6 +140,15 @@ create.Component(stores, {
         urls, // 需要预览的图片http链接列表
         showmenu: true
       })
-    }
+    },
+    onNavReady (e) {
+      const {
+        statusBarHeight,
+        navBarHeight,
+      } = e.detail
+      this.setData({
+        customNavHeight: statusBarHeight + navBarHeight
+      })
+    },
   }
 })

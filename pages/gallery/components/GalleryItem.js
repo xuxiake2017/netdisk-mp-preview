@@ -1,7 +1,7 @@
 import { behavior as computedBehavior } from 'miniprogram-computed';
 import commonBehaviors from '../../../common/behaviors/commonBehaviors';
 import { styleObj2StyleStr } from '../../../utils/util';
-import timeFormat from '../../../utils/timeFormat';
+import timeFormat, { timeFormatHuman } from '../../../utils/timeFormat';
 
 Component({
 
@@ -54,7 +54,7 @@ Component({
       const keys = Object.keys(imgObj)
       this.setData({
         imgList: imgObj[keys[0]],
-        imgDate: timeFormat(Number(keys[0]), 'yyyy/mm/dd')
+        imgDate: timeFormatHuman(keys[0])
       })
     }
   },

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/xuxiake2017/netdisk-mp-preview#readme",
   "dependencies": {
     "@vant/weapp": "^1.6.8",
+    "dayjs": "^1.11.7",
     "eventemitter2": "^6.4.4",
     "mini-stores": "^1.0.5",
     "miniapp-color-thief": "^1.0.5",

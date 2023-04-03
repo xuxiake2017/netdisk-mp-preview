@@ -1,6 +1,6 @@
 <view class="gallery-list-item-wrap">
   <view style="padding-bottom: 100%; position: relative;">
-    <view class="gallery-list-item-img u-flex-col u-col-between" bind:longpress="onLongpress" hover-class="gallery-list-item-img--hover">
+    <view class="gallery-list-item-img u-flex-col u-col-between" bind:longpress="onLongpress" hover-class="gallery-list-item-img--hover" bind:tap="onClick">
       <van-image
         lazy-load
         width="100%"
@@ -59,7 +59,7 @@
       <view
         wx:if="{{ showOptMenu }}"
         class="gallery-list-item-mask"
-        bind:tap="onClick"
+        catch:tap="onChecked"
       >
         <van-checkbox
           value="{{ checked }}"

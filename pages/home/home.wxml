@@ -18,7 +18,7 @@
           <view class="home__search-bar">
             <view class="home__search-bar-input-wrap">
               <text class="iconfont icon-search"></text>
-              <input placeholder="搜索网盘文件" placeholder-style="font-weight: 600; font-size: 30rpx; color: #c2c2c2;" bind:tap="onSearchInputClick" />
+              <input placeholder="搜索相册文件" placeholder-style="font-weight: 600; font-size: 30rpx; color: #c2c2c2;" bind:tap="onSearchInputClick" />
             </view>
             <picker bind:change="onOrderByChange" value="{{ orderByIndex }}" range="{{ orderByList }}" range-key="label" header-text="排序方式">
               <text class="iconfont icon-descending"></text>

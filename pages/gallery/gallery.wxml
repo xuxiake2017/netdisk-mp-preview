@@ -1,31 +1,34 @@
-<block wx:if="{{ !$data.showNoAuth }}">
-  <scroll-view
-    class="full-w-h"
-    scroll-y
-    refresher-enabled
-    refresher-triggered="{{ refresherTriggered }}"
-    enable-back-to-top
-    lower-threshold="{{ 100 }}"
-    show-scrollbar="{{ false }}"
-    bindrefresherrefresh="onRefresherRefresh"
-    bindscrolltolower="onScrollToLower"
-  >
-    <view class="u-p-t-30 u-p-b-30">
-      <gallery-item
-        wx:key="index"
-        wx:for="{{ imgList }}"
-        img-obj="{{ item }}"
-        window-width="{{ windowWidth }}"
-        bind:imgclick="onImgClick"
-      ></gallery-item>
-      <!-- 文件列表加载 -->
-      <view wx:if="{{ loading }}" class="u-text-center u-p-t-20 u-p-b-20">
-        <van-loading size="45rpx" vertical>加载中...</van-loading>
+<custom-nav title="{{ galleryName }}" bind:on-ready="onNavReady"></custom-nav>
+<view class="safe-area-inset-bottom" style="{{ contentStyle }}">
+  <block wx:if="{{ !$data.showNoAuth }}">
+    <scroll-view
+      class="full-w-h"
+      scroll-y
+      refresher-enabled
+      refresher-triggered="{{ refresherTriggered }}"
+      enable-back-to-top
+      lower-threshold="{{ 100 }}"
+      show-scrollbar="{{ false }}"
+      bindrefresherrefresh="onRefresherRefresh"
+      bindscrolltolower="onScrollToLower"
+    >
+      <view class="u-p-t-30 u-p-b-30">
+        <gallery-item
+          wx:key="index"
+          wx:for="{{ imgList }}"
+          img-obj="{{ item }}"
+          window-width="{{ windowWidth }}"
+          bind:imgclick="onImgClick"
+        ></gallery-item>
+        <!-- 文件列表加载 -->
+        <view wx:if="{{ loading }}" class="u-text-center u-p-t-20 u-p-b-20">
+          <van-loading size="45rpx" vertical>加载中...</van-loading>
+        </view>
+        <load-finished wx:if="{{ finished }}"></load-finished>
       </view>
-      <load-finished wx:if="{{ finished }}"></load-finished>
-    </view>
-  </scroll-view>
-</block>
-<no-auth
-  wx:else
-/>
+    </scroll-view>
+  </block>
+  <no-auth
+    wx:else
+  />
+</view>

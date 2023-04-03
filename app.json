@@ -7,7 +7,8 @@
     "pages/searchPage/searchPage",
     "pages/MediaPreview/MediaPreview",
     "pages/UserInfo/UserInfo",
-    "pages/UserInfo/AvatarCropper/AvatarCropper"
+    "pages/UserInfo/AvatarCropper/AvatarCropper",
+    "pages/gallery/gallery"
   ],
   "entryPagePath": "pages/IndexPage/IndexPage",
   "window": {

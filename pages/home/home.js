@@ -59,6 +59,9 @@ create.Component(stores, {
       })
     },
     async onRefresherRefresh () {
+      if(this.data.loading) {
+        return
+      }
       this.setData({
         refresherTriggered: true,
       })
@@ -68,7 +71,7 @@ create.Component(stores, {
       })
     },
     onScrollToLower () {
-      if(this.data.finished) {
+      if(this.data.finished || this.data.loading) {
         return
       }
       this.setData({

@@ -41,11 +41,20 @@ ComponentWithComputed({
       if (this.data.isAllImgGallery) return
       this.triggerEvent('custom-longpress', this.data.galleryData)
     },
-    onClick () {
+    onChecked () {
       if (this.data.isAllImgGallery) return
       this.triggerEvent('checked', {
         parentId: this.data.galleryData.parentId,
         checked: !this.data.checked,
+      })
+    },
+    onClick () {
+      const {
+        parentId,
+        galleryName,
+      } = this.data.galleryData
+      wx.navigateTo({
+        url: `/pages/gallery/gallery?parentId=${parentId}&galleryName=${galleryName}`
       })
     }
   }
