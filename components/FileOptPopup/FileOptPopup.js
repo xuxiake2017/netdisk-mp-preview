@@ -48,6 +48,10 @@ Component({
         },
       ],
     },
+    safeAreaInsetBottom: {
+      type: Boolean,
+      value: true,
+    },
   },
 
   options: {

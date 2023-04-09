@@ -63,6 +63,7 @@
   bind:popup-close="onPopupClose"
   bind:opt-click="onOptClick"
   fileOptions="{{ fileOptions }}"
+  safeAreaInsetBottom="{{ false }}"
 ></file-opt-popup>
 <custom-model
   title="{{ optDialogTitle }}"
@@ -82,4 +83,5 @@
   show="{{ uploadPopupShow }}"
   bind:popupClose="onUploadPopupClose"
   bind:uploadItemClick="onUploadItemClick"
+  safeAreaInsetBottom="{{ false }}"
 ></file-upload-popup>

@@ -6,6 +6,7 @@
   position="bottom"
   bind:close="onPopupClose"
   catch:touchmove
+  safe-area-inset-bottom="{{ safeAreaInsetBottom }}"
 >
   <view class="popup-title"></view>
   <view class="u-p-30 popup-content">

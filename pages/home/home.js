@@ -88,7 +88,9 @@ create.Component(stores, {
         this.setOrderByIndex()
         this.getFileList()
       })
-      app.emitter.on(MOVE_FILE_SUCCESS, () => {
+      app.emitter.on(MOVE_FILE_SUCCESS, (parentId) => {
+        const moveOptFile = app.globalData.moveOptFile
+        if (moveOptFile.parentId === -1 || parentId === -1)
         this.resetFileList()
       })
     }

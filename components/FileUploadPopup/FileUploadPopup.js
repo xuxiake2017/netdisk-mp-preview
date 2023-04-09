@@ -12,6 +12,10 @@ Component({
     show: {
       type: Boolean
     },
+    safeAreaInsetBottom: {
+      type: Boolean,
+      value: true,
+    },
   },
 
   options: {
