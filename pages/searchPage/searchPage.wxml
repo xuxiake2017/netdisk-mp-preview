@@ -10,7 +10,7 @@
           <text class="iconfont icon-search"></text>
           <!-- <van-icon name="search" /> -->
           <input
-            placeholder="搜索网盘文件"
+            placeholder="搜索相册文件"
             placeholder-style="font-weight: 600; font-size: 30rpx; color: #c2c2c2;"
             model:value="{{ searchContent }}"
             bind:tap="onInputClick"
