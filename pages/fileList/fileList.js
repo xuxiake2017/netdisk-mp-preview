@@ -36,6 +36,8 @@ Component({ // 使用 Component 构造器构造页面
       })
       this.getFileList()
       app.emitter.on(MOVE_FILE_SUCCESS, () => {
+        const moveOptFile = app.globalData.moveOptFile
+        if (moveOptFile.parentId === this.data.fileId)
         this.resetFileList()
       })
     },

@@ -123,7 +123,7 @@ Component({ // 使用 Component 构造器构造页面
       }
       MoveFile(params).then((result) => {
         this.$toast.success('移动成功！')
-        this.$emit(MOVE_FILE_SUCCESS)
+        this.$emit(MOVE_FILE_SUCCESS, this.data.parentId)
         setTimeout(() => {
           this.goBack()
         }, 500)

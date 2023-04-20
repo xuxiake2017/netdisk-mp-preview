@@ -35,6 +35,7 @@
     file="{{ optFile }}"
     bind:popup-close="onPopupClose"
     bind:opt-click="onOptClick"
+    fileOptions="{{ fileOptions }}"
   ></file-opt-popup>
   <file-upload-popup
     show="{{ uploadPopupShow }}"
